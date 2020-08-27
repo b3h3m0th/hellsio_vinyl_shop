@@ -15,8 +15,8 @@ const pages = {
 const App = () => {
   return (
     <div className="App">
-      <Nav />
       <Router>
+        <Nav />
         <Switch>
           <Route exact path="/products" component={pages.products} />
           <Route path="/" component={pages.home} />
