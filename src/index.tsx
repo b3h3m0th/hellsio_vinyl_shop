@@ -5,7 +5,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider as StoreProvider } from "mobx-react";
 
-const stores = {};
+import { navStore } from "./stores/navStore";
+import { burgerMenuStore } from "./stores/burgerMenuStore";
+
+const stores = {
+  navStore,
+  burgerMenuStore,
+};
 
 ReactDOM.render(
   <React.StrictMode>

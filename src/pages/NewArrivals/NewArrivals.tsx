@@ -1,10 +1,10 @@
 import React from "react";
-import "./Products.scss";
+import "./NewArrivals.scss";
 
 const Products = () => {
   return (
     <div>
-      <div>Products</div>
+      <div>New Arrivals</div>
     </div>
   );
 };

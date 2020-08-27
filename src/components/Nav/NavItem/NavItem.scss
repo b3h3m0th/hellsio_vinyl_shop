@@ -1,17 +1,48 @@
 .nav-item {
   color: white;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-weight: 500;
+  margin: 0px 25px;
 
-  &__before {
-    position: absolute;
-    top: -10px;
-    width: 3px;
+  .active {
+    position: relative;
+    top: -20px;
+    opacity: 1;
+
+    .nav-item__before {
+      position: relative;
+      width: 2px;
+      height: 40px;
+      background-color: red;
+      margin-bottom: 10px;
+      top: -10px;
+      transition: 0.2s;
+    }
+  }
+
+  .nav-item__before {
+    position: relative;
+    width: 2px;
     height: 40px;
     background-color: red;
     margin-bottom: 10px;
+    top: -50px;
+    transition: 0.2s;
+  }
+
+  a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    opacity: 0.5;
+    top: -20px;
+
+    .nav-item__label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
   }
 }

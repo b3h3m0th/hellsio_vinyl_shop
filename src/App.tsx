@@ -1,15 +1,16 @@
 import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
 
 //pages
 import Home from "./pages/Home";
-import Products from "./pages/Products";
+import NewArrivals from "./pages/NewArrivals";
 
 const pages = {
   home: Home,
-  products: Products,
+  newArrivals: NewArrivals,
 };
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
       <Router>
         <Nav />
         <Switch>
-          <Route exact path="/products" component={pages.products} />
+          <Route exact path="/newarrivals" component={pages.newArrivals} />
           <Route path="/" component={pages.home} />
         </Switch>
       </Router>
@@ -30,4 +31,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default inject("burgerMenuStore")(observer(App));

@@ -1,0 +1,37 @@
+.burger-wrapper {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  cursor: pointer;
+  min-width: 80px;
+
+  &:hover .burger-layer:first-child {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+
+  &:hover .burger-layer:nth-child(2) {
+    margin-left: 10px;
+    margin-right: 0;
+  }
+
+  .burger-layer {
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-red);
+    margin: 4px;
+    transition: 0.2s;
+
+    &:first-child {
+      margin-left: 10px;
+    }
+
+    &:nth-child(2) {
+      margin-right: 10px;
+    }
+  }
+}
