@@ -2,6 +2,10 @@
 @import "./styles/scss-variables.scss";
 @import "./styles/css-variables.scss";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
