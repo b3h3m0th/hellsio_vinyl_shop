@@ -1,0 +1,17 @@
+[
+  {
+    "src": 1,
+    "id": "newarrivals",
+    "navLabel": "NEW ARRIVALS"
+  },
+  {
+    "src": 2,
+    "id": "featured",
+    "navLabel": "FEATURED"
+  },
+  {
+    "src": 3,
+    "id": "popular",
+    "navLabel": "POPULAR"
+  }
+]
