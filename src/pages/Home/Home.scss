@@ -1,0 +1,57 @@
+.home {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__hero-banner {
+    padding: 0 80px;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .hero-banner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+
+      &__title {
+        text-align: right;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        color: var(--color-red);
+        width: 100%;
+        font-size: 6em;
+        font-weight: 600;
+      }
+
+      &__subtitle {
+        text-align: right;
+        color: var(--color-white);
+        opacity: 0.2;
+        font-size: 20px;
+        margin: 0;
+      }
+    }
+  }
+
+  &__background-container {
+    height: 100%;
+    width: 50%;
+    flex: 1;
+
+    &__img {
+      height: 100%;
+      width: 100%;
+      box-shadow: 50px -50px 50px 0px var(--color-black) inset;
+      z-index: 2;
+      background-image: url("../../assets/img/background/F8-Five_Finger_Death_Punch.jpg");
+      opacity: 0.5;
+    }
+  }
+}

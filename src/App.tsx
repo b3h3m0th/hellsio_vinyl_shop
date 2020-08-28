@@ -5,12 +5,16 @@ import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
 
 //pages
-import Home from "./pages/Home";
-import NewArrivals from "./pages/NewArrivals";
+import Home from "./pages/Home/Home";
+import NewArrivals from "./pages/NewArrivals/NewArrivals";
+import Featured from "./pages/Featured/Featured";
+import Popular from "./pages/Popular/Popular";
 
 const pages = {
   home: Home,
   newArrivals: NewArrivals,
+  featured: Featured,
+  popular: Popular,
 };
 
 const App = () => {
@@ -20,6 +24,8 @@ const App = () => {
         <Nav />
         <Switch>
           <Route exact path="/newarrivals" component={pages.newArrivals} />
+          <Route exact path="/featured" component={pages.featured} />
+          <Route exact path="/popular" component={pages.popular} />
           <Route path="/" component={pages.home} />
         </Switch>
       </Router>

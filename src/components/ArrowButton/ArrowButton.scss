@@ -1,0 +1,40 @@
+.arrow-button {
+  margin-top: 30px;
+  font-size: 16px;
+  color: var(--color-red);
+  cursor: pointer;
+
+  #arrowRight-line,
+  #arrowRight-arrow-bottom,
+  #arrowRight-arrow-top {
+    transition: 0.2s;
+  }
+
+  &:hover #arrowRight-line {
+    width: 30px;
+  }
+
+  &:hover #arrowRight-arrow-bottom {
+    x: 5px;
+    y: -5px;
+  }
+
+  &:hover #arrowRight-arrow-top {
+    x: -5px;
+    y: -5px;
+  }
+
+  span {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  svg {
+    position: relative;
+    left: 0;
+    top: 2px;
+    height: 16px;
+    margin-left: 30px;
+    transition: 0.2s;
+  }
+}
