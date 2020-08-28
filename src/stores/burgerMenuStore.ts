@@ -1,15 +1,16 @@
-import { decorate, observable } from "mobx";
+import { decorate, observable, action } from "mobx";
 
 export class BurgerMenuStore {
   opened: boolean = false;
 
-  toggleBurgerMenu() {
+  toggleBurgerMenu = () => {
     this.opened = !this.opened;
-  }
+  };
 }
 
 decorate(BurgerMenuStore, {
   opened: observable,
+  toggleBurgerMenu: action,
 });
 
 export const burgerMenuStore = new BurgerMenuStore();

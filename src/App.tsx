@@ -3,6 +3,7 @@ import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
+import Footer from "./components/Footer/Footer";
 
 //pages
 import Home from "./pages/Home/Home";
@@ -28,6 +29,7 @@ const App = () => {
           <Route exact path="/popular" component={pages.popular} />
           <Route path="/" component={pages.home} />
         </Switch>
+        <Footer />
       </Router>
 
       <div>content</div>

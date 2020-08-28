@@ -5,12 +5,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider as StoreProvider } from "mobx-react";
 
-import { navStore } from "./stores/navStore";
 import { burgerMenuStore } from "./stores/burgerMenuStore";
+import { musicStore } from "./stores/musicStore";
 
 const stores = {
-  navStore,
   burgerMenuStore,
+  musicStore,
 };
 
 ReactDOM.render(

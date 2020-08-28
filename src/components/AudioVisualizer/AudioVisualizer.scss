@@ -1,0 +1,14 @@
+.audio-visualizer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &__bar {
+    transform-origin: bottom;
+    width: 2px;
+    margin: 4px;
+    height: 5px;
+    transition: 0.4s;
+  }
+}
