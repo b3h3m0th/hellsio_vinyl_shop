@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./AudioVisualizer.scss";
 import { MusicStore } from "../../stores/musicStore";
 import { inject, observer } from "mobx-react";
+import { Howl, Howler } from "howler";
 
 interface AudioVisualizerProps {
   musicStore?: MusicStore;
 }
 
 const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
+  //   useEffect(() => {
+  //     var sound = new Howl({
+  //       src: "http://goldfirestudios.com/proj/howlerjs/sound.ogg",
+  //       autoplay: true,
+  //       loop: false,
+  //       volume: 0.2,
+  //       onend: function () {
+  //         console.log("Finished!");
+  //       },
+  //     });
+  //     sound.play();
+  //   });
+
   const visualizer = {
     count: 13,
   };
@@ -89,6 +103,11 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
 
   return (
     <>
+      <audio
+        src="http://goldfirestudios.com/proj/howlerjs/sound.ogg"
+        autoPlay={true}
+        loop={true}
+      ></audio>
       <div
         className="audio-visualizer"
         onClick={() => {
