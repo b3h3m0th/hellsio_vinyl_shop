@@ -1,26 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./AudioVisualizer.scss";
 import { MusicStore } from "../../stores/musicStore";
 import { inject, observer } from "mobx-react";
 import { Howl, Howler } from "howler";
+
+//songs
+const temple_of_hate = require("../../assets/audio/angra-temple_of_hate.mp3");
+const ecclesia_diabolica_catholica = require("../../assets/audio/behemoth-ecclesia_diabolica_catholica.mp3");
+const wash_it_all_away = require("../../assets/audio/five_finger_death_punch-wash_it_all_away.mp3");
+const rats = require("../../assets/audio/ghost-rats.mp3");
 
 interface AudioVisualizerProps {
   musicStore?: MusicStore;
 }
 
 const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
-  //   useEffect(() => {
-  //     var sound = new Howl({
-  //       src: "http://goldfirestudios.com/proj/howlerjs/sound.ogg",
-  //       autoplay: true,
-  //       loop: false,
-  //       volume: 0.2,
-  //       onend: function () {
-  //         console.log("Finished!");
-  //       },
-  //     });
-  //     sound.play();
-  //   });
+  const [audioPlaying, setAudioPlaying] = useState(true);
+
+  const songs = [
+    rats,
+    temple_of_hate,
+    ecclesia_diabolica_catholica,
+    wash_it_all_away,
+  ];
+
+  useEffect(() => {
+    new Howl({
+      src: songs,
+      autoplay: true,
+      loop: true,
+      volume: 0.1,
+      onend: function () {
+        console.log("Finished!");
+      },
+    });
+  }, []);
 
   const visualizer = {
     count: 13,
@@ -103,20 +117,21 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
 
   return (
     <>
-      <audio
-        src="http://goldfirestudios.com/proj/howlerjs/sound.ogg"
-        autoPlay={true}
-        loop={true}
-      ></audio>
       <div
         className="audio-visualizer"
         onClick={() => {
           musicStore?.togglePlaying();
+          if (audioPlaying) {
+            Howler.mute(true);
+            setAudioPlaying(false);
+          } else {
+            Howler.mute(false);
+            setAudioPlaying(true);
+          }
         }}
       >
         {visualizerBars}
       </div>
-      <div></div>
     </>
   );
 };
