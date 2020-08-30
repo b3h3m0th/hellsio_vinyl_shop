@@ -34,6 +34,7 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
         console.log("Finished!");
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const visualizer = {
