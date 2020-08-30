@@ -65,11 +65,17 @@ const Home = ({ languageStore }: HomeProps) => {
       width: 0,
       ease: "power4",
     });
+    gsap.from(".hero-explore-button", 0.5, {
+      delay: 2.4,
+      x: 45,
+      ease: "power4",
+    });
   });
 
   useEffect(() => {
     (function setHeroVinylHeight() {
       const vinylContainer = document.getElementById("home-vinyl-container");
+      const heroExploreButton = document.getElementById("hero-explore-button");
       const heroTitle = document.querySelector("#hero-banner-title");
       const heroSubtitle = document.getElementById("hero-banner-subtitle");
       const heroArrow = document.getElementById("hero-banner-arrow");
@@ -88,6 +94,16 @@ const Home = ({ languageStore }: HomeProps) => {
           parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
           2 +
         10
+      }px`;
+      heroExploreButton!.style.height = `${
+        parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
+        heroSubtitle!.clientHeight +
+        heroArrow!.clientHeight
+      }px`;
+      heroExploreButton!.style.marginTop = `${
+        (heroTitle!.clientHeight -
+          parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
+        2
       }px`;
     })();
   });
@@ -122,7 +138,42 @@ const Home = ({ languageStore }: HomeProps) => {
             <HeroVinyl img={berserker} genre="Death" />
           </div>
         </div>
-        <button className="hero-explore-button" type="button"></button>
+        <button
+          className="hero-explore-button"
+          id="hero-explore-button"
+          type="button"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="11.593"
+            height="20.256"
+            viewBox="0 0 11.593 20.256"
+          >
+            <defs>
+              <style>
+                {`.cls-2 {
+              fill: #fff;
+            }`}
+              </style>
+            </defs>
+            <g id="arrowRightSmall" transform="translate(0 0)">
+              <rect
+                id="arrowRightSmallTop"
+                className="cls-2"
+                width="2.081"
+                height="14.313"
+                transform="translate(0 1.472) rotate(-45)"
+              />
+              <rect
+                id="arrowRightSmallBottom"
+                className="cls-2"
+                width="2.081"
+                height="14.313"
+                transform="translate(1.472 20.256) rotate(-135)"
+              />
+            </g>
+          </svg>
+        </button>
       </div>
     </div>
   );

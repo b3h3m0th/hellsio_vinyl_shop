@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.593" height="20.256" viewBox="0 0 11.593 20.256">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="arrowRightSmall" transform="translate(0 0)">
+    <rect id="arrowRightSmallTop" class="cls-1" width="2.081" height="14.313" transform="translate(0 1.472) rotate(-45)"/>
+    <rect id="arrowRightSmallBottom" class="cls-1" width="2.081" height="14.313" transform="translate(1.472 20.256) rotate(-135)"/>
+  </g>
+</svg>

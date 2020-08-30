@@ -55,7 +55,7 @@
       box-shadow: 50px -50px 50px 0px var(--color-black) inset;
       z-index: 2;
       background-image: url("../../assets/img/background/F8-Five_Finger_Death_Punch.jpg");
-      opacity: 0.5;
+      opacity: 0.2;
     }
 
     &__vinyls {
@@ -74,6 +74,21 @@
         align-items: center;
         flex-direction: row-reverse;
       }
+    }
+
+    .hero-explore-button {
+      position: absolute;
+      background-color: var(--color-red);
+      right: 0;
+      border: 0;
+      width: 45px;
+      height: 0;
+      z-index: 10;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
