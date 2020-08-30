@@ -28,7 +28,6 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
     new Howl({
       src: songs,
       autoplay: true,
-      loop: true,
       volume: 0.1,
       onend: function () {
         console.log("Finished!");
