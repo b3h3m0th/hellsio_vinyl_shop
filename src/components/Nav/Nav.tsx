@@ -5,6 +5,7 @@ import NavItem from "./NavItem/NavItem";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { Link } from "react-router-dom";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
+import { LanguageStore } from "../../stores/languageStore";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
@@ -12,13 +13,14 @@ const shoppingBagIcon = require("../../assets/icons/shopping_bag/shopping_bag_we
 
 interface NavProps {
   burgerMenuStore?: BurgerMenuStore;
+  languageStore?: LanguageStore;
 }
 
-const Nav = ({ burgerMenuStore }: NavProps) => {
+const Nav = ({ burgerMenuStore, languageStore }: NavProps) => {
   return (
     <nav className="nav">
       <div className="nav__wrapper">
-        <Link to="/home" className="nav__wrapper__logo">
+        <Link to={`/${languageStore?.language}`} className="nav__wrapper__logo">
           <img src={logo} alt="Hellsio logo" className="logo" />
         </Link>
         <div className="nav__wrapper__content">
@@ -50,4 +52,4 @@ const Nav = ({ burgerMenuStore }: NavProps) => {
   );
 };
 
-export default inject("burgerMenuStore")(observer(Nav));
+export default inject("burgerMenuStore", "languageStore")(observer(Nav));

@@ -1,0 +1,37 @@
+.hero-vinyl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin-right: -30px;
+
+  img {
+    box-shadow: 20px 0 50px 0px #000;
+    width: 200px;
+    transition: cubic-bezier(0.4, 0, 1, 1) 0.2s;
+    transform-origin: top left;
+  }
+
+  &__link {
+    margin-top: 10px;
+
+    a {
+      color: rgba($color: #fff, $alpha: 0.5);
+      opacity: 0.5;
+      font-size: 1.1em;
+    }
+
+    &:hover .hero-link__after {
+      width: 10px;
+    }
+  }
+
+  .hero-link__after {
+    position: relative;
+    width: 25px;
+    height: 2px;
+    background-color: var(--color-red);
+    margin: 2px 0 0 2px;
+    transition: cubic-bezier(0.4, 0, 1, 1) 0.2s;
+  }
+}

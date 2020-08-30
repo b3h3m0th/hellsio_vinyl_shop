@@ -44,14 +44,36 @@
     height: 100%;
     width: 50%;
     flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
     &__img {
+      position: relative;
       height: 100%;
       width: 100%;
       box-shadow: 50px -50px 50px 0px var(--color-black) inset;
       z-index: 2;
       background-image: url("../../assets/img/background/F8-Five_Finger_Death_Punch.jpg");
       opacity: 0.5;
+    }
+
+    &__vinyls {
+      z-index: 2;
+      position: absolute;
+      width: 100%;
+      background-color: transparent;
+      height: 500px;
+      display: flex;
+      justify-content: flex-start;
+
+      &__wrapper {
+        margin-left: 50px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row-reverse;
+      }
     }
   }
 }

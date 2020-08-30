@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 import AudioVisualizer from "../AudioVisualizer/AudioVisualizer";
+import LanguageSwitch from "../LanguageSwitch/LanguageSwitch";
 import { MusicStore } from "../../stores/musicStore";
 import { inject, observer } from "mobx-react";
 
@@ -14,6 +15,7 @@ const Footer = () => {
       <div className="audio-wrapper">
         <AudioVisualizer />
       </div>
+      <LanguageSwitch />
     </div>
   );
 };

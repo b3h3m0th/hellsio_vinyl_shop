@@ -10,16 +10,27 @@ const ecclesia_diabolica_catholica = require("../../assets/audio/behemoth-eccles
 const wash_it_all_away = require("../../assets/audio/five_finger_death_punch-wash_it_all_away.mp3");
 const rats = require("../../assets/audio/ghost-rats.mp3");
 
+// const temple_of_hate_audio = new Audio(
+//   "../../assets/audio/angra-temple_of_hate.mp3"
+// );
+// const ecclesia_diabolica_catholica_audio = new Audio(
+//   "../../assets/audio/behemoth-ecclesia_diabolica_catholica.mp3"
+// );
+// const wash_it_all_away_audio = new Audio(
+//   "../../assets/audio/five_finger_death_punch-wash_it_all_away.mp3"
+// );
+// const rats_audio = new Audio("../../assets/audio/ghost-rats.mp3");
+
 interface AudioVisualizerProps {
   musicStore?: MusicStore;
 }
 
 const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
-  const [audioPlaying, setAudioPlaying] = useState(true);
+  const [audioPlaying, setAudioPlaying] = useState(musicStore?.playing);
 
   const songs = [
-    rats,
     temple_of_hate,
+    rats,
     ecclesia_diabolica_catholica,
     wash_it_all_away,
   ];
@@ -29,6 +40,7 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
       src: songs,
       autoplay: true,
       volume: 0.1,
+      mute: audioPlaying ? false : true,
       onend: function () {
         console.log("Finished!");
       },

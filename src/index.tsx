@@ -7,10 +7,12 @@ import { Provider as StoreProvider } from "mobx-react";
 
 import { burgerMenuStore } from "./stores/burgerMenuStore";
 import { musicStore } from "./stores/musicStore";
+import { languageStore } from "./stores/languageStore";
 
 const stores = {
   burgerMenuStore,
   musicStore,
+  languageStore,
 };
 
 ReactDOM.render(
