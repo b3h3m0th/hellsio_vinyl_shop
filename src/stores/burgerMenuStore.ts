@@ -1,7 +1,7 @@
 import { decorate, observable, action } from "mobx";
 
 export class BurgerMenuStore {
-  opened: boolean = true;
+  opened: boolean = false;
 
   toggleBurgerMenu = () => {
     this.opened = !this.opened;
