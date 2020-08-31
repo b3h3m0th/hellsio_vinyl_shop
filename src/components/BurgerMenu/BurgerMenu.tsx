@@ -2,7 +2,7 @@ import React from "react";
 import "./BurgerMenu.scss";
 
 interface BurgerMenuProps {
-  onClick: any;
+  onClick: () => void;
 }
 
 export const BurgerMenu = ({ onClick }: BurgerMenuProps) => {

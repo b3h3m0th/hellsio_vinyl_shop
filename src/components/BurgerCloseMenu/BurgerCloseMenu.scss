@@ -1,0 +1,28 @@
+.burger-close {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &__cross-vertical {
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background-color: var(--color-red);
+    margin-top: 20px;
+  }
+
+  &__cross-horizontal {
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background-color: var(--color-red);
+    transition: 0.2s;
+  }
+
+  &:hover &__cross-horizontal {
+    margin-top: 30px;
+  }
+}

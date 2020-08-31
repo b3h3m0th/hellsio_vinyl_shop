@@ -3,6 +3,7 @@ import "./Nav.scss";
 import { inject, observer } from "mobx-react";
 import NavItem from "./NavItem/NavItem";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
+import { BurgerCloseMenu } from "../BurgerCloseMenu/BurgerCloseMenu";
 import { Link } from "react-router-dom";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
 import { LanguageStore } from "../../stores/languageStore";
@@ -18,37 +19,64 @@ interface NavProps {
 
 const Nav = ({ burgerMenuStore, languageStore }: NavProps) => {
   return (
-    <nav className="nav">
-      <div className="nav__wrapper">
-        <Link to={`/${languageStore?.language}`} className="nav__wrapper__logo">
-          <img src={logo} alt="Hellsio logo" className="logo" />
-        </Link>
-        <div className="nav__wrapper__content">
-          <NavItem label="NEW ARRIVALS" link="newarrivals" />
-          <NavItem label="FEATURED" link="featured" />
-          <NavItem label="POPULAR" link="popular" />
-          <div className="nav-icons"></div>
-          <div className="nav-icons__icon">
-            <img src={searchIcon} alt="Hellsio search icon" id="search_icon" />
-          </div>
-          <div className="nav-icons__icon">
-            <img
-              src={shoppingBagIcon}
-              alt="Hellsio shopping bag icon"
-              id="shopping_bag_icon"
-            />
-          </div>
-          <div className="nav-icons__icon">
-            <BurgerMenu
-              onClick={() => {
-                burgerMenuStore?.toggleBurgerMenu();
-                console.log(burgerMenuStore?.opened);
-              }}
-            />
+    <>
+      <div
+        className={`nav-modal ${
+          burgerMenuStore?.opened ? "nav-modal-active" : "nav-modal-not-active"
+        }`}
+      >
+        nav content TO BE ADDED
+      </div>
+      <nav className="nav">
+        <div className="nav__wrapper">
+          <Link
+            to={`/${languageStore?.language}`}
+            className="nav__wrapper__logo"
+          >
+            <img src={logo} alt="Hellsio logo" className="logo" />
+          </Link>
+          <div className="nav__wrapper__content">
+            <NavItem label="NEW ARRIVALS" link="newarrivals" />
+            <NavItem label="FEATURED" link="featured" />
+            <NavItem label="POPULAR" link="popular" />
+            <div className="nav-icons"></div>
+            <div className="nav-icons__icon">
+              <img
+                src={searchIcon}
+                alt="Hellsio search icon"
+                id="search_icon"
+              />
+            </div>
+            <div className="nav-icons__icon">
+              <Link to={`/${languageStore?.language}/shoppingbag`}>
+                <img
+                  src={shoppingBagIcon}
+                  alt="Hellsio shopping bag icon"
+                  id="shopping_bag_icon"
+                />
+              </Link>
+            </div>
+            <div className="nav-icons__icon">
+              {burgerMenuStore?.opened ? (
+                <BurgerCloseMenu
+                  onClick={() => {
+                    burgerMenuStore?.close();
+                    console.log(burgerMenuStore?.opened);
+                  }}
+                />
+              ) : (
+                <BurgerMenu
+                  onClick={() => {
+                    burgerMenuStore?.open();
+                    console.log(burgerMenuStore?.opened);
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
