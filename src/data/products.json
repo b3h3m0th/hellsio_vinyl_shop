@@ -1,0 +1,122 @@
+[
+  {
+    "id": "berserker-amon_amarth",
+    "name": "Berserker",
+    "genre": "death",
+    "artists": [
+      {
+        "name": "Amon Amarth"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Fafner's Gold"
+      },
+      {
+        "title": "Crack the Sky"
+      },
+      {
+        "title": "Mjölner, Hammer of Thor"
+      },
+      {
+        "title": "Valkyria"
+      },
+      {
+        "title": "Raven's Flight"
+      },
+      {
+        "title": "Ironside"
+      },
+      {
+        "title": "The Berserker at Stamford Bridge"
+      },
+      {
+        "title": "When Once Again We Can Set Our Sails"
+      },
+      {
+        "title": "Skoll and Hati"
+      },
+      {
+        "title": "Wings of Eagles"
+      },
+      {
+        "title": "Into the Dark"
+      }
+    ]
+  },
+  {
+    "id": "the_infernal_pathway-1439",
+    "name": "The Infernal Pathway",
+    "genre": "black",
+    "artists": [
+      {
+        "name": "1439"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Abyssos Antithesis"
+      },
+      {
+        "title": "Through Eyes of Stone"
+      },
+      {
+        "title": "Tunnel of Set VIII"
+      },
+      {
+        "title": "Enter Cold Void Dreaming"
+      },
+      {
+        "title": "Towers upon Towers"
+      },
+      {
+        "title": "Tunnel of Set IX"
+      },
+      {
+        "title": "Deeper Still"
+      },
+      {
+        "title": "Striding the Chass"
+      },
+      {
+        "title": "Dødskamp"
+      },
+      {
+        "title": "Tunnel of Set X"
+      },
+      {
+        "title": "Stand Tall in Fire"
+      }
+    ]
+  }
+]

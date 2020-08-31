@@ -41,9 +41,6 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
       autoplay: true,
       volume: 0.1,
       mute: audioPlaying ? false : true,
-      onend: function () {
-        console.log("Finished!");
-      },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

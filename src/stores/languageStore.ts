@@ -9,7 +9,6 @@ export class LanguageStore {
 
   setLanguage: (language: Language) => void = (language: Language) => {
     this.language = language;
-    console.log("language changed to: " + this.language);
   };
 }
 

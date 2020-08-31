@@ -61,14 +61,12 @@ const Nav = ({ burgerMenuStore, languageStore }: NavProps) => {
                 <BurgerCloseMenu
                   onClick={() => {
                     burgerMenuStore?.close();
-                    console.log(burgerMenuStore?.opened);
                   }}
                 />
               ) : (
                 <BurgerMenu
                   onClick={() => {
                     burgerMenuStore?.open();
-                    console.log(burgerMenuStore?.opened);
                   }}
                 />
               )}

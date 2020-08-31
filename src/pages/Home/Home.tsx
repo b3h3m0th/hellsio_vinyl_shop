@@ -79,11 +79,11 @@ const Home = ({ languageStore }: HomeProps) => {
       const heroTitle = document.querySelector("#hero-banner-title");
       const heroSubtitle = document.getElementById("hero-banner-subtitle");
       const heroArrow = document.getElementById("hero-banner-arrow");
-      console.log(vinylContainer);
-      console.log(vinylContainer?.clientHeight);
-      console.log(window.getComputedStyle(heroTitle!, null).fontSize);
-      console.log(heroSubtitle!.clientHeight);
-      console.log(heroArrow!.clientHeight);
+      // console.log(vinylContainer);
+      // console.log(vinylContainer?.clientHeight);
+      // console.log(window.getComputedStyle(heroTitle!, null).fontSize);
+      // console.log(heroSubtitle!.clientHeight);
+      // console.log(heroArrow!.clientHeight);
       vinylContainer!.style.height = `${
         parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
         heroSubtitle!.clientHeight +
@@ -133,9 +133,21 @@ const Home = ({ languageStore }: HomeProps) => {
           id="home-vinyl-container"
         >
           <div className="home__background-container__vinyls__wrapper">
-            <HeroVinyl img={the_infernal_pathway} genre="Black" />
-            <HeroVinyl img={gods_of_violence} genre="Trash" />
-            <HeroVinyl img={berserker} genre="Death" />
+            <HeroVinyl
+              img={the_infernal_pathway}
+              genre="Black"
+              productID="the_infernal_pathway-1439"
+            />
+            <HeroVinyl
+              img={gods_of_violence}
+              genre="Trash"
+              productID="the_infernal_pathway-1439"
+            />
+            <HeroVinyl
+              img={berserker}
+              genre="Death"
+              productID="berserker-amon_amarth"
+            />
           </div>
         </div>
         <button
