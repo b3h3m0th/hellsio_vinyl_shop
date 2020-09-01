@@ -54,6 +54,13 @@ const App = ({ languageStore }: AppProps) => {
             component={pages.popular}
           />
 
+          {/* products page */}
+          <Route
+            exact
+            path={`/${languageStore?.language}/products`}
+            component={pages.productDetail}
+          ></Route>
+
           {/* genres page */}
           <Route
             exact
@@ -64,7 +71,7 @@ const App = ({ languageStore }: AppProps) => {
           {/* product detail page */}
           <Route
             exact
-            path={`/${languageStore?.language}/product/:albumID`}
+            path={`/${languageStore?.language}/products/:albumID`}
             component={pages.productDetail}
           ></Route>
 

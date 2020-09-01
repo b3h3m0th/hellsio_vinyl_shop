@@ -3,6 +3,7 @@
     "id": "berserker-amon_amarth",
     "name": "Berserker",
     "genre": "death",
+    "img": "Berserker-Amon_Amarth.jpeg",
     "artists": [
       {
         "name": "Amon Amarth"
@@ -63,6 +64,7 @@
     "id": "the_infernal_pathway-1439",
     "name": "The Infernal Pathway",
     "genre": "black",
+    "img": "The_Infernal_Pathway-1349.jpg",
     "artists": [
       {
         "name": "1439"

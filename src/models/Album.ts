@@ -4,6 +4,7 @@ export type Album = {
   id: string;
   name: string;
   genre: Genre;
+  img: any;
   artists: [
     {
       name: string;

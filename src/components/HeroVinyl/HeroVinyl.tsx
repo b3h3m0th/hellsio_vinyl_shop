@@ -19,7 +19,7 @@ const HeroVinyl = ({
 }: HeroVinylProps) => {
   return (
     <div className="hero-vinyl">
-      <Link to={`/${languageStore?.language}/product/${productID}`}>
+      <Link to={`/${languageStore?.language}/products/${productID}`}>
         <img src={img} alt="Hellsio hero vinyl" />
       </Link>
 
