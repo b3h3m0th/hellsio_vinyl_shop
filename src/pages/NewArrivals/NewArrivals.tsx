@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import "./NewArrivals.scss";
 import GenreList from "../../components/GenreList/GenreList";
-import { Genre } from "../../models/Genre";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import { Album } from "../../models/Album";
 const albums = require("../../data/products.json");
-const genres = require("../../data/genres.json");
 
 const NewArrivals = () => {
   let albumVinyls: any = [];

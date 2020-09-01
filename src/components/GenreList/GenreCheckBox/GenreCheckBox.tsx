@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./GenreCheckBox.scss";
-import { Genre } from "../../../models/Genre";
-import gsap from "gsap";
+// import { Genre } from "../../../models/Genre";
+// import gsap from "gsap";
 
 interface GenreCheckBoxProps {
   label: string;
