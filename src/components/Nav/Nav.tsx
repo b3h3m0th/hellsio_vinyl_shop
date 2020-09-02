@@ -48,7 +48,7 @@ const Nav = ({ burgerMenuStore, languageStore }: NavProps) => {
               />
             </div>
             <div className="nav-icons__icon">
-              <Link to={`/${languageStore?.language}/shoppingbag`}>
+              <Link to={`/${languageStore?.language}/checkout`}>
                 <img
                   src={shoppingBagIcon}
                   alt="Hellsio shopping bag icon"

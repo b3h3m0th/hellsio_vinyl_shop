@@ -1,0 +1,40 @@
+.primary-button {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  outline: 0;
+  background-color: var(--color-red);
+  border: 0;
+  height: 40px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--color-white);
+  font-weight: 600;
+
+  p {
+    position: relative;
+    margin: 0;
+    transition: 0.2s;
+    left: 0;
+  }
+
+  img {
+    right: 50%;
+    position: absolute;
+    color: white;
+    opacity: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+  }
+
+  &:hover img {
+    right: 25%;
+    opacity: 1;
+  }
+
+  &:hover p {
+    left: -10%;
+    opacity: 1;
+  }
+}

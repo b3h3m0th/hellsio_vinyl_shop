@@ -20,17 +20,29 @@
   }
 
   &__albums {
+    position: relative;
     height: 100%;
     background-color: var(--color-black);
     flex: 4;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
 
     &__wrapper {
-      display: grid;
-      grid-template-columns: auto auto auto;
-      width: auto;
+      position: relative;
+      top: 0;
+      max-height: 100vh;
+
+      .new-arrivals__albums__wrapper__grid {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        margin-top: 11vh;
+      }
     }
   }
 }

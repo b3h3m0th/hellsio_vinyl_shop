@@ -23,22 +23,20 @@ const Home = ({ languageStore }: HomeProps) => {
       x: -70,
       opacity: 0,
       ease: "power4",
-      delay: 0.5,
     });
     gsap.from(".hero-banner__title", 1.8, {
       ease: "power4",
-      delay: 0.5,
     });
     gsap.from(".hero-banner__subtitle", 1.8, {
       x: -60,
       opacity: 0,
-      delay: 0.8,
+      delay: 0.3,
       ease: "power4",
     });
     gsap.from(".shop-now-button", 1.8, {
       x: -50,
       opacity: 0,
-      delay: 1.1,
+      delay: 0.5,
       ease: "power4",
     });
     gsap.from(".home__background-container__img", 1, {

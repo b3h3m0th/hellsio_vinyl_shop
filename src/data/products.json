@@ -1,6 +1,7 @@
 [
   {
     "id": "berserker-amon_amarth",
+    "src": "1",
     "name": "Berserker",
     "genre": "death",
     "img": "Berserker-Amon_Amarth.jpeg",
@@ -62,6 +63,7 @@
   },
   {
     "id": "the_infernal_pathway-1439",
+    "src": "2",
     "name": "The Infernal Pathway",
     "genre": "black",
     "img": "The_Infernal_Pathway-1349.jpg",
@@ -118,6 +120,68 @@
       },
       {
         "title": "Stand Tall in Fire"
+      }
+    ]
+  },
+  {
+    "id": "gods_of_violence-kreator",
+    "src": "3",
+    "name": "Gods of Violence",
+    "genre": "trash",
+    "img": "Gods_of_Violence-Kreator.jpg",
+    "artists": [
+      {
+        "name": "Kreator"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Apocalypticon (Instrumental)"
+      },
+      {
+        "title": "World War None"
+      },
+      {
+        "title": "Satan is real"
+      },
+      {
+        "title": "Totalitarian Terror"
+      },
+      {
+        "title": "Gods of Violence"
+      },
+      {
+        "title": "Army of Storm"
+      },
+      {
+        "title": "Hail to the Hordes"
+      },
+      {
+        "title": "Lion with Eagle Wings"
+      },
+      {
+        "title": "Fallen Brother"
+      },
+      {
+        "title": "Side by Side"
+      },
+      {
+        "title": "Death Becomes My Light"
       }
     ]
   }

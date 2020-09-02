@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import "./GenreList.scss";
 import { Genre } from "../../models/Genre";
 import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
-import { Link } from "react-router-dom";
 import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
+import Title from "../Title/Title";
 
 const genres = require("../../data/genres.json");
 
@@ -41,13 +41,7 @@ const GenreList = ({ title, languageStore, link }: GenresListProps) => {
 
   return (
     <div className="genres-list">
-      <Link
-        className="genres-list__title"
-        to={`/${languageStore?.language}/${link}`}
-      >
-        <h3 className="genres-list__title__text"> {title.toUpperCase()}</h3>
-        <div className="genres-list__title__after"></div>
-      </Link>
+      <Title title={title} link={link} />
       <div className="genres-list__genres-container">{genresList}</div>
     </div>
   );

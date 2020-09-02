@@ -1,0 +1,20 @@
+.title-container {
+  display: flex;
+  flex-direction: column;
+
+  &__text {
+    color: white;
+    margin-bottom: 5px;
+  }
+
+  &:hover &__after {
+    width: 5px;
+  }
+
+  &__after {
+    transition: 0.2s;
+    width: 25px;
+    height: 2px;
+    background-color: var(--color-red);
+  }
+}

@@ -27,7 +27,11 @@ const NewArrivals = () => {
         <GenreList title="New Arrivals" link="newarrivals"></GenreList>
       </div>
       <div className="new-arrivals__albums">
-        <div className="new-arrivals__albums__wrapper">{albumVinyls}</div>
+        <div className="new-arrivals__albums__wrapper">
+          <div className="new-arrivals__albums__wrapper__grid">
+            {albumVinyls}
+          </div>
+        </div>
       </div>
     </div>
   );

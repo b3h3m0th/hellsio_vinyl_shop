@@ -18,6 +18,7 @@ import NewArrivals from "./pages/NewArrivals/NewArrivals";
 import Featured from "./pages/Featured/Featured";
 import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Checkout from "./pages/Checkout/Checkout";
 
 const pages = {
   home: Home,
@@ -25,6 +26,7 @@ const pages = {
   featured: Featured,
   popular: Popular,
   productDetail: ProductDetail,
+  checkout: Checkout,
 };
 
 interface AppProps {
@@ -52,6 +54,12 @@ const App = ({ languageStore }: AppProps) => {
             exact
             path={`/${languageStore?.language}/popular`}
             component={pages.popular}
+          />
+
+          <Route
+            exact
+            path={`/${languageStore?.language}/checkout`}
+            component={pages.checkout}
           />
 
           {/* products page */}
