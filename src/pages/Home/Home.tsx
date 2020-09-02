@@ -139,7 +139,7 @@ const Home = ({ languageStore }: HomeProps) => {
             <HeroVinyl
               img={gods_of_violence}
               genre="Trash"
-              productID="the_infernal_pathway-1439"
+              productID="gods_of_violence-kreator"
             />
             <HeroVinyl
               img={berserker}
