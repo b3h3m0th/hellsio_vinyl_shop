@@ -19,7 +19,7 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
 
   album?.tracklist.forEach((track, index) => {
     tracks.push(
-      <p>
+      <p key={index}>
         {index.toString().length > 1 ? index : "0" + index} - {track.title}
       </p>
     );
