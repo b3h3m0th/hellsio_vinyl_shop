@@ -66,7 +66,7 @@ const App = ({ languageStore }: AppProps) => {
           <Route
             exact
             path={`/${languageStore?.language}/products`}
-            component={pages.productDetail}
+            component={pages.newArrivals}
           ></Route>
 
           {/* genres page */}

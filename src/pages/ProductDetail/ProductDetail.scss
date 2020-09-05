@@ -35,6 +35,93 @@
     }
   }
 
+  &__nav {
+    z-index: 11;
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    overflow-x: visible;
+
+    ::-webkit-scrollbar-thumb {
+      height: 0px;
+      width: 0;
+    }
+
+    &__buttons {
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+
+      a {
+        line-height: 0;
+
+        .button-next,
+        .button-previous {
+          padding: 0;
+          width: 100%;
+          width: 120px;
+          height: 120px;
+          border: 0;
+          outline: 0;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--color-gray);
+          cursor: pointer;
+          transition: 0.2s;
+
+          &:hover {
+            opacity: 0.8;
+          }
+
+          img {
+            width: 15px;
+          }
+        }
+
+        .button-next {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &__current-album {
+      padding: 20px;
+      background-color: var(--color-gray);
+
+      img {
+        height: 250px;
+        width: 250px;
+      }
+    }
+
+    &__next-albums {
+      width: auto;
+      display: flex;
+
+      &__album {
+        background-color: var(--color-gray);
+        padding: 20px;
+        height: 200px;
+        width: 200px;
+        opacity: 1;
+
+        img {
+          height: 100%;
+          width: 100%;
+          max-height: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
   &__background-container {
     flex: 1;
     height: 100%;
@@ -60,12 +147,14 @@
       display: flex;
       height: 40%;
       width: 100%;
+      background-color: transparent;
 
       .album-detail {
         display: flex;
         height: 100%;
         flex: 1;
         flex-direction: row;
+        padding-right: 200px;
 
         &__tracklist {
           flex: 1;
@@ -77,18 +166,20 @@
           h4 {
             text-align: left;
             text-transform: uppercase;
+            opacity: 1;
           }
 
           &__tracks {
             overflow: auto;
-
-            ::-webkit-scrollbar {
-              width: 0;
-            }
+            background-color: transparent;
+            overflow: hidden;
 
             p {
+              position: relative;
+              opacity: 1;
               text-align: left;
               margin: 2px 0;
+              background-color: transparent;
             }
           }
         }

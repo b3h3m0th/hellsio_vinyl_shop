@@ -6,8 +6,10 @@ import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
 import Title from "../Title/Title";
-
+import axios from "axios";
 const genres = require("../../data/genres.json");
+
+// const genres = require("../../data/genres.json");
 
 interface GenresListProps {
   title: string;
@@ -16,6 +18,21 @@ interface GenresListProps {
 }
 
 const GenreList = ({ title, languageStore, link }: GenresListProps) => {
+  useEffect(() => {
+    (async () => {
+      axios
+        .get(
+          "https://hellsio-vinyl-shop-server.netlify.app/.netlify/functions/api/genres"
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })();
+  });
+
   let genresList: any = [];
 
   genres.forEach((genre: Genre) =>
