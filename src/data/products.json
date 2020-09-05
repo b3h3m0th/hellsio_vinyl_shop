@@ -249,5 +249,73 @@
         "title": "The Toll It Takes"
       }
     ]
+  },
+  {
+    "id": "loved_you_at_your_darkest-behemoth",
+    "src": "5",
+    "name": "Loved You At Your Darkest",
+    "genre": "black",
+    "img": "Loved_you_at_your_Darkest-Behemoth.jpg",
+    "artists": [
+      {
+        "name": "Behemoth"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Solve (Intro)"
+      },
+      {
+        "title": "Wolves Ov Siberia"
+      },
+      {
+        "title": "God = Dog"
+      },
+      {
+        "title": "Ecclesia Diabolica Catholica"
+      },
+      {
+        "title": "Bartzabel"
+      },
+      {
+        "title": "If Crucifixion Was Not Enough"
+      },
+      {
+        "title": "Angelvs XIII"
+      },
+      {
+        "title": "My Own Grave"
+      },
+      {
+        "title": "Sabbath Mater"
+      },
+      {
+        "title": "Havohej Pantocrator"
+      },
+      {
+        "title": "Rom 5:8"
+      },
+      {
+        "title": "We Are the Next 1000 Years"
+      },
+      {
+        "title": "Coagvla (Outro)"
+      }
+    ]
   }
 ]

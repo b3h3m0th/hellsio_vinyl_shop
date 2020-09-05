@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Album } from "../../models/Album";
 import "./ProductDetail.scss";
 import gsap from "gsap";
@@ -7,6 +7,7 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { Link } from "react-router-dom";
 import { languageStore } from "../../stores/languageStore";
 import FastAverageColor from "fast-average-color";
+import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 const albumData: Album[] = require("../../data/products.json");
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
@@ -16,6 +17,12 @@ interface ProductDetailProps {
 }
 
 const ProductDetail = ({ match }: ProductDetailProps) => {
+  // const [albumData, setAlbumData] = useState();
+  // (async () => {
+  //   const response = await fetch("/.netlify/functions/api/albums");
+  //   setAlbumData(await response.json());
+  // })();
+
   const album = albumData.find((al) => al.id === match.params.albumID);
 
   let tracks: any = [];
@@ -23,7 +30,8 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
   album?.tracklist.forEach((track, index) => {
     tracks.push(
       <p key={index} className="tracks_track">
-        {index.toString().length > 1 ? index : "0" + index} - {track.title}
+        {(index + 1).toString().length > 1 ? index + 1 : "0" + (index + 1)} -{" "}
+        {track.title}
       </p>
     );
   });
@@ -36,7 +44,6 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
     let currentAlbumIndex = albumData.indexOf(album!, 0) + i;
     if (currentAlbumIndex > albumData.length - 1)
       currentAlbumIndex = albumData.length - 1 - i;
-    console.log("index " + currentAlbumIndex);
 
     let currentAlbum = albumData[currentAlbumIndex];
     // if (currentAlbum) console.log(currentAlbum);
@@ -53,7 +60,6 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
       </div>
     );
   }
-  console.log("-");
 
   let linkNextAlbumIndex = albumData.indexOf(album!, 0) + 1;
   if (linkNextAlbumIndex > albumData.length - 1) linkNextAlbumIndex = 0;
@@ -144,9 +150,19 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
               <div className="album-detail__tracklist__tracks">{tracks}</div>
             </div>
             <div className="album-detail__price">
-              <p className="album-detail__price__price">
-                $ {album?.formates[0].price}
-              </p>
+              <div className="album-detail__price__content">
+                <div className="album-detail__price__content__left">
+                  <p className="album-detail__price__content__price">
+                    $ {album?.formates[0].price}
+                  </p>
+                  <QuantityPicker label="Quantity" maxValue={5} />
+                </div>
+                <div className="album-detail__price__content__right">
+                  <p className="album-detail__price__content__right__per-item">
+                    per item
+                  </p>
+                </div>
+              </div>
               <PrimaryButton
                 label="Add to cart"
                 link="checkout"
@@ -156,7 +172,6 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
           </div>
         </div>
       </div>
-      {/* <div>{productUrlData.params.albumID}</div> */}
     </div>
   );
 };
