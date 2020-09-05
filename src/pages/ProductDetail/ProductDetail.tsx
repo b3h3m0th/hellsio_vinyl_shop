@@ -32,33 +32,28 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
 
   //following albums
   let followingAlbums: any = [];
-  let bgcolors: string[] = [];
   for (let i = 1; i < 4; i++) {
     let currentAlbumIndex = albumData.indexOf(album!, 0) + i;
-    if (currentAlbumIndex >= albumData.length - 1) currentAlbumIndex = i;
-    console.log(currentAlbumIndex);
+    if (currentAlbumIndex > albumData.length - 1)
+      currentAlbumIndex = albumData.length - 1 - i;
+    console.log("index " + currentAlbumIndex);
 
     let currentAlbum = albumData[currentAlbumIndex];
     // if (currentAlbum) console.log(currentAlbum);
     // else currentAlbum = albumData[i];
     let currentAlbumCover = require(`../../assets/img/vinyl_covers/${currentAlbum.img}`);
-    const fac = new FastAverageColor();
-    fac.getColorAsync(currentAlbumCover).then((color) => {
-      bgcolors.push(color.hexa);
-      console.log(bgcolors);
-    });
     followingAlbums.push(
       <div
         className={`product-detail__nav__next-albums__album`}
         id={`next-albums-${currentAlbum.id}`}
         key={`next album` + currentAlbum.id}
-        style={{ backgroundColor: `${bgcolors[0]}`, color: "white" }}
+        style={{ color: "white" }}
       >
         <img src={currentAlbumCover} key={i} alt="Hellsio album cover" />
       </div>
     );
-    console.log(bgcolors);
   }
+  console.log("-");
 
   let linkNextAlbumIndex = albumData.indexOf(album!, 0) + 1;
   if (linkNextAlbumIndex > albumData.length - 1) linkNextAlbumIndex = 0;
@@ -93,11 +88,11 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
       ease: "power4",
       x: 100,
     });
-    gsap.from(".tracks_track", 1.8, {
+    gsap.from(".tracks_track", 1, {
       delay: 0.5,
       opacity: 0,
       ease: "power4",
-      stagger: 0.1,
+      stagger: 0.05,
       x: "20px",
     });
     gsap.from(".product-detail__nav__current-album", 1.8, {
