@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./QuantityPicker.scss";
+const minusIcon = require("../../assets/icons/minus/minus.svg");
+const plusIcon = require("../../assets/icons/plus/plus.svg");
 
 interface QuantityPickerProps {
   label: string;
@@ -7,11 +9,11 @@ interface QuantityPickerProps {
 }
 
 const QuantityPicker = ({ label, maxValue }: QuantityPickerProps) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const handleDecrease = () => {
-    if (quantity - 1 < 0) {
-      setQuantity(0);
+    if (quantity - 1 < 1) {
+      setQuantity(1);
     } else {
       setQuantity(quantity - 1);
     }
@@ -32,12 +34,16 @@ const QuantityPicker = ({ label, maxValue }: QuantityPickerProps) => {
         <button
           className="quantity-picker__wrapper__decrease"
           onClick={handleDecrease}
-        ></button>
+        >
+          <img src={minusIcon} alt="Hellsio icon minus" />
+        </button>
         <div className="quantity-picker__wrapper__value">{quantity}</div>
         <button
           className="quantity-picker__wrapper__increase"
           onClick={handleIncrease}
-        ></button>
+        >
+          <img src={plusIcon} alt="Hellsio icon plus" />
+        </button>
       </div>
     </div>
   );

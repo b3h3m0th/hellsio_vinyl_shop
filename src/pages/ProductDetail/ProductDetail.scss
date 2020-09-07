@@ -162,6 +162,7 @@
           padding-top: 20px;
           padding-left: 20px;
           box-sizing: border-box;
+          max-width: 500px;
 
           h4 {
             text-align: left;
@@ -206,6 +207,7 @@
               &__per-item {
                 color: var(--color-white);
                 margin: 0;
+                line-height: 51px;
               }
             }
 

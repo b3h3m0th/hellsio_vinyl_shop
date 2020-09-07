@@ -1,0 +1,32 @@
+.drop-down-picker {
+  height: auto;
+  max-width: 130px;
+
+  &__label {
+    color: var(--color-white);
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+
+  &__select {
+    max-width: 130px;
+    height: 35px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-white);
+    background-color: transparent;
+    width: 100%;
+    color: var(--color-white);
+    outline: none;
+    padding: 0 10px;
+    -webkit-appearance: none;
+    background: url("../../assets/icons/dropDownArrow/dropDownArrow.svg") 90% /
+      20% no-repeat;
+    background-size: 10px;
+
+    &__option {
+      background-color: transparent;
+      color: red;
+      border: 1px solid var(--color-white);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Album } from "../../models/Album";
 import "./ProductDetail.scss";
 import gsap from "gsap";
@@ -6,8 +6,9 @@ import { inject, observer } from "mobx-react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { Link } from "react-router-dom";
 import { languageStore } from "../../stores/languageStore";
-import FastAverageColor from "fast-average-color";
+// import FastAverageColor from "fast-average-color";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
+import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 const albumData: Album[] = require("../../data/products.json");
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
@@ -74,31 +75,31 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
   useEffect(() => {});
 
   useEffect(() => {
-    gsap.from(".product-detail__background-container", 1.8, {
+    gsap.from(".product-detail__background-container", 0.5, {
       opacity: 0,
       ease: "power2",
     });
-    gsap.from(".product-detail__album-title__title", 1.8, {
+    gsap.from(".product-detail__album-title__title", 0.5, {
       x: -100,
       ease: "power4",
       opacity: 0,
     });
-    gsap.from(".product-detail__album-title__subtitle", 1.8, {
+    gsap.from(".product-detail__album-title__subtitle", 0.5, {
       delay: 0.2,
       x: -100,
       ease: "power4",
       opacity: 0,
     });
-    gsap.from("h4", 1.8, {
+    gsap.from("h4", 0.5, {
       opacity: 0,
       ease: "power4",
       x: 100,
     });
-    gsap.from(".tracks_track", 1, {
-      delay: 0.5,
+    gsap.from(".tracks_track", 0.5, {
+      delay: 0.2,
       opacity: 0,
       ease: "power4",
-      stagger: 0.05,
+      stagger: 0.02,
       x: "20px",
     });
     gsap.from(".product-detail__nav__current-album", 1.8, {
@@ -161,6 +162,7 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
                   <p className="album-detail__price__content__right__per-item">
                     per item
                   </p>
+                  <DropDownPicker label="Format" options={album!.formates} />
                 </div>
               </div>
               <PrimaryButton
