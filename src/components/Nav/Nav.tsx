@@ -95,7 +95,6 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
         ...registerErrors,
         registerErrorOptions.password_does_not_match,
       ]);
-      console.log("after ", registerErrorOptions);
     } else if (pw1 === pw2) {
       setRegisterErrors([
         registerErrors.splice(
@@ -113,7 +112,6 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
         ...registerErrors,
         registerErrorOptions.password_does_not_match,
       ]);
-      console.log("after ", registerErrorOptions);
     } else if (pw1.length === pw2.length) {
       setRegisterErrors([
         registerErrors.splice(
@@ -125,8 +123,7 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
   };
 
   const register = () => {
-    console.log(registerErrors);
-    if (registerErrors.length - 1 > 0) return console.log("not empty errors");
+    if (registerErrors.length - 1 > 0) return;
 
     (async () => {
       const options = {
@@ -148,8 +145,6 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
 
   const login = () => {
     (async () => {
-      console.log("data ", signInDataChange);
-
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -165,7 +160,7 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
         options
       );
       const result = await response.json();
-      if (result) {
+      if (result.user) {
         const user: User = result.user;
         console.log(user);
         loginStore?.setLoggedIn(true);
@@ -335,7 +330,6 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
                           password2: registerDataChange.password2,
                         };
 
-                        console.log(pwData);
                         validateRegister(pwData);
                       }}
                     />
@@ -361,7 +355,6 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
                           password2: registerDataChange.password2,
                         };
 
-                        console.log(pwData);
                         validateRegister(pwData);
                       }}
                     />
