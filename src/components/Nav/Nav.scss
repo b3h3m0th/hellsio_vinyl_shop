@@ -98,6 +98,12 @@
     max-width: 260px;
     margin-right: 10vw;
     margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+
+    a {
+      text-align: left;
+    }
   }
 
   .sign-in-wrapper {

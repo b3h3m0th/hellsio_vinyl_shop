@@ -170,6 +170,9 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
         console.log(user);
         loginStore?.setLoggedIn(true);
         loginStore?.setUser(user);
+        setSignInDataChange({ email: "", password: "" });
+      } else {
+        return;
       }
     })();
   };
@@ -233,7 +236,23 @@ const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
         </div>
         {loginStore?.loggedIn ? (
           <div className="nav-modal__column profile-wrapper">
-            <Title title={loginStore!.user?.username.toString()} link="/" />
+            <Title
+              title={
+                loginStore.user
+                  ? loginStore?.user?.username.toString()
+                  : "Profile"
+              }
+              link="/"
+            />
+            <Link
+              to={`/${languageStore?.language}`}
+              onClick={() => {
+                loginStore.logout();
+                loginStore.user = null;
+              }}
+            >
+              Logout
+            </Link>
           </div>
         ) : (
           <div className="nav-modal__column sign-in-wrapper">
