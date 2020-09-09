@@ -24,7 +24,7 @@ const HeroVinyl = ({
       </Link>
 
       <div className="hero-vinyl__link">
-        <Link to={`/${languageStore?.language}/genres`}>{genre}</Link>
+        <Link to={`/${languageStore?.language}/newarrivals`}>{genre}</Link>
         <div className="hero-link__after"></div>
       </div>
     </div>

@@ -4,7 +4,7 @@
   height: 10vh;
   background: var(--color-fade-to-black);
   padding: 0 80px;
-  z-index: 12;
+  z-index: 21;
 
   &__wrapper {
     height: 100%;
@@ -79,7 +79,7 @@
   align-items: flex-start;
   padding: 0 150px;
   padding-top: 15vh;
-  z-index: 11;
+  z-index: 20;
 
   &__column {
     height: 100%;
