@@ -8,11 +8,15 @@ import { Provider as StoreProvider } from "mobx-react";
 import { burgerMenuStore } from "./stores/burgerMenuStore";
 import { musicStore } from "./stores/musicStore";
 import { languageStore } from "./stores/languageStore";
+import { loginStore } from "./stores/loginStore";
+
+require("dotenv").config();
 
 const stores = {
   burgerMenuStore,
   musicStore,
   languageStore,
+  loginStore,
 };
 
 ReactDOM.render(

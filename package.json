@@ -14,8 +14,10 @@
     "@types/react-helmet": "^6.1.0",
     "@types/react-howler": "^3.7.2",
     "@types/react-router-dom": "^5.1.5",
+    "array-uniq": "^2.1.0",
     "axios": "^0.20.0",
     "dotenv": "^8.2.0",
+    "email-validator": "^2.0.4",
     "fast-average-color": "^6.0.2",
     "framer-motion": "^2.6.5",
     "gsap": "^3.5.1",
@@ -52,5 +54,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://hellsio-vinyl-shop-server"
+  "proxy": "http://localhost:9000"
 }

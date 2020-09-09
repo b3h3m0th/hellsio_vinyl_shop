@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./GenreList.scss";
 import { Genre } from "../../models/Genre";
 import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
@@ -6,8 +6,6 @@ import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
 import Title from "../Title/Title";
-import axios from "axios";
-const genres = require("../../data/genres.json");
 
 // const genres = require("../../data/genres.json");
 
@@ -18,25 +16,19 @@ interface GenresListProps {
 }
 
 const GenreList = ({ title, languageStore, link }: GenresListProps) => {
+  const [genres, setGenres] = useState([]);
   useEffect(() => {
     (async () => {
-      axios
-        .get(
-          "https://hellsio-vinyl-shop-server.netlify.app/.netlify/functions/api/genres"
-        )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const response = await fetch("/.netlify/functions/api/genres");
+      const genres = await response.json();
+      setGenres(() => genres);
     })();
-  });
+  }, []);
 
   let genresList: any = [];
 
   genres.forEach((genre: Genre) =>
-    genresList.push(<GenreCheckBox label={genre} key={genre} />)
+    genresList.push(<GenreCheckBox label={genre.genre} key={genre.genre} />)
   );
 
   useEffect(() => {

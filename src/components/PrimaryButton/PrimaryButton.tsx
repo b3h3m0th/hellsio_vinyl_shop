@@ -9,6 +9,8 @@ interface PrimaryButtonProps {
   link: string;
   languageStore?: LanguageStore;
   icon?: any;
+  submit?: boolean;
+  onClick?: () => void;
 }
 
 const PrimaryButton = ({
@@ -16,10 +18,15 @@ const PrimaryButton = ({
   link,
   languageStore,
   icon,
+  submit,
+  onClick,
 }: PrimaryButtonProps) => {
   return (
-    <Link to={`/${languageStore?.language}/${link}`}>
-      <button className="primary-button">
+    <Link
+      to={`/${languageStore?.language}/${link}`}
+      onClick={onClick && onClick}
+    >
+      <button className="primary-button" type={submit ? "submit" : "button"}>
         <p>{label}</p>
         {icon && <img src={icon} alt="Hellsio primary button icon" />}
       </button>

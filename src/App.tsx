@@ -9,7 +9,6 @@ import {
 import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
-
 import { LanguageStore } from "./stores/languageStore";
 
 //pages
