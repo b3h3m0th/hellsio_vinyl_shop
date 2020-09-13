@@ -73,7 +73,9 @@
   background-color: rgb(3, 3, 3);
   z-index: 10;
   box-shadow: none;
-  transition: cubic-bezier(0.6, 1, 1, 1) 0.3s;
+  transition: opacity cubic-bezier(0.6, 1, 1, 1) 0.3s,
+    height cubic-bezier(0.6, 1, 1, 1) 0.3s, top cubic-bezier(0.6, 1, 1, 1) 0.3s,
+    padding-top cubic-bezier(0.6, 1, 1, 1) 0.3s, visibility 0.3s 0s;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -227,6 +229,9 @@
   height: auto;
   min-height: 50%;
   top: initial;
+  display: flex;
+  pointer-events: all;
+  visibility: visible;
 }
 .nav-modal-not-active {
   min-height: 0;
@@ -234,4 +239,6 @@
   top: -40px;
   padding-top: 0;
   opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }

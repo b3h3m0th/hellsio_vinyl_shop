@@ -299,9 +299,6 @@
         "title": "Angelvs XIII"
       },
       {
-        "title": "My Own Grave"
-      },
-      {
         "title": "Sabbath Mater"
       },
       {
@@ -315,6 +312,121 @@
       },
       {
         "title": "Coagvla (Outro)"
+      }
+    ]
+  },
+  {
+    "id": "outstrider-abbath",
+    "src": "6",
+    "name": "Outstrider",
+    "genre": "black",
+    "img": "Outstrider-Abbath.jpg",
+    "artists": [
+      {
+        "name": "Abbath"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Calm In Ire (Of Hurricane)"
+      },
+      {
+        "title": "Bridge Of Spasms"
+      },
+      {
+        "title": "The Artifex"
+      },
+      {
+        "title": "Harvest Pyre"
+      },
+      {
+        "title": "Land Of Khem"
+      },
+      {
+        "title": "Outstrider"
+      },
+      {
+        "title": "Scythewinder"
+      },
+      {
+        "title": "Hecate"
+      },
+      {
+        "title": "Pace Till Death"
+      }
+    ]
+  },
+  {
+    "id": "human_targer-thy_art_is_murder",
+    "src": "7",
+    "name": "Human Target",
+    "genre": "death",
+    "img": "Human_Target-Thy_Art_is_Murder.jpg",
+    "artists": [
+      {
+        "name": "Thy Art is Murder"
+      }
+    ],
+    "releaseDate": "1-1-1991",
+    "formates": [
+      {
+        "id": "7-vinyl",
+        "price": 19.99
+      },
+      {
+        "id": "9-vinyl",
+        "price": 21.99
+      },
+      {
+        "id": "11-vinyl",
+        "price": 24.99
+      }
+    ],
+    "tracklist": [
+      {
+        "title": "Human Target"
+      },
+      {
+        "title": "New Gods"
+      },
+      {
+        "title": "Death Squad Anthem"
+      },
+      {
+        "title": "Make America Hate Again"
+      },
+      {
+        "title": "Eternal Suffering"
+      },
+      {
+        "title": "Welcome Oblivion"
+      },
+      {
+        "title": "Atonement"
+      },
+      {
+        "title": "Voyeurs into Death"
+      },
+      {
+        "title": "Eye for an Eye"
+      },
+      {
+        "title": "Chemical Christ"
       }
     ]
   }

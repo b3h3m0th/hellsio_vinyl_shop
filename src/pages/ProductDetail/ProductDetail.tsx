@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Album } from "../../models/Album";
 import "./ProductDetail.scss";
 import gsap from "gsap";
@@ -6,18 +6,20 @@ import { inject, observer } from "mobx-react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { Link } from "react-router-dom";
 import { languageStore } from "../../stores/languageStore";
-// import FastAverageColor from "fast-average-color";
+import { toJS } from "mobx";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
+import { CheckoutStore } from "../../stores/checkoutStore";
 const albumData: Album[] = require("../../data/products.json");
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
 interface ProductDetailProps {
   match?: any;
+  checkoutStore?: CheckoutStore;
 }
 
-const ProductDetail = ({ match }: ProductDetailProps) => {
+const ProductDetail = ({ match, checkoutStore }: ProductDetailProps) => {
   // const [albumData, setAlbumData] = useState();
   // (async () => {
   //   const response = await fetch("/.netlify/functions/api/albums");
@@ -72,7 +74,11 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
   const linkNext = `/${languageStore.language}/products/${albumData[linkNextAlbumIndex].id}`;
   const linkPrevious = `/${languageStore.language}/products/${albumData[linkPreviousAlbumIndex].id}`;
 
-  useEffect(() => {});
+  const [selectedFormat, setSelectedFormat] = useState("7-vinyl");
+
+  const handleFormatChange = (e: any) => {
+    setSelectedFormat(e.target.value);
+  };
 
   useEffect(() => {
     gsap.from(".product-detail__background-container", 0.5, {
@@ -154,7 +160,11 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
               <div className="album-detail__price__content">
                 <div className="album-detail__price__content__left">
                   <p className="album-detail__price__content__price">
-                    $ {album?.formates[0].price}
+                    ${" "}
+                    {
+                      album?.formates.find((al) => al.id === selectedFormat)
+                        ?.price
+                    }
                   </p>
                   <QuantityPicker label="Quantity" maxValue={5} />
                 </div>
@@ -162,13 +172,23 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
                   <p className="album-detail__price__content__right__per-item">
                     per item
                   </p>
-                  <DropDownPicker label="Format" options={album!.formates} />
+                  <DropDownPicker
+                    label="Format"
+                    options={album!.formates}
+                    id="product-detail__drop-down"
+                    onChange={(e) => handleFormatChange(e)}
+                  />
                 </div>
               </div>
               <PrimaryButton
                 label="Add to cart"
                 link="checkout"
                 icon={arrowRight}
+                onClick={() => {
+                  checkoutStore?.addProduct(album!);
+                  console.log(album);
+                  console.log(toJS(checkoutStore?.products));
+                }}
               />
             </div>
           </div>
@@ -178,4 +198,7 @@ const ProductDetail = ({ match }: ProductDetailProps) => {
   );
 };
 
-export default inject("languageStore")(observer(ProductDetail));
+export default inject(
+  "languageStore",
+  "checkoutStore"
+)(observer(ProductDetail));

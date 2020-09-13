@@ -9,6 +9,7 @@ import { burgerMenuStore } from "./stores/burgerMenuStore";
 import { musicStore } from "./stores/musicStore";
 import { languageStore } from "./stores/languageStore";
 import { loginStore } from "./stores/loginStore";
+import { checkoutStore } from "./stores/checkoutStore";
 
 require("dotenv").config();
 
@@ -17,6 +18,7 @@ const stores = {
   musicStore,
   languageStore,
   loginStore,
+  checkoutStore,
 };
 
 ReactDOM.render(

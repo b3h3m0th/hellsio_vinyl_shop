@@ -5,17 +5,28 @@ import "./DropDownPicker.scss";
 interface DropDownPickerProps {
   options: [{ id: string; price: number }];
   label: string;
+  id?: string;
+  onChange?: (e: any) => void;
 }
 
-const DropDownPicker = ({ options, label }: DropDownPickerProps) => {
+const DropDownPicker = ({
+  options,
+  label,
+  id,
+  onChange,
+}: DropDownPickerProps) => {
   return (
     <div className="drop-down-picker">
       <p className="drop-down-picker__label">{label}</p>
-      <select className="drop-down-picker__select">
+      <select
+        className="drop-down-picker__select"
+        id={id && id}
+        onChange={onChange && onChange}
+      >
         {options.map((o, index) => {
           return (
             <option
-              className="dopr-down-picker__select__option"
+              className="drop-down-picker__select__option"
               key={index}
               value={o.id}
             >

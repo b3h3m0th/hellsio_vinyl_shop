@@ -4,4 +4,159 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &__payment {
+    height: 100%;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
+      min-width: 260px;
+      &__subtitle {
+        color: var(--color-white);
+        opacity: 0.5;
+        margin-top: 70%;
+        text-align: left;
+      }
+
+      &__payment-info {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 60px;
+
+        ul {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 40px;
+
+          li {
+            list-style-image: url("../../assets/icons/greenTick/greenTick.svg");
+            list-style-position: inside;
+            text-align: left;
+            margin-bottom: 2px;
+
+            span {
+              margin-left: 10px;
+            }
+
+            .payment-options {
+              display: inline-flex;
+              align-items: center;
+
+              img {
+                margin-right: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__products {
+    height: 100%;
+    flex: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+
+      &__product {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-right: 80px;
+        margin: 20px 0;
+
+        &__album-cover {
+          max-width: 150px;
+          box-shadow: 0px 0px 50px 0px #000;
+          margin-right: 40px;
+        }
+
+        &__name {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          width: 240px;
+          margin-top: 20px;
+
+          &__title {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--color-red);
+            margin-bottom: 10px;
+            margin-top: 0;
+            text-align: left;
+          }
+
+          &__artist {
+            font-size: 1.1em;
+            margin-top: 0;
+            margin-left: 10%;
+          }
+        }
+
+        &__quantity {
+          margin-left: 40px;
+          display: block;
+          width: 150px;
+          text-align: left;
+        }
+
+        &__format {
+          margin-left: 40px;
+          display: block;
+          width: 150px;
+          text-align: left;
+        }
+
+        &__price {
+          margin-left: 40px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-direction: row;
+          height: 100%;
+          width: 180px;
+
+          &__price {
+            font-size: 2em;
+          }
+
+          &__per-item {
+            margin-left: 10px;
+          }
+        }
+
+        &__remove {
+          height: 100%;
+          margin-left: 40px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          &__text {
+            color: var(--color-red);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }
