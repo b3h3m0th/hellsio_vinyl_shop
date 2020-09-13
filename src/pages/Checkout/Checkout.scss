@@ -63,6 +63,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+    overflow-x: hidden;
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
 
     &__wrapper {
       width: 100%;
@@ -70,6 +76,10 @@
       justify-content: flex-start;
       align-items: flex-start;
       flex-direction: column;
+      position: relative;
+      top: 0;
+      max-height: 100vh;
+      margin-top: 11vh;
 
       &__product {
         width: 100%;

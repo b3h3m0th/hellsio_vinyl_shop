@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Checkout.scss";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
@@ -8,6 +8,7 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
+import gsap from "gsap";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -21,9 +22,17 @@ const Checkout = ({ languageStore, checkoutStore }: CheckoutProps) => {
   const [selectedFormats, setSelectedFormats] = useState(["7-vinyl"]);
 
   const handleFormatChange = (e: any, index: number) => {
-    const newValue = e.target.value;
-    setSelectedFormats([...selectedFormats, e.target.valueb]);
+    setSelectedFormats([...selectedFormats, e.target.value]);
   };
+
+  useEffect(() => {
+    gsap.from(".checkout__products__wrapper__product", 1.8, {
+      opacity: 0,
+      x: 100,
+      ease: "power4",
+      stagger: 0.2,
+    });
+  });
 
   return (
     <div className="checkout">
