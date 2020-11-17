@@ -29,9 +29,9 @@ const AudioVisualizer = ({ musicStore }: AudioVisualizerProps) => {
   const [audioPlaying, setAudioPlaying] = useState(musicStore?.playing);
 
   const songs = [
+    ecclesia_diabolica_catholica,
     temple_of_hate,
     rats,
-    ecclesia_diabolica_catholica,
     wash_it_all_away,
   ];
 
