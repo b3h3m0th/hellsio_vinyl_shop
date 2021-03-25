@@ -18,6 +18,7 @@ import Featured from "./pages/Featured/Featured";
 import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Checkout from "./pages/Checkout/Checkout";
+import Admin from "./pages/Admin/Admin";
 
 const pages = {
   home: Home,
@@ -26,13 +27,14 @@ const pages = {
   popular: Popular,
   productDetail: ProductDetail,
   checkout: Checkout,
+  admin: Admin,
 };
 
 interface AppProps {
   languageStore?: LanguageStore;
 }
 
-const App = ({ languageStore }: AppProps) => {
+const App: React.FC<AppProps> = ({ languageStore }: AppProps) => {
   return (
     <div className="App">
       <Router>
@@ -80,6 +82,12 @@ const App = ({ languageStore }: AppProps) => {
             exact
             path={`/${languageStore?.language}/products/:albumID`}
             component={pages.productDetail}
+          ></Route>
+
+          {/* Admin */}
+          <Route
+            path={`/${languageStore?.language}/admin`}
+            component={pages.admin}
           ></Route>
 
           {/* Home */}

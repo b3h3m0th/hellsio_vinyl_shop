@@ -6,7 +6,7 @@ import Vinyl from "../../components/Vinyl/Vinyl";
 import { Album } from "../../models/Album";
 const albums = require("../../data/products.json");
 
-const NewArrivals = () => {
+const NewArrivals: React.FC = () => {
   let albumVinyls: any = [];
   albums.forEach((album: Album, index: number) => {
     const vinylImage = require(`../../assets/img/vinyl_covers/${album.img}`);

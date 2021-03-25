@@ -18,7 +18,10 @@ interface CheckoutProps {
   checkoutStore?: CheckoutStore;
 }
 
-const Checkout = ({ languageStore, checkoutStore }: CheckoutProps) => {
+const Checkout: React.FC<CheckoutProps> = ({
+  languageStore,
+  checkoutStore,
+}: CheckoutProps) => {
   const [selectedFormats, setSelectedFormats] = useState(["7-vinyl"]);
 
   const handleFormatChange = (e: any, index: number) => {
