@@ -27,7 +27,11 @@ interface NavProps {
   loginStore?: LoginStore;
 }
 
-const Nav = ({ burgerMenuStore, languageStore, loginStore }: NavProps) => {
+const Nav: React.FC<NavProps> = ({
+  burgerMenuStore,
+  languageStore,
+  loginStore,
+}: NavProps) => {
   const [genres, setGenres] = useState([]);
   const [signIn, setSignIn] = useState(true);
 
