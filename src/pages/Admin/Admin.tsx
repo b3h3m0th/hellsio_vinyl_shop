@@ -1,12 +1,6 @@
 import React from "react";
 import "./Admin.scss";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-  Redirect,
-} from "react-router-dom";
+import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
 
 //admin pages
 import Orders from "./Orders/Orders";

@@ -32,8 +32,8 @@ const Nav: React.FC<NavProps> = ({
   languageStore,
   loginStore,
 }: NavProps) => {
-  const [genres, setGenres] = useState([]);
-  const [signIn, setSignIn] = useState(true);
+  const [genres, setGenres] = useState<any[]>([]);
+  const [signIn, setSignIn] = useState<boolean>(true);
 
   const [signInDataChange, setSignInDataChange] = useState({
     email: "",
