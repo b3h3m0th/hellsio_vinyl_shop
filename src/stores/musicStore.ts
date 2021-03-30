@@ -1,7 +1,7 @@
 import { decorate, observable, action } from "mobx";
 
 export class MusicStore {
-  playing: boolean = true;
+  playing: boolean = false;
 
   togglePlaying: () => void = () => {
     this.playing = !this.playing;

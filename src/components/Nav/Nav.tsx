@@ -208,7 +208,7 @@ const Nav: React.FC<NavProps> = ({
         </div>
         <div className="nav-modal__column">
           <Title title="Genres" link="newarrivals" />
-          {genres.map((genre: any, index) => {
+          {genres.map((genre: any, index: number) => {
             return (
               <p className="p" key={index}>
                 <Link to={`/${languageStore?.language}/newarrivals`}>
@@ -450,6 +450,8 @@ const Nav: React.FC<NavProps> = ({
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID || ""}
               onSuccess={(response) => console.log(response)}
+              onFailure={(error) => console.log(error)}
+              uxMode="popup"
             ></GoogleLogin>
           </div>
         )}
