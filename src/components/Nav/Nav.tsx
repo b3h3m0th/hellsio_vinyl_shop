@@ -13,8 +13,10 @@ import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { LoginStore } from "../../stores/loginStore";
 import { User } from "../../models/User";
 import GoogleLogin from "react-google-login";
+import validateRegistrationData, {
+  RegistrationData,
+} from "../../validation/registration";
 
-const emaillValidator = require("email-validator");
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const shoppingBagIcon = require("../../assets/icons/shopping_bag/shopping_bag_web_red.png");
@@ -39,104 +41,32 @@ const Nav: React.FC<NavProps> = ({
     email: "",
     password: "",
   });
-  const [registerDataChange, setRegisterDataChange] = useState({
+
+  const [
+    registrationDataChange,
+    setRegistrationDataChange,
+  ] = useState<RegistrationData>({
     username: "",
     email: "",
     password: "",
     password2: "",
   });
-  const registerErrorOptions = {
-    password_too_short: "Your Password must at least contain 8 characters",
-    password_does_not_match: "Your Passwords do not match",
-    username_too_short: "Your Username cannot be empty",
-    email_not_valid: "Please enter a valid email",
-  };
 
-  const [registerErrors, setRegisterErrors]: any[] = useState([]);
-
-  const validateRegister = (pwData: any) => {
-    const { password: pw1, password2: pw2, username, email } = pwData;
-
-    if (
-      username.trim().length < 1 &&
-      !registerErrors.includes(registerErrorOptions.username_too_short)
-    ) {
-      setRegisterErrors([
-        ...registerErrors,
-        registerErrorOptions.username_too_short,
-      ]);
-    } else if (username.trim().length > 1) {
-      setRegisterErrors([
-        registerErrors.splice(
-          registerErrors.indexOf(registerErrorOptions.username_too_short),
-          1
-        ),
-      ]);
-    }
-
-    if (
-      !emaillValidator.validate(email) &&
-      !registerErrors.includes(registerErrorOptions.email_not_valid)
-    ) {
-      setRegisterErrors([
-        ...registerErrors,
-        registerErrorOptions.email_not_valid,
-      ]);
-    } else if (emaillValidator.validate(email)) {
-      setRegisterErrors([
-        registerErrors.splice(
-          registerErrors.indexOf(registerErrorOptions.email_not_valid),
-          1
-        ),
-      ]);
-    }
-
-    if (
-      pw1 !== pw2 &&
-      !registerErrors.includes(registerErrorOptions.password_does_not_match)
-    ) {
-      setRegisterErrors([
-        ...registerErrors,
-        registerErrorOptions.password_does_not_match,
-      ]);
-    } else if (pw1 === pw2) {
-      setRegisterErrors([
-        registerErrors.splice(
-          registerErrors.indexOf(registerErrorOptions.password_does_not_match),
-          1
-        ),
-      ]);
-    }
-
-    if (
-      pw1.length !== pw2.length &&
-      !registerErrors.includes(registerErrorOptions.password_does_not_match)
-    ) {
-      setRegisterErrors([
-        ...registerErrors,
-        registerErrorOptions.password_does_not_match,
-      ]);
-    } else if (pw1.length === pw2.length) {
-      setRegisterErrors([
-        registerErrors.splice(
-          registerErrors.indexOf(registerErrorOptions.password_does_not_match),
-          1
-        ),
-      ]);
-    }
-  };
+  const [registrationErrors, setRegistrationErrors]: any[] = useState<
+    Array<RegistrationData>
+  >([]);
 
   const register = () => {
-    if (registerErrors.length - 1 > 0) return;
+    if (registrationErrors.length - 1 > 0) return;
 
     (async () => {
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: registerDataChange.username,
-          email: registerDataChange.email,
-          password: registerDataChange.password,
+          username: registrationDataChange.username,
+          email: registrationDataChange.email,
+          password: registrationDataChange.password,
           pw: process.env.HASHED_ADMIN_PASSWORD,
         }),
       };
@@ -265,7 +195,7 @@ const Nav: React.FC<NavProps> = ({
                       type="email"
                       id="sign-in__email"
                       name="email"
-                      onChange={(e) =>
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSignInDataChange({
                           email: e.target.value,
                           password: signInDataChange.password,
@@ -279,7 +209,7 @@ const Nav: React.FC<NavProps> = ({
                       type="password"
                       id="sign-in__password"
                       name="password"
-                      onChange={(e) =>
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSignInDataChange({
                           email: signInDataChange.email,
                           password: e.target.value,
@@ -297,7 +227,7 @@ const Nav: React.FC<NavProps> = ({
                     className="toggle-to-register"
                     onClick={() => {
                       setSignIn(false);
-                      setRegisterDataChange({
+                      setRegistrationDataChange({
                         username: "",
                         email: signInDataChange.email,
                         password: signInDataChange.password,
@@ -319,22 +249,16 @@ const Nav: React.FC<NavProps> = ({
                       type="text"
                       id="register__username"
                       name="username"
-                      onChange={(e) => {
-                        setRegisterDataChange({
-                          username: e.target.value,
-                          email: registerDataChange.email,
-                          password: registerDataChange.password,
-                          password2: registerDataChange.password2,
-                        });
-
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
                           username: e.target.value,
-                          email: registerDataChange.email,
-                          password: registerDataChange.password,
-                          password2: registerDataChange.password2,
+                          email: registrationDataChange.email,
+                          password: registrationDataChange.password,
+                          password2: registrationDataChange.password2,
                         };
 
-                        validateRegister(pwData);
+                        setRegistrationDataChange(pwData);
+                        setRegistrationErrors(validateRegistrationData(pwData));
                       }}
                     />
                   </div>
@@ -344,22 +268,16 @@ const Nav: React.FC<NavProps> = ({
                       type="email"
                       id="register__email"
                       name="email"
-                      onChange={(e) => {
-                        setRegisterDataChange({
-                          username: registerDataChange.username,
-                          email: e.target.value,
-                          password: registerDataChange.password,
-                          password2: registerDataChange.password2,
-                        });
-
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
-                          username: registerDataChange.username,
+                          username: registrationDataChange.username,
                           email: e.target.value,
-                          password: registerDataChange.password,
-                          password2: registerDataChange.password2,
+                          password: registrationDataChange.password,
+                          password2: registrationDataChange.password2,
                         };
 
-                        validateRegister(pwData);
+                        setRegistrationDataChange(pwData);
+                        setRegistrationErrors(validateRegistrationData(pwData));
                       }}
                     />
                   </div>
@@ -369,21 +287,16 @@ const Nav: React.FC<NavProps> = ({
                       type="password"
                       id="register__password"
                       name="password"
-                      onChange={(e) => {
-                        setRegisterDataChange({
-                          username: registerDataChange.username,
-                          email: registerDataChange.email,
-                          password: e.target.value,
-                          password2: registerDataChange.password2,
-                        });
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
-                          username: registerDataChange.username,
-                          email: registerDataChange.email,
+                          username: registrationDataChange.username,
+                          email: registrationDataChange.email,
                           password: e.target.value,
-                          password2: registerDataChange.password2,
+                          password2: registrationDataChange.password2,
                         };
 
-                        validateRegister(pwData);
+                        setRegistrationDataChange(pwData);
+                        setRegistrationErrors(validateRegistrationData(pwData));
                       }}
                     />
                   </div>
@@ -395,26 +308,21 @@ const Nav: React.FC<NavProps> = ({
                       type="password"
                       id="register__password2"
                       name="password2"
-                      onChange={(e) => {
-                        setRegisterDataChange({
-                          username: registerDataChange.username,
-                          email: registerDataChange.email,
-                          password: registerDataChange.password,
-                          password2: e.target.value,
-                        });
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
-                          username: registerDataChange.username,
-                          email: registerDataChange.email,
-                          password: registerDataChange.password,
+                          username: registrationDataChange.username,
+                          email: registrationDataChange.email,
+                          password: registrationDataChange.password,
                           password2: e.target.value,
                         };
-                        validateRegister(pwData);
+                        setRegistrationDataChange(pwData);
+                        setRegistrationErrors(validateRegistrationData(pwData));
                       }}
                     />
                   </div>
                   <div className="register-errors">
                     <ul className="register-errors__errors">
-                      {registerErrors.map((err: any, index: number) => {
+                      {registrationErrors.map((err: any, index: number) => {
                         return (
                           <li
                             key={index}
@@ -437,8 +345,8 @@ const Nav: React.FC<NavProps> = ({
                     onClick={() => {
                       setSignIn(true);
                       setSignInDataChange({
-                        email: registerDataChange.email,
-                        password: registerDataChange.password,
+                        email: registrationDataChange.email,
+                        password: registrationDataChange.password,
                       });
                     }}
                   >
