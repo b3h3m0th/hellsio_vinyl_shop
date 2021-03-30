@@ -10,6 +10,7 @@ import { musicStore } from "./stores/musicStore";
 import { languageStore } from "./stores/languageStore";
 import { loginStore } from "./stores/loginStore";
 import { checkoutStore } from "./stores/checkoutStore";
+import { adminStore } from "./stores/adminStore";
 
 require("dotenv").config({ path: "../" });
 
@@ -19,6 +20,7 @@ const stores = {
   languageStore,
   loginStore,
   checkoutStore,
+  adminStore,
 };
 
 ReactDOM.render(

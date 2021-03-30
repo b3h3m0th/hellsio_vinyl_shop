@@ -19,7 +19,8 @@ import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Checkout from "./pages/Checkout/Checkout";
 import Admin from "./pages/Admin/Admin";
-import AdminRedirect from "./components/AdminRedirect/AdminRedirect";
+import { AdminStore } from "./stores/adminStore";
+import AdminLogin from "./pages/AdminLogin/AdminLogin";
 
 const pages = {
   home: Home,
@@ -29,13 +30,15 @@ const pages = {
   productDetail: ProductDetail,
   checkout: Checkout,
   admin: Admin,
+  adminLogin: AdminLogin,
 };
 
 interface AppProps {
   languageStore?: LanguageStore;
+  adminStore?: AdminStore;
 }
 
-const App: React.FC<AppProps> = ({ languageStore }: AppProps) => {
+const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
   return (
     <div className="App">
       <Router>
@@ -88,7 +91,18 @@ const App: React.FC<AppProps> = ({ languageStore }: AppProps) => {
           {/* Admin */}
           <Route
             path={`/${languageStore?.language}/admin`}
-            component={pages.admin}
+            component={
+              adminStore?.loggedIn
+                ? pages.adminLogin
+                : () => (
+                    <Redirect to={`/${languageStore?.language}/admin-login`} />
+                  )
+            }
+          ></Route>
+
+          <Route
+            path={`/${languageStore?.language}/admin-login`}
+            component={pages.adminLogin}
           ></Route>
 
           {/* Home */}
@@ -108,4 +122,4 @@ const App: React.FC<AppProps> = ({ languageStore }: AppProps) => {
   );
 };
 
-export default inject("languageStore")(observer(App));
+export default inject("languageStore", "adminStore")(observer(App));
