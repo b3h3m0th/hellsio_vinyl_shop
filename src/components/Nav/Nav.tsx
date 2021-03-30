@@ -35,7 +35,9 @@ const Nav: React.FC<NavProps> = ({
   loginStore,
 }: NavProps) => {
   const [genres, setGenres] = useState<any[]>([]);
-  const [signIn, setSignIn] = useState<boolean>(true);
+  const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
+    true
+  );
 
   const [signInDataChange, setSignInDataChange] = useState({
     email: "",
@@ -185,7 +187,7 @@ const Nav: React.FC<NavProps> = ({
           </div>
         ) : (
           <div className="nav-modal__column sign-in-wrapper">
-            {signIn ? (
+            {signInOrRegistration ? (
               <div className="sign-in-wrapper__sign-in">
                 <Title title="Sign in" link={`/${languageStore?.language}`} />
                 <form className="sign-in-wrapper__sign-in__sign-in">
@@ -226,7 +228,7 @@ const Nav: React.FC<NavProps> = ({
                   <p
                     className="toggle-to-register"
                     onClick={() => {
-                      setSignIn(false);
+                      setSignInOrRegistration(false);
                       setRegistrationDataChange({
                         username: "",
                         email: signInDataChange.email,
@@ -343,7 +345,7 @@ const Nav: React.FC<NavProps> = ({
                   <p
                     className="toggle-to-sign-in"
                     onClick={() => {
-                      setSignIn(true);
+                      setSignInOrRegistration(true);
                       setSignInDataChange({
                         email: registrationDataChange.email,
                         password: registrationDataChange.password,
