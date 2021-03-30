@@ -12,7 +12,7 @@ import { Album } from "../../models/Album";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { LoginStore } from "../../stores/loginStore";
 import { User } from "../../models/User";
-require("dotenv").config();
+import GoogleLogin from "react-google-login";
 
 const emaillValidator = require("email-validator");
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
@@ -447,6 +447,10 @@ const Nav: React.FC<NavProps> = ({
                 </form>
               </div>
             )}
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID || ""}
+              onSuccess={(response) => console.log(response)}
+            ></GoogleLogin>
           </div>
         )}
       </div>

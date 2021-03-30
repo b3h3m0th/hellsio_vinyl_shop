@@ -11,7 +11,7 @@ import { languageStore } from "./stores/languageStore";
 import { loginStore } from "./stores/loginStore";
 import { checkoutStore } from "./stores/checkoutStore";
 
-require("dotenv").config();
+require("dotenv").config({ path: "../" });
 
 const stores = {
   burgerMenuStore,
