@@ -155,7 +155,7 @@ const Nav: React.FC<NavProps> = ({
         body: JSON.stringify({
           email: signInDataChange.email,
           password: signInDataChange.password,
-          pw: "$2a$10$wQhpGTYmyJwjxb57otpBf.ymj8alOg.mGiFgYeo9.5SApLFI/AWVm",
+          pw: "",
         }),
       };
 
@@ -317,7 +317,7 @@ const Nav: React.FC<NavProps> = ({
                     <label htmlFor="register__username">Username</label>
                     <input
                       type="text"
-                      id="username"
+                      id="register__username"
                       name="username"
                       onChange={(e) => {
                         setRegisterDataChange({
