@@ -8,9 +8,9 @@ export type RegistrationData = {
 };
 
 export const registrationErrorOptions = {
-  password_too_short: "Your Password must at least contain 8 characters",
-  password_does_not_match: "Your Passwords do not match",
-  username_too_short: "Your Username cannot be empty",
+  password_too_short: "Your password must at least contain 8 characters",
+  password_does_not_match: "Your passwords do not match",
+  username_too_short: "Your username must at least contain 8 characters",
   email_not_valid: "Please enter a valid email",
 } as const;
 
@@ -24,7 +24,7 @@ const validateRegistrationData: (
   > = [];
 
   //username
-  if (pwData.username.length < 0) {
+  if (pwData.username.length < 8) {
     errors.push(registrationErrorOptions.username_too_short);
   } else {
     errors.filter(
