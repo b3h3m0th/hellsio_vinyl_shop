@@ -19,6 +19,7 @@ import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Checkout from "./pages/Checkout/Checkout";
 import Admin from "./pages/Admin/Admin";
+import AdminRedirect from "./components/AdminRedirect/AdminRedirect";
 
 const pages = {
   home: Home,
