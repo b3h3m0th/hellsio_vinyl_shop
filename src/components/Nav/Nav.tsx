@@ -12,7 +12,6 @@ import { Album } from "../../models/Album";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { LoginStore } from "../../stores/loginStore";
 import { User } from "../../models/User";
-import GoogleLogin from "react-google-login";
 import validateRegistrationData, {
   RegistrationData,
 } from "../../validation/registration";
@@ -357,12 +356,6 @@ const Nav: React.FC<NavProps> = ({
                 </form>
               </div>
             )}
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID || ""}
-              onSuccess={(response) => console.log(response)}
-              onFailure={(error) => console.log(error)}
-              uxMode="popup"
-            ></GoogleLogin>
           </div>
         )}
       </div>
