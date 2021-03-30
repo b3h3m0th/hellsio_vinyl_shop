@@ -42,7 +42,7 @@ const validateRegistrationData: (
   }
 
   //password
-  if (pwData.password.length <= 8) {
+  if (pwData.password.length < 8) {
     errors.push(registrationErrorOptions.password_too_short);
   } else {
     errors.filter(
