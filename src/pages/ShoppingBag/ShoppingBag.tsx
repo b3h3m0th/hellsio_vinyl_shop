@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Checkout.scss";
+import "./ShoppingBag.scss";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import { LanguageStore } from "../../stores/languageStore";
@@ -43,7 +43,7 @@ const Checkout: React.FC<CheckoutProps> = ({
         <div className="checkout__payment__content">
           <Title
             title="Your shopping bag"
-            link={`/${languageStore?.language}/checkout`}
+            link={`/${languageStore?.language}/shopping-bag`}
           />
           <p className="checkout__payment__content__subtitle">
             Continue to checkout <br /> and payment process

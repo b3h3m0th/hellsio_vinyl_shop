@@ -17,7 +17,7 @@ import NewArrivals from "./pages/NewArrivals/NewArrivals";
 import Featured from "./pages/Featured/Featured";
 import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import Checkout from "./pages/Checkout/Checkout";
+import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
 import { AdminStore } from "./stores/adminStore";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
@@ -28,7 +28,7 @@ const pages = {
   featured: Featured,
   popular: Popular,
   productDetail: ProductDetail,
-  checkout: Checkout,
+  shoppingBag: ShoppingBag,
   admin: Admin,
   adminLogin: AdminLogin,
 };
@@ -63,8 +63,8 @@ const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
 
           <Route
             exact
-            path={`/${languageStore?.language}/checkout`}
-            component={pages.checkout}
+            path={`/${languageStore?.language}/shopping-bag`}
+            component={pages.shoppingBag}
           />
 
           {/* products page */}

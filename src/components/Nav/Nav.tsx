@@ -380,7 +380,7 @@ const Nav: React.FC<NavProps> = ({
               />
             </div>
             <div className="nav-icons__icon">
-              <Link to={`/${languageStore?.language}/checkout`}>
+              <Link to={`/${languageStore?.language}/shopping-bag`}>
                 <img
                   src={shoppingBagIcon}
                   alt="Hellsio shopping bag icon"

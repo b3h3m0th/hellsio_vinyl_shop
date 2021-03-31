@@ -182,7 +182,7 @@ const ProductDetail = ({ match, checkoutStore }: ProductDetailProps) => {
               </div>
               <PrimaryButton
                 label="Add to cart"
-                link="checkout"
+                link="shopping-bag"
                 icon={arrowRight}
                 onClick={() => {
                   checkoutStore?.addProduct(album!);
