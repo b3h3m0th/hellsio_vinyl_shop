@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 
 interface PrimaryButtonProps {
   label: string;
-  link: string;
+  link?: string;
   languageStore?: LanguageStore;
   icon?: any;
   submit?: boolean;

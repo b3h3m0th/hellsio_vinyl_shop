@@ -1,17 +1,26 @@
 import React from "react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import Title from "../../components/Title/Title";
-import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import "./AdminLogin.scss";
+import { AdminStore } from "../../stores/adminStore";
+import { LanguageStore } from "../../stores/languageStore";
+import { Redirect } from "react-router";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
-interface AdminLoginProps {}
+interface AdminLoginProps {
+  languageStore?: LanguageStore;
+  adminStore?: AdminStore;
+}
 
-const AdminLogin: React.FC<AdminLoginProps> = ({}: AdminLoginProps) => {
+const AdminLogin: React.FC<AdminLoginProps> = ({
+  adminStore,
+  languageStore,
+}: AdminLoginProps) => {
   const login = () => {
-    //login admin
+    adminStore?.login();
+    // window.location.href = `/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`;
   };
 
   return (
@@ -35,9 +44,14 @@ const AdminLogin: React.FC<AdminLoginProps> = ({}: AdminLoginProps) => {
           icon={arrowRight}
           onClick={() => login()}
         />
+        {adminStore?.loggedIn ? (
+          <Redirect
+            to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
+          />
+        ) : null}
       </form>
     </div>
   );
 };
 
-export default AdminLogin;
+export default inject("adminStore", "languageStore")(observer(AdminLogin));

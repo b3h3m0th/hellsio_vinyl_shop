@@ -93,7 +93,7 @@ const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
             path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
             component={
               adminStore?.loggedIn
-                ? pages.adminLogin
+                ? pages.admin
                 : () => (
                     <Redirect
                       to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
