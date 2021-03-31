@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useForceRerender = () => {
-  const [value, setValue] = useState(0);
-  return () => setValue((value) => ++value);
+export const useForceRerender: () => () => void = () => {
+  const [_, setValue] = useState<boolean>(false);
+  return (): void => setValue((v) => !v);
 };
