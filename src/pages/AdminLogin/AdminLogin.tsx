@@ -47,7 +47,6 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
           loginResponse.data.refreshToken
         );
         adminStore?.login();
-        window.location.href = `/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`;
       } catch (err) {
         console.log(err);
       }
