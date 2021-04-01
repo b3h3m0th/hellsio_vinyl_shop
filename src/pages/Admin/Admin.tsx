@@ -54,7 +54,7 @@ const Admin: React.FC<AdminProps> = ({
           </Link>
 
           <Link
-            to={`${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
+            to={`${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
             className="admin__sidenav__nav__logout"
             onClick={() => handleLogout()}
           >

@@ -3,6 +3,8 @@ import axios from "axios";
 import { deleteTokenSet, setTokenSet } from "../authorization/token";
 
 export class AdminStore {
+  //write this as function
+  // -> automatically check refresh token and request new one if needed (reduces logins)
   loggedIn: boolean = false;
 
   login(username: string, password: string) {
