@@ -15,8 +15,7 @@ const adminPages = {
 };
 
 const Admin: React.FC = () => {
-  const { path, url } = useRouteMatch();
-  console.log(path, url);
+  const { path } = useRouteMatch();
 
   const logout = () => {
     //
@@ -26,14 +25,20 @@ const Admin: React.FC = () => {
     <div className="admin">
       <div className="admin__sidenav">
         <div className="admin__sidenav__nav">
-          <Title title="Administrator" link={path} />
-          <Link to={`${path}/orders`} className="admin__sidenav__nav__link">
+          <Title
+            title="Administrator"
+            link={`${path.split("/").slice(2).join("/")}`}
+          />
+          <Link to={`${path}/orders`} className={`admin__sidenav__nav__link`}>
             Orders
           </Link>
-          <Link to={`${path}/products`} className="admin__sidenav__nav__link">
+          <Link to={`${path}/products`} className={`admin__sidenav__nav__link`}>
             Products
           </Link>
-          <Link to={`${path}/customers`} className="admin__sidenav__nav__link">
+          <Link
+            to={`${path}/customers`}
+            className={`admin__sidenav__nav__link`}
+          >
             Customers
           </Link>
 

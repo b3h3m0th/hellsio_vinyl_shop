@@ -14,9 +14,14 @@
 
     &__nav {
       text-align: left;
+
       &__link {
         margin-bottom: 10px;
         display: block;
+      }
+
+      .nav-link-active {
+        color: var(--color-red);
       }
 
       &__logout {
