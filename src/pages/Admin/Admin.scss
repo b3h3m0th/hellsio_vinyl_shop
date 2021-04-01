@@ -11,7 +11,20 @@
     justify-content: center;
     align-items: center;
     flex: 2;
-    background-color: red;
+
+    &__nav {
+      text-align: left;
+      &__link {
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      &__logout {
+        display: block;
+        margin-top: 50px;
+        color: var(--color-red);
+      }
+    }
   }
 
   &__content {
