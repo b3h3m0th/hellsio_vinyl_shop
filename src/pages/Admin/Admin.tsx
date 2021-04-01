@@ -1,15 +1,15 @@
 import React from "react";
 import "./Admin.scss";
 import { Switch, Route, useRouteMatch, Redirect, Link } from "react-router-dom";
-import axios from "axios";
+import { inject, observer } from "mobx-react";
 
 //admin pages
 import Orders from "./Orders/Orders";
 import Customers from "./Customers/Customers";
 import Products from "./Products/Products";
 import Title from "../../components/Title/Title";
-import { setTokenSet } from "../../authorization/token";
 import { AdminStore } from "../../stores/adminStore";
+import { LanguageStore } from "../../stores/languageStore";
 
 const adminPages = {
   orders: Orders,
@@ -19,28 +19,17 @@ const adminPages = {
 
 interface AdminProps {
   adminStore?: AdminStore;
+  languageStore?: LanguageStore;
 }
 
-const Admin: React.FC<AdminProps> = ({ adminStore }: AdminProps) => {
+const Admin: React.FC<AdminProps> = ({
+  adminStore,
+  languageStore,
+}: AdminProps) => {
   const { path } = useRouteMatch();
 
-  const logout = () => {
-    (async () => {
-      try {
-        const loginResponse = await axios.delete(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/logout` || ""}`,
-          { headers: { "Content-Type": "application/json" } }
-        );
-
-        setTokenSet(
-          loginResponse.data.accessToken,
-          loginResponse.data.refreshToken
-        );
-        adminStore?.login();
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+  const handleLogout: () => void = () => {
+    adminStore?.logout();
   };
 
   return (
@@ -65,9 +54,9 @@ const Admin: React.FC<AdminProps> = ({ adminStore }: AdminProps) => {
           </Link>
 
           <Link
-            to="/"
+            to={`${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
             className="admin__sidenav__nav__logout"
-            onClick={() => logout()}
+            onClick={() => handleLogout()}
           >
             Logout
           </Link>
@@ -100,4 +89,4 @@ const Admin: React.FC<AdminProps> = ({ adminStore }: AdminProps) => {
   );
 };
 
-export default Admin;
+export default inject("adminStore", "languageStore")(observer(Admin));

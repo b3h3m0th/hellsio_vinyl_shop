@@ -1,10 +1,31 @@
 import { decorate, observable, action } from "mobx";
+import axios from "axios";
+import { deleteTokenSet, setTokenSet } from "../authorization/token";
 
 export class AdminStore {
   loggedIn: boolean = false;
 
-  login() {
-    this.loggedIn = true;
+  login(username: string, password: string) {
+    (async () => {
+      try {
+        const loginResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/admin/login` || ""}`,
+          {
+            username: username,
+            password: password,
+          },
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        setTokenSet(
+          loginResponse.data.accessToken,
+          loginResponse.data.refreshToken
+        );
+        return (this.loggedIn = true);
+      } catch (err) {
+        return console.log(err);
+      }
+    })();
   }
 
   toggleLoggedIn() {
@@ -12,7 +33,19 @@ export class AdminStore {
   }
 
   logout() {
-    this.loggedIn = false;
+    (async () => {
+      try {
+        await axios.delete(
+          `${`${process.env.REACT_APP_BASE_API_URL}/admin/logout` || ""}`,
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        deleteTokenSet();
+        return (this.loggedIn = false);
+      } catch (err) {
+        return console.log(err);
+      }
+    })();
   }
 }
 

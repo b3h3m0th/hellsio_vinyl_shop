@@ -30,27 +30,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
     password: "",
   });
 
-  const login = () => {
-    (async () => {
-      try {
-        const loginResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/login` || ""}`,
-          {
-            username: loginData.username,
-            password: loginData.password,
-          },
-          { headers: { "Content-Type": "application/json" } }
-        );
-
-        setTokenSet(
-          loginResponse.data.accessToken,
-          loginResponse.data.refreshToken
-        );
-        adminStore?.login();
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+  const handleLogin: () => void = () => {
+    adminStore?.login(loginData.username, loginData.password);
   };
 
   return (
@@ -92,7 +73,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
           label="Sign In"
           link={`${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
           icon={arrowRight}
-          onClick={() => login()}
+          onClick={() => handleLogin()}
         />
         {adminStore?.loggedIn ? (
           <Redirect
