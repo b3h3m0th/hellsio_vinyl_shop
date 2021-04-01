@@ -1,12 +1,15 @@
 import React from "react";
 import "./Admin.scss";
 import { Switch, Route, useRouteMatch, Redirect, Link } from "react-router-dom";
+import axios from "axios";
 
 //admin pages
 import Orders from "./Orders/Orders";
 import Customers from "./Customers/Customers";
 import Products from "./Products/Products";
 import Title from "../../components/Title/Title";
+import { setTokenSet } from "../../authorization/token";
+import { AdminStore } from "../../stores/adminStore";
 
 const adminPages = {
   orders: Orders,
@@ -14,11 +17,30 @@ const adminPages = {
   products: Products,
 };
 
-const Admin: React.FC = () => {
+interface AdminProps {
+  adminStore?: AdminStore;
+}
+
+const Admin: React.FC<AdminProps> = ({ adminStore }: AdminProps) => {
   const { path } = useRouteMatch();
 
   const logout = () => {
-    //
+    (async () => {
+      try {
+        const loginResponse = await axios.delete(
+          `${`${process.env.REACT_APP_BASE_API_URL}/admin/logout` || ""}`,
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        setTokenSet(
+          loginResponse.data.accessToken,
+          loginResponse.data.refreshToken
+        );
+        adminStore?.login();
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   };
 
   return (

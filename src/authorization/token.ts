@@ -24,3 +24,8 @@ export const setTokenSet: (
   window.localStorage.setItem(`${storagePrefix}-access-token`, accessToken);
   window.localStorage.setItem(`${storagePrefix}-refresh-token`, refreshToken);
 };
+
+export const deleteTokenSet: () => void = () => {
+  window.localStorage.removeItem(`${storagePrefix}-access-token`);
+  window.localStorage.removeItem(`${storagePrefix}-refresh-token`);
+};
