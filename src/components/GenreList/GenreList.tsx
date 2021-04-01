@@ -18,11 +18,11 @@ interface GenresListProps {
 const GenreList = ({ title, languageStore, link }: GenresListProps) => {
   const [genres, setGenres] = useState([]);
   useEffect(() => {
-    (async () => {
-      const response = await fetch("/.netlify/functions/api/genres");
-      const genres = await response.json();
-      setGenres(() => genres);
-    })();
+    // (async () => {
+    //   const response = await fetch("/.netlify/functions/api/genres");
+    //   const genres = await response.json();
+    //   setGenres(() => genres);
+    // })();
   }, []);
 
   let genresList: any = [];

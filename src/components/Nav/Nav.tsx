@@ -60,22 +60,22 @@ const Nav: React.FC<NavProps> = ({
   const register = () => {
     if (registrationErrors.length - 1 > 0) return;
 
-    (async () => {
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: registrationDataChange.username,
-          email: registrationDataChange.email,
-          password: registrationDataChange.password,
-          pw: process.env.HASHED_ADMIN_PASSWORD,
-        }),
-      };
+    // (async () => {
+    //   const options = {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       username: registrationDataChange.username,
+    //       email: registrationDataChange.email,
+    //       password: registrationDataChange.password,
+    //       pw: process.env.HASHED_ADMIN_PASSWORD,
+    //     }),
+    //   };
 
-      const response = await fetch("/.netlify/functions/api/users", options);
-      const result = await response.json();
-      console.log(result);
-    })();
+    //   const response = await fetch("/.netlify/functions/api/users", options);
+    //   const result = await response.json();
+    //   console.log(result);
+    // })();
   };
 
   const login = () => {
