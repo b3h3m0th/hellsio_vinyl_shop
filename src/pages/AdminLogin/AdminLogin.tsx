@@ -67,6 +67,9 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
                 password: e.target.value,
               })
             }
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+              e.key === "Enter" ? handleLogin() : () => void 0
+            }
           />
         </div>
         <PrimaryButton

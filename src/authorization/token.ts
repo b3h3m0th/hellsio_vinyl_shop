@@ -37,3 +37,20 @@ export const deleteAccessToken: () => void = () => {
 export const deleteRefreshToken: () => void = () => {
   window.localStorage.removeItem(`${storagePrefix}-refresh-token`);
 };
+
+export const getAccessToken: () => void = () => {
+  return window.localStorage.getItem(`${storagePrefix}-access-token`) || "";
+};
+
+export const getRefreshToken: () => string = () => {
+  return window.localStorage.getItem(`${storagePrefix}-refresh-token`) || "";
+};
+
+export const getTokenSet: () => TokenSet = () => {
+  return {
+    accessToken:
+      window.localStorage.getItem(`${storagePrefix}-access-token`) || "",
+    refreshToken:
+      window.localStorage.getItem(`${storagePrefix}-refresh-token`) || "",
+  };
+};
