@@ -38,7 +38,7 @@ export const deleteRefreshToken: () => void = () => {
   window.localStorage.removeItem(`${storagePrefix}-refresh-token`);
 };
 
-export const getAccessToken: () => void = () => {
+export const getAccessToken: () => string = () => {
   return window.localStorage.getItem(`${storagePrefix}-access-token`) || "";
 };
 
