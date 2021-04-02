@@ -29,3 +29,11 @@ export const deleteTokenSet: () => void = () => {
   window.localStorage.removeItem(`${storagePrefix}-access-token`);
   window.localStorage.removeItem(`${storagePrefix}-refresh-token`);
 };
+
+export const deleteAccessToken: () => void = () => {
+  window.localStorage.removeItem(`${storagePrefix}-access-token`);
+};
+
+export const deleteRefreshToken: () => void = () => {
+  window.localStorage.removeItem(`${storagePrefix}-refresh-token`);
+};
