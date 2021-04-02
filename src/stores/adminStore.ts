@@ -53,8 +53,6 @@ export class AdminStore {
           }
         );
 
-        console.log(authResponse);
-
         if (authResponse.status === 403) {
           const tokenResponse = await axios.post(
             `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,

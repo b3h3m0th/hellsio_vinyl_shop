@@ -7,7 +7,9 @@ interface GenreCheckBoxProps {
   label: string;
 }
 
-const GenreCheckBox = ({ label }: GenreCheckBoxProps) => {
+const GenreCheckBox: React.FC<GenreCheckBoxProps> = ({
+  label,
+}: GenreCheckBoxProps) => {
   const [checked, setChecked] = useState(false);
 
   return (
@@ -22,8 +24,7 @@ const GenreCheckBox = ({ label }: GenreCheckBoxProps) => {
         className="genre-checkbox__container__checkbox"
         type="checkbox"
         checked={checked}
-        onChange={(e) => {
-          console.log(e);
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setChecked(!checked);
         }}
       />
