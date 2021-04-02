@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./Orders.scss";
-import fetchOrders from "./orderx";
+import fetchOrders from "./fetchOrders";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<any>();
 
   useEffect(() => {
-    setOrders(fetchOrders());
-  }, [orders, setOrders]);
+    (async () => {
+      setOrders(await fetchOrders());
+    })();
+  }, []);
   return (
     <div className="admin-orders">
-      <div>{orders ? orders : "Loading"}</div>
+      <div>{orders ? `${JSON.stringify(orders)}` : "Loading..."}</div>
     </div>
   );
 };
