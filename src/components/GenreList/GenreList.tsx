@@ -16,7 +16,7 @@ interface GenresListProps {
 }
 
 const GenreList = ({ title, languageStore, link }: GenresListProps) => {
-  const [genres, setGenres] = useState([]);
+  const [genres] = useState([]);
   useEffect(() => {
     // (async () => {
     //   const response = await fetch("/.netlify/functions/api/genres");

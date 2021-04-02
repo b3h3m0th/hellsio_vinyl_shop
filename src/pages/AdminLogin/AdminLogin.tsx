@@ -6,8 +6,6 @@ import "./AdminLogin.scss";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
 import { Redirect } from "react-router";
-import axios from "axios";
-import { setTokenSet } from "../../authorization/token";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
