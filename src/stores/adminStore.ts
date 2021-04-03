@@ -51,25 +51,25 @@ export class AdminStore {
           }
         );
 
-        if (authResponse.status === 403) {
-          const tokenResponse = await axios.post(
-            `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
-            {
-              token: refreshToken,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          setAdminAccessToken(tokenResponse.data.accessToken);
-        }
+        console.log(authResponse);
 
         this.loggedIn = true;
       } catch (err) {
         this.loggedIn = false;
+        const tokenResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+          {
+            token: refreshToken,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setAdminAccessToken(tokenResponse.data.accessToken);
+
         return console.log(err);
       }
     })();

@@ -63,6 +63,10 @@ const Nav: React.FC<NavProps> = ({
   };
 
   useEffect(() => {
+    userStore?.isLoggedIn();
+  }, [userStore]);
+
+  useEffect(() => {
     (async () => {
       const response = await fetch("/.netlify/functions/api/genres");
       const genres = await response.json();
@@ -119,7 +123,7 @@ const Nav: React.FC<NavProps> = ({
             );
           })}
         </div>
-        {userStore?.isLoggedIn() ? (
+        {userStore?.loggedIn ? (
           <div className="nav-modal__column profile-wrapper">
             <Title
               title={

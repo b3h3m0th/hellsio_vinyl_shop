@@ -62,25 +62,23 @@ export class UserStore {
 
         console.log(authResponse);
 
-        if (authResponse.status === 403) {
-          const tokenResponse = await axios.post(
-            `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
-            {
-              token: refreshToken,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          setUserAccessToken(tokenResponse.data.accessToken);
-        }
-
         this.loggedIn = true;
       } catch (err) {
         this.loggedIn = false;
+        const tokenResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
+          {
+            token: refreshToken,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setUserAccessToken(tokenResponse.data.accessToken);
+
         return console.log(err);
       }
     })();
