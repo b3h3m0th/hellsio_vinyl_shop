@@ -1,13 +1,13 @@
 import axios from "axios";
 import {
-  getAccessToken,
-  getRefreshToken,
-  setAccessToken,
+  getAdminAccessToken,
+  getAdminRefreshToken,
+  setAdminAccessToken,
 } from "../../../authorization/token";
 
 const fetchOrders = async (): Promise<any> => {
-  const accessToken = getAccessToken();
-  const refreshToken = getRefreshToken();
+  const accessToken = getAdminAccessToken();
+  const refreshToken = getAdminRefreshToken();
   let response;
   try {
     response = await axios.get(
@@ -31,7 +31,7 @@ const fetchOrders = async (): Promise<any> => {
       }
     );
 
-    setAccessToken(tokenResponse.data.accessToken);
+    setAdminAccessToken(tokenResponse.data.accessToken);
     return await fetchOrders();
   }
 };

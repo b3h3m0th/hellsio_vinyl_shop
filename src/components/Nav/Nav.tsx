@@ -10,8 +10,7 @@ import { LanguageStore } from "../../stores/languageStore";
 import Title from "../../components/Title/Title";
 import { Album } from "../../models/Album";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import { LoginStore } from "../../stores/loginStore";
-import { User } from "../../models/User";
+import { UserStore } from "../../stores/userStore";
 import validateRegistrationData, {
   RegistrationData,
 } from "../../validation/registration";
@@ -25,13 +24,13 @@ const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 interface NavProps {
   burgerMenuStore?: BurgerMenuStore;
   languageStore?: LanguageStore;
-  loginStore?: LoginStore;
+  userStore?: UserStore;
 }
 
 const Nav: React.FC<NavProps> = ({
   burgerMenuStore,
   languageStore,
-  loginStore,
+  userStore,
 }: NavProps) => {
   const [genres, setGenres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
@@ -57,54 +56,10 @@ const Nav: React.FC<NavProps> = ({
     Array<RegistrationData>
   >([]);
 
-  const register = () => {
-    if (registrationErrors.length - 1 > 0) return;
+  const handleRegister = () => {};
 
-    // (async () => {
-    //   const options = {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       username: registrationDataChange.username,
-    //       email: registrationDataChange.email,
-    //       password: registrationDataChange.password,
-    //       pw: process.env.HASHED_ADMIN_PASSWORD,
-    //     }),
-    //   };
-
-    //   const response = await fetch("/.netlify/functions/api/users", options);
-    //   const result = await response.json();
-    //   console.log(result);
-    // })();
-  };
-
-  const login = () => {
-    (async () => {
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: signInDataChange.email,
-          password: signInDataChange.password,
-          pw: "",
-        }),
-      };
-
-      const response = await fetch(
-        "/.netlify/functions/api/users/login",
-        options
-      );
-      const result = await response.json();
-      if (result.user) {
-        const user: User = result.user;
-        console.log(user);
-        loginStore?.setLoggedIn(true);
-        loginStore?.setUser(user);
-        setSignInDataChange({ email: "", password: "" });
-      } else {
-        return;
-      }
-    })();
+  const handleLogin = () => {
+    userStore?.login(signInDataChange.email, signInDataChange.password);
   };
 
   useEffect(() => {
@@ -164,21 +119,20 @@ const Nav: React.FC<NavProps> = ({
             );
           })}
         </div>
-        {loginStore?.loggedIn ? (
+        {userStore?.isLoggedIn() ? (
           <div className="nav-modal__column profile-wrapper">
             <Title
               title={
-                loginStore.user
-                  ? loginStore?.user?.username.toString()
+                userStore.user
+                  ? userStore?.user?.username.toString()
                   : "Profile"
               }
               link="/"
             />
             <Link
-              to={`/${languageStore?.language}`}
+              to={`/`}
               onClick={() => {
-                loginStore.logout();
-                loginStore.user = null;
+                userStore.logout();
               }}
             >
               Logout
@@ -222,7 +176,7 @@ const Nav: React.FC<NavProps> = ({
                     label="Sign in"
                     link=""
                     icon={arrowRight}
-                    onClick={login}
+                    onClick={() => handleLogin()}
                   />
                   <p
                     className="toggle-to-register"
@@ -339,7 +293,7 @@ const Nav: React.FC<NavProps> = ({
                     label="Register"
                     link=""
                     icon={arrowRight}
-                    onClick={register}
+                    onClick={() => handleRegister}
                   />
                   <p
                     className="toggle-to-sign-in"
@@ -413,5 +367,5 @@ const Nav: React.FC<NavProps> = ({
 export default inject(
   "burgerMenuStore",
   "languageStore",
-  "loginStore"
+  "userStore"
 )(observer(Nav));

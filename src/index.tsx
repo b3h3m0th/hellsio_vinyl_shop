@@ -8,7 +8,7 @@ import { Provider as StoreProvider } from "mobx-react";
 import { burgerMenuStore } from "./stores/burgerMenuStore";
 import { musicStore } from "./stores/musicStore";
 import { languageStore } from "./stores/languageStore";
-import { loginStore } from "./stores/loginStore";
+import { userStore } from "./stores/userStore";
 import { checkoutStore } from "./stores/checkoutStore";
 import { adminStore } from "./stores/adminStore";
 
@@ -18,7 +18,7 @@ const stores = {
   burgerMenuStore,
   musicStore,
   languageStore,
-  loginStore,
+  userStore,
   checkoutStore,
   adminStore,
 };

@@ -1,24 +1,24 @@
 import React, { ComponentType } from "react";
-import { Redirect, Route, RouteComponentProps } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import { LoginStore } from "../../stores/loginStore";
+import { UserStore } from "../../stores/userStore";
 
 interface ProtectedRoutesProps {
   component: ComponentType<any>;
-  loginStore?: LoginStore;
+  userStore?: UserStore;
   path: string;
 }
 
 const ProtectedRoute: React.FC<ProtectedRoutesProps> = ({
   component,
-  loginStore,
+  userStore,
   path,
 }: ProtectedRoutesProps) => {
-  return loginStore?.loggedIn ? (
+  return userStore?.loggedIn ? (
     <Route path={path} component={component} />
   ) : (
     <Route path="/" component={() => <Redirect to="/" />} />
   );
 };
 
-export default inject("loginStore")(observer(ProtectedRoute));
+export default inject("userStore")(observer(ProtectedRoute));

@@ -1,32 +1,41 @@
 import { decorate, observable, action } from "mobx";
+import { User } from "../models/User";
 import axios from "axios";
 import {
-  deleteAdminTokenSet,
-  getAdminAccessToken,
-  getAdminRefreshToken,
-  setAdminAccessToken,
-  setAdminTokenSet,
+  deleteUserTokenSet,
+  getUserAccessToken,
+  getUserRefreshToken,
+  setUserAccessToken,
+  setUserTokenSet,
 } from "../authorization/token";
 
-export class AdminStore {
+export class UserStore {
   loggedIn: boolean = false;
 
-  login(username: string, password: string) {
+  user: User = {
+    username: "Profile",
+    email: "",
+    registrationDate: new Date(1),
+  };
+
+  login(email: string, password: string) {
     (async () => {
       try {
         const loginResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/login` || ""}`,
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/login` || ""}`,
           {
-            username: username,
+            email: email,
             password: password,
           },
           { headers: { "Content-Type": "application/json" } }
         );
 
-        setAdminTokenSet(
+        setUserTokenSet(
           loginResponse.data.accessToken,
           loginResponse.data.refreshToken
         );
+
+        console.log(loginResponse);
 
         this.isLoggedIn();
       } catch (err) {
@@ -36,13 +45,13 @@ export class AdminStore {
   }
 
   isLoggedIn: () => boolean = () => {
-    const accessToken = getAdminAccessToken();
-    const refreshToken = getAdminRefreshToken();
+    const accessToken = getUserAccessToken();
+    const refreshToken = getUserRefreshToken();
 
     (async () => {
       try {
         const authResponse = await axios.get(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/` || ""}`,
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/` || ""}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -51,9 +60,11 @@ export class AdminStore {
           }
         );
 
+        console.log(authResponse);
+
         if (authResponse.status === 403) {
           const tokenResponse = await axios.post(
-            `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+            `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
             {
               token: refreshToken,
             },
@@ -64,7 +75,7 @@ export class AdminStore {
             }
           );
 
-          setAdminAccessToken(tokenResponse.data.accessToken);
+          setUserAccessToken(tokenResponse.data.accessToken);
         }
 
         this.loggedIn = true;
@@ -76,6 +87,10 @@ export class AdminStore {
     return this.loggedIn;
   };
 
+  setUser = (user: User) => {
+    this.user = user;
+  };
+
   toggleLoggedIn() {
     this.loggedIn = !this.loggedIn;
   }
@@ -84,11 +99,11 @@ export class AdminStore {
     (async () => {
       try {
         await axios.delete(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/logout` || ""}`,
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/logout` || ""}`,
           { headers: { "Content-Type": "application/json" } }
         );
 
-        deleteAdminTokenSet();
+        deleteUserTokenSet();
         return (this.loggedIn = false);
       } catch (err) {
         return console.log(err);
@@ -97,11 +112,14 @@ export class AdminStore {
   }
 }
 
-decorate(AdminStore, {
+decorate(UserStore, {
   loggedIn: observable,
   login: action,
+  isLoggedIn: action,
   toggleLoggedIn: action,
+  user: observable,
+  setUser: action,
   logout: action,
 });
 
-export const adminStore = new AdminStore();
+export const userStore = new UserStore();
