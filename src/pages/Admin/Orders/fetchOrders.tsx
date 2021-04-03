@@ -1,18 +1,40 @@
 import axios from "axios";
-import { getAccessToken } from "../../../authorization/token";
+import {
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+} from "../../../authorization/token";
 
 const fetchOrders = async (): Promise<any> => {
   const accessToken = getAccessToken();
+  const refreshToken = getRefreshToken();
+  let response;
   try {
-    const response = await axios.get(
+    response = await axios.get(
       `${process.env.REACT_APP_BASE_API_URL}/admin/orders`,
       {
         headers: { authorization: `Bearer ${accessToken}` },
       }
     );
+
     return response.data;
   } catch (err) {
-    return console.log(err);
+    const tokenResponse = await axios.post(
+      `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+      {
+        token: refreshToken,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(tokenResponse);
+
+    setAccessToken(tokenResponse.data.accessToken);
+    return await fetchOrders();
   }
 };
 

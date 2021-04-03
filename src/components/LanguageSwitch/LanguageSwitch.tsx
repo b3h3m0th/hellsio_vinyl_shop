@@ -9,12 +9,13 @@ interface LanguageSwitchProps {
   languageStore?: LanguageStore;
 }
 
-const LanguageSwitch = ({ languageStore }: LanguageSwitchProps) => {
-  const languageLinks: any = [];
+const LanguageSwitch: React.FC<LanguageSwitchProps> = ({
+  languageStore,
+}: LanguageSwitchProps) => {
   return (
     <div className="language-switch">
-      {languages.forEach((la) => {
-        languageLinks.push(
+      {languages.map((la: any) => {
+        return (
           <Link
             to={`/${la}`}
             key={la}
@@ -31,7 +32,6 @@ const LanguageSwitch = ({ languageStore }: LanguageSwitchProps) => {
           </Link>
         );
       })}
-      {languageLinks}
     </div>
   );
 };
