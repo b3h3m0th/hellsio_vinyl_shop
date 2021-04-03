@@ -31,8 +31,6 @@ const fetchOrders = async (): Promise<any> => {
       }
     );
 
-    console.log(tokenResponse);
-
     setAccessToken(tokenResponse.data.accessToken);
     return await fetchOrders();
   }

@@ -17,7 +17,7 @@ const Loader: React.FC<LoaderProps> = ({ children }: LoaderProps) => {
     <div className="loader">
       {children}
       {[...new Array(dots)].map((_: any, i: number) => (
-        <span>.</span>
+        <span key={i}>.</span>
       ))}
     </div>
   );
