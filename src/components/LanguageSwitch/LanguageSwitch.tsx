@@ -16,7 +16,7 @@ const LanguageSwitch = ({ languageStore }: LanguageSwitchProps) => {
       {languages.forEach((la) => {
         languageLinks.push(
           <Link
-            to={`/${la}/newarrivals`}
+            to={`/${la}`}
             key={la}
             className={
               languageStore?.language === la
