@@ -53,7 +53,7 @@ const Nav: React.FC<NavProps> = ({
   });
 
   const [registrationErrors, setRegistrationErrors]: any[] = useState<
-    Array<RegistrationData>
+    Array<any>
   >([]);
 
   const handleRegister = () => {};
