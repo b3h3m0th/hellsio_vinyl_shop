@@ -37,7 +37,7 @@ export class UserStore {
 
         console.log(loginResponse);
 
-        this.isLoggedIn();
+        await this.isLoggedIn();
       } catch (err) {
         return console.log(err);
       }
