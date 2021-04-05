@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Nav.scss";
 import { inject, observer } from "mobx-react";
 import NavItem from "./NavItem/NavItem";
@@ -61,6 +61,12 @@ const Nav: React.FC<NavProps> = ({
   const handleLogin = () => {
     userStore?.login(signInDataChange.email, signInDataChange.password);
   };
+
+  useEffect(() => {
+    (async (): Promise<void> => {
+      await userStore?.isLoggedIn();
+    })();
+  }, [userStore]);
 
   return (
     <>

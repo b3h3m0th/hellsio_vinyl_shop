@@ -37,7 +37,7 @@ export class UserStore {
 
         console.log(loginResponse);
 
-        await this.isLoggedIn();
+        return await this.isLoggedIn();
       } catch (err) {
         return console.log(err);
       }
@@ -78,7 +78,7 @@ export class UserStore {
 
       setUserAccessToken(tokenResponse.data.accessToken);
 
-      return await this.isLoggedIn();
+      await this.isLoggedIn();
     }
     return this.loggedIn;
   };

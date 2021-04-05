@@ -47,7 +47,6 @@ const App: React.FC<AppProps> = ({
 }: AppProps) => {
   useEffect(() => {
     (async (): Promise<void> => {
-      await userStore?.isLoggedIn();
       await adminStore?.isLoggedIn();
     })();
   }, [userStore, adminStore]);
