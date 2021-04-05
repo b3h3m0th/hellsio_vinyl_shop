@@ -28,51 +28,49 @@ export class AdminStore {
           loginResponse.data.refreshToken
         );
 
-        this.isLoggedIn();
+        await this.isLoggedIn();
       } catch (err) {
         return console.log(err);
       }
     })();
   }
 
-  isLoggedIn: () => boolean = () => {
+  isLoggedIn = async (): Promise<any> => {
     const accessToken = getAdminAccessToken();
     const refreshToken = getAdminRefreshToken();
 
-    (async () => {
-      try {
-        const authResponse = await axios.get(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/` || ""}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        console.log(authResponse);
-
-        this.loggedIn = true;
-      } catch (err) {
-        this.loggedIn = false;
-        const tokenResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
-          {
-            token: refreshToken,
+    try {
+      const authResponse = await axios.get(
+        `${`${process.env.REACT_APP_BASE_API_URL}/admin/` || ""}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${accessToken}`,
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        }
+      );
 
-        setAdminAccessToken(tokenResponse.data.accessToken);
+      console.log(authResponse);
 
-        return console.log(err);
-      }
-    })();
+      this.loggedIn = true;
+    } catch (err) {
+      this.loggedIn = false;
+      const tokenResponse = await axios.post(
+        `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+        {
+          token: refreshToken,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setAdminAccessToken(tokenResponse.data.accessToken);
+
+      return await this.isLoggedIn();
+    }
     return this.loggedIn;
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 import {
   BrowserRouter as Router,
@@ -21,6 +21,7 @@ import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
 import { AdminStore } from "./stores/adminStore";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
+import { UserStore } from "./stores/userStore";
 
 const pages = {
   home: Home,
@@ -36,9 +37,20 @@ const pages = {
 interface AppProps {
   languageStore?: LanguageStore;
   adminStore?: AdminStore;
+  userStore?: UserStore;
 }
 
-const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
+const App: React.FC<AppProps> = ({
+  languageStore,
+  adminStore,
+  userStore,
+}: AppProps) => {
+  useEffect(() => {
+    (async (): Promise<void> => {
+      await userStore?.isLoggedIn();
+      await adminStore?.isLoggedIn();
+    })();
+  }, [userStore, adminStore]);
   return (
     <div className="App">
       <Router>
@@ -92,7 +104,7 @@ const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
           <Route
             path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
             component={
-              adminStore?.isLoggedIn()
+              adminStore?.loggedIn
                 ? pages.admin
                 : () => (
                     <Redirect
@@ -124,4 +136,8 @@ const App: React.FC<AppProps> = ({ languageStore, adminStore }: AppProps) => {
   );
 };
 
-export default inject("languageStore", "adminStore")(observer(App));
+export default inject(
+  "languageStore",
+  "adminStore",
+  "userStore"
+)(observer(App));

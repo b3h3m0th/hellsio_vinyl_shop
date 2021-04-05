@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Nav.scss";
 import { inject, observer } from "mobx-react";
 import NavItem from "./NavItem/NavItem";
@@ -32,7 +32,7 @@ const Nav: React.FC<NavProps> = ({
   languageStore,
   userStore,
 }: NavProps) => {
-  const [genres, setGenres] = useState<any[]>([]);
+  const [genres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
     true
   );
@@ -61,18 +61,6 @@ const Nav: React.FC<NavProps> = ({
   const handleLogin = () => {
     userStore?.login(signInDataChange.email, signInDataChange.password);
   };
-
-  useEffect(() => {
-    userStore?.isLoggedIn();
-  }, [userStore]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("/.netlify/functions/api/genres");
-      const genres = await response.json();
-      setGenres(() => genres);
-    })();
-  }, []);
 
   return (
     <>

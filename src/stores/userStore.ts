@@ -44,44 +44,42 @@ export class UserStore {
     })();
   }
 
-  isLoggedIn: () => boolean = () => {
+  isLoggedIn = async (): Promise<any> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
 
-    (async () => {
-      try {
-        const authResponse = await axios.get(
-          `${`${process.env.REACT_APP_BASE_API_URL}/user/` || ""}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        console.log(authResponse);
-
-        this.loggedIn = true;
-      } catch (err) {
-        this.loggedIn = false;
-        const tokenResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
-          {
-            token: refreshToken,
+    try {
+      const authResponse = await axios.get(
+        `${`${process.env.REACT_APP_BASE_API_URL}/user/` || ""}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${accessToken}`,
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        }
+      );
 
-        setUserAccessToken(tokenResponse.data.accessToken);
+      console.log(authResponse);
 
-        return console.log(err);
-      }
-    })();
+      this.loggedIn = true;
+    } catch (err) {
+      this.loggedIn = false;
+      const tokenResponse = await axios.post(
+        `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
+        {
+          token: refreshToken,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setUserAccessToken(tokenResponse.data.accessToken);
+
+      return await this.isLoggedIn();
+    }
     return this.loggedIn;
   };
 
