@@ -8,6 +8,7 @@ import {
   setUserAccessToken,
   setUserTokenSet,
 } from "../authorization/token";
+import { register } from "../serviceWorker";
 
 export class UserStore {
   loggedIn: boolean = false;
@@ -38,6 +39,32 @@ export class UserStore {
         console.log(loginResponse);
 
         return await this.isLoggedIn();
+      } catch (err) {
+        return console.log(err);
+      }
+    })();
+  }
+
+  register(
+    username: string,
+    email: string,
+    password: string,
+    password2: string
+  ) {
+    (async () => {
+      try {
+        const registerResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/register` || ""}`,
+          {
+            username: username,
+            email: email,
+            password: password,
+            password2: password2,
+          },
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        console.log(registerResponse);
       } catch (err) {
         return console.log(err);
       }
@@ -110,6 +137,7 @@ export class UserStore {
 
 decorate(UserStore, {
   loggedIn: observable,
+  register: register,
   login: action,
   isLoggedIn: action,
   toggleLoggedIn: action,

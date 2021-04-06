@@ -56,7 +56,14 @@ const Nav: React.FC<NavProps> = ({
     Array<any>
   >([]);
 
-  const handleRegister = () => {};
+  const handleRegister = () => {
+    userStore?.register(
+      registrationDataChange.username,
+      registrationDataChange.email,
+      registrationDataChange.password,
+      registrationDataChange.password2
+    );
+  };
 
   const handleLogin = () => {
     userStore?.login(signInDataChange.email, signInDataChange.password);
@@ -291,7 +298,7 @@ const Nav: React.FC<NavProps> = ({
                     label="Register"
                     link=""
                     icon={arrowRight}
-                    onClick={() => handleRegister}
+                    onClick={() => handleRegister()}
                   />
                   <p
                     className="toggle-to-sign-in"
