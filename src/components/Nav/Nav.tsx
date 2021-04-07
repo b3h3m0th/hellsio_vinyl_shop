@@ -56,6 +56,8 @@ const Nav: React.FC<NavProps> = ({
     Array<any>
   >([]);
 
+  const [loginErrors, setLoginErrors]: any[] = useState<Array<any>>([]);
+
   const handleRegister = () => {
     userStore?.register(
       registrationDataChange.username,
