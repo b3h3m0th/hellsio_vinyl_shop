@@ -61,7 +61,10 @@ const Nav: React.FC<NavProps> = ({
       registrationDataChange.username,
       registrationDataChange.email,
       registrationDataChange.password,
-      registrationDataChange.password2
+      registrationDataChange.password2,
+      setRegistrationErrors,
+      registrationErrors,
+      setSignInOrRegistration
     );
   };
 

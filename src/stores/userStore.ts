@@ -49,26 +49,33 @@ export class UserStore {
     username: string,
     email: string,
     password: string,
-    password2: string
+    password2: string,
+    setErrorList: React.Dispatch<React.SetStateAction<Array<any>>>,
+    errorList: any[],
+    setSignInOrRegistration: React.Dispatch<React.SetStateAction<boolean>>
   ) {
-    (async () => {
-      try {
-        const registerResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/user/register` || ""}`,
-          {
-            username: username,
-            email: email,
-            password: password,
-            password2: password2,
-          },
-          { headers: { "Content-Type": "application/json" } }
-        );
+    if (errorList.length === 0) {
+      (async () => {
+        try {
+          const registerResponse = await axios.post(
+            `${`${process.env.REACT_APP_BASE_API_URL}/user/register` || ""}`,
+            {
+              username: username,
+              email: email,
+              password: password,
+              password2: password2,
+            },
+            { headers: { "Content-Type": "application/json" } }
+          );
 
-        console.log(registerResponse);
-      } catch (err) {
-        return console.log(err);
-      }
-    })();
+          console.log(registerResponse);
+          //first handlelogin
+          // await this.login(email, password);
+        } catch (err) {
+          setErrorList((prev: any) => [err.response.data.error, ...prev]);
+        }
+      })();
+    }
   }
 
   isLoggedIn = async (): Promise<any> => {

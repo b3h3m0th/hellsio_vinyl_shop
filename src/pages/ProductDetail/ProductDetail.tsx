@@ -19,7 +19,10 @@ interface ProductDetailProps {
   checkoutStore?: CheckoutStore;
 }
 
-const ProductDetail = ({ match, checkoutStore }: ProductDetailProps) => {
+const ProductDetail: React.FC<ProductDetailProps> = ({
+  match,
+  checkoutStore,
+}: ProductDetailProps) => {
   // const [albumData, setAlbumData] = useState();
   // (async () => {
   //   const response = await fetch("/.netlify/functions/api/albums");
