@@ -156,6 +156,26 @@
           cursor: pointer;
           font-size: 0.9em;
         }
+
+        .sign-in-errors {
+          width: 100%;
+          color: white;
+          margin-bottom: 40px;
+
+          &__errors {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+
+            &__error {
+              margin: 0;
+              padding: 0;
+              margin: 5px 0;
+              font-size: 0.9em;
+              color: var(--color-red);
+            }
+          }
+        }
       }
     }
 

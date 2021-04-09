@@ -71,7 +71,11 @@ const Nav: React.FC<NavProps> = ({
   };
 
   const handleLogin = () => {
-    userStore?.login(signInDataChange.email, signInDataChange.password);
+    userStore?.login(
+      signInDataChange.email,
+      signInDataChange.password,
+      setLoginErrors
+    );
   };
 
   useEffect(() => {
@@ -182,6 +186,20 @@ const Nav: React.FC<NavProps> = ({
                       }
                     />
                   </div>
+                  <div className="sign-in-errors">
+                    <ul className="sign-in-errors__errors">
+                      {loginErrors.map((err: any, index: number) => {
+                        return (
+                          <li
+                            key={index}
+                            className="sign-in-errors__errors__error"
+                          >
+                            {err}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                   <PrimaryButton
                     label="Sign in"
                     link=""
@@ -192,6 +210,7 @@ const Nav: React.FC<NavProps> = ({
                     className="toggle-to-register"
                     onClick={() => {
                       setSignInOrRegistration(false);
+                      setLoginErrors([]);
                       setRegistrationDataChange({
                         username: "",
                         email: signInDataChange.email,

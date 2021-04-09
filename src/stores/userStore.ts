@@ -19,7 +19,11 @@ export class UserStore {
     registrationDate: new Date(1),
   };
 
-  login(email: string, password: string) {
+  login(
+    email: string,
+    password: string,
+    setErrorList: React.Dispatch<React.SetStateAction<Array<any>>>
+  ) {
     (async () => {
       try {
         const loginResponse = await axios.post(
@@ -40,6 +44,7 @@ export class UserStore {
 
         return await this.isLoggedIn();
       } catch (err) {
+        setErrorList((prev: any) => [err.response.data.error, ...prev]);
         return console.log(err);
       }
     })();
