@@ -74,6 +74,7 @@ const Nav: React.FC<NavProps> = ({
     userStore?.login(
       signInDataChange.email,
       signInDataChange.password,
+      loginErrors,
       setLoginErrors
     );
   };
@@ -159,7 +160,7 @@ const Nav: React.FC<NavProps> = ({
                 <Title title="Sign in" link={`/${languageStore?.language}`} />
                 <form className="sign-in-wrapper__sign-in__sign-in">
                   <div className="sign-in-wrapper__sign-in__sign-in__email">
-                    <label htmlFor="sign-in__email">Email</label>
+                    <label htmlFor="sign-in__email">Email/Username</label>
                     <input
                       type="email"
                       id="sign-in__email"

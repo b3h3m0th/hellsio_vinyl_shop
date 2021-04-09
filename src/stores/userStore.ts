@@ -22,32 +22,39 @@ export class UserStore {
   login(
     email: string,
     password: string,
+    errorList: any[],
     setErrorList: React.Dispatch<React.SetStateAction<Array<any>>>
   ) {
-    (async () => {
-      try {
-        const loginResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/user/login` || ""}`,
-          {
-            email: email,
-            password: password,
-          },
-          { headers: { "Content-Type": "application/json" } }
-        );
+    if (errorList.length === 0) {
+      (async () => {
+        try {
+          const loginResponse = await axios.post(
+            `${`${process.env.REACT_APP_BASE_API_URL}/user/login` || ""}`,
+            {
+              email: email,
+              password: password,
+            },
+            { headers: { "Content-Type": "application/json" } }
+          );
 
-        setUserTokenSet(
-          loginResponse.data.accessToken,
-          loginResponse.data.refreshToken
-        );
+          setUserTokenSet(
+            loginResponse.data.accessToken,
+            loginResponse.data.refreshToken
+          );
 
-        console.log(loginResponse);
+          console.log(loginResponse);
 
-        return await this.isLoggedIn();
-      } catch (err) {
-        setErrorList((prev: any) => [err.response.data.error, ...prev]);
-        return console.log(err);
-      }
-    })();
+          return await this.isLoggedIn();
+        } catch (err) {
+          setErrorList((prev: any) => [err.response.data.error, ...prev]);
+
+          setTimeout(() => {
+            setErrorList([]);
+          }, 4000);
+          return console.log(err);
+        }
+      })();
+    }
   }
 
   register(
@@ -78,6 +85,10 @@ export class UserStore {
           // await this.login(email, password);
         } catch (err) {
           setErrorList((prev: any) => [err.response.data.error, ...prev]);
+
+          setTimeout(() => {
+            setErrorList([]);
+          }, 4000);
         }
       })();
     }
