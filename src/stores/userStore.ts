@@ -81,8 +81,6 @@ export class UserStore {
           );
 
           console.log(registerResponse);
-          //first handlelogin
-          // await this.login(email, password);
         } catch (err) {
           setErrorList((prev: any) => [err.response.data.error, ...prev]);
 
@@ -142,11 +140,17 @@ export class UserStore {
   }
 
   logout() {
+    const refreshToken = getUserRefreshToken();
     (async () => {
       try {
         await axios.delete(
           `${`${process.env.REACT_APP_BASE_API_URL}/user/logout` || ""}`,
-          { headers: { "Content-Type": "application/json" } }
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: refreshToken,
+            },
+          }
         );
 
         deleteUserTokenSet();
