@@ -28,8 +28,15 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
     password: "",
   });
 
+  const [loginErrors, setLoginErros] = useState<Array<string>>([]);
+
   const handleLogin: () => void = () => {
-    adminStore?.login(loginData.username, loginData.password);
+    adminStore?.login(
+      loginData.username,
+      loginData.password,
+      loginErrors,
+      setLoginErros
+    );
   };
 
   return (
@@ -69,6 +76,20 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
               e.key === "Enter" ? handleLogin() : () => void 0
             }
           />
+        </div>
+        <div className="admin-login__form__errors">
+          <ul className="admin-login__form__errors__errors">
+            {loginErrors.map((err: any, index: number) => {
+              return (
+                <li
+                  key={index}
+                  className="admin-login__form__errors__errors__error"
+                >
+                  {err}
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <PrimaryButton
           label="Sign In"

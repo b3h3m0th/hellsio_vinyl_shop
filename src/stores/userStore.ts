@@ -81,6 +81,7 @@ export class UserStore {
           );
 
           console.log(registerResponse);
+          setSignInOrRegistration((prev) => !prev);
         } catch (err) {
           setErrorList((prev: any) => [err.response.data.error, ...prev]);
 

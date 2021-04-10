@@ -146,10 +146,6 @@
           }
         }
 
-        &__password {
-          margin-bottom: 40px;
-        }
-
         .toggle-to-register {
           color: var(--color-red);
           text-align: center;
@@ -160,7 +156,7 @@
         .sign-in-errors {
           width: 100%;
           color: white;
-          margin-bottom: 40px;
+          margin-bottom: 20px;
 
           &__errors {
             padding: 0;
@@ -224,7 +220,7 @@
         .register-errors {
           width: 100%;
           color: white;
-          margin-bottom: 40px;
+          margin-bottom: 20px;
 
           &__errors {
             padding: 0;

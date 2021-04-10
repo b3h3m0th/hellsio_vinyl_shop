@@ -11,28 +11,40 @@ import {
 export class AdminStore {
   loggedIn: boolean = false;
 
-  login(username: string, password: string) {
-    (async () => {
-      try {
-        const loginResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/admin/login` || ""}`,
-          {
-            username: username,
-            password: password,
-          },
-          { headers: { "Content-Type": "application/json" } }
-        );
+  login(
+    username: string,
+    password: string,
+    errorList: string[],
+    setErrorList: React.Dispatch<React.SetStateAction<Array<any>>>
+  ) {
+    if (errorList.length === 0) {
+      (async () => {
+        try {
+          const loginResponse = await axios.post(
+            `${`${process.env.REACT_APP_BASE_API_URL}/admin/login` || ""}`,
+            {
+              username: username,
+              password: password,
+            },
+            { headers: { "Content-Type": "application/json" } }
+          );
 
-        setAdminTokenSet(
-          loginResponse.data.accessToken,
-          loginResponse.data.refreshToken
-        );
+          setAdminTokenSet(
+            loginResponse.data.accessToken,
+            loginResponse.data.refreshToken
+          );
 
-        await this.isLoggedIn();
-      } catch (err) {
-        return console.log(err);
-      }
-    })();
+          await this.isLoggedIn();
+        } catch (err) {
+          setErrorList((prev: any) => [err.response.data.error, ...prev]);
+
+          setTimeout(() => {
+            setErrorList([]);
+          }, 4000);
+          return console.log(err);
+        }
+      })();
+    }
   }
 
   isLoggedIn = async (): Promise<any> => {
