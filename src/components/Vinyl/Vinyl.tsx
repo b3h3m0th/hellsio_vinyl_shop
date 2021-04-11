@@ -10,7 +10,11 @@ interface VinylProps {
   id: string;
 }
 
-const Vinyl = ({ image, languageStore, id }: VinylProps) => {
+const Vinyl: React.FC<VinylProps> = ({
+  image,
+  languageStore,
+  id,
+}: VinylProps) => {
   return (
     <Link to={`/${languageStore?.language}/products/${id}`}>
       <div className="vinyl-container">

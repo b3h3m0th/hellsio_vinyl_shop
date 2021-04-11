@@ -1,17 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./NewArrivals.scss";
 import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import { Album } from "../../models/Album";
+import axios from "axios";
+import toBase64 from "../../util/toBase64";
 const albums = require("../../data/products.json");
 
 const NewArrivals: React.FC = () => {
-  let albumVinyls: any = [];
-  albums.forEach((album: Album, index: number) => {
-    const vinylImage = require(`../../assets/img/vinyl_covers/${album.img}`);
-    albumVinyls.push(<Vinyl id={album.id} key={index} image={vinylImage} />);
-  });
+  const [albums, setAlbums] = useState<Array<any>>([]);
+  const [errors, setErrors] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const albumsResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_API_URL}/product`
+        );
+
+        console.log(albumsResponse.data);
+        setAlbums(albumsResponse.data);
+      } catch (error) {}
+    })();
+  }, []);
 
   useEffect(() => {
     gsap.from(".vinyl-container", 1, {
@@ -29,7 +41,15 @@ const NewArrivals: React.FC = () => {
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
-            {albumVinyls}
+            {albums.map((album: any, i: number) => {
+              return (
+                <Vinyl
+                  image={`data:image/png;base64,${toBase64(album.cover.data)}`}
+                  id={album.code}
+                  key={i}
+                ></Vinyl>
+              );
+            })}
           </div>
         </div>
       </div>
