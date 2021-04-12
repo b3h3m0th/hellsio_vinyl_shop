@@ -5,10 +5,10 @@ import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import axios from "axios";
 import toBase64 from "../../util/toBase64";
+import Loader from "../../components/Loader/Loader";
 
 const NewArrivals: React.FC = () => {
-  const [albums, setAlbums] = useState<Array<any>>([]);
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [albums, setAlbums] = useState<Array<any> | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -18,7 +18,11 @@ const NewArrivals: React.FC = () => {
         );
 
         console.log(albumsResponse.data);
-        setAlbums(albumsResponse.data);
+        setAlbums(
+          albumsResponse.data
+            .sort((a: any, b: any) => b.added_date - a.added_date)
+            .reverse()
+        );
       } catch (error) {}
     })();
   }, []);
@@ -39,15 +43,21 @@ const NewArrivals: React.FC = () => {
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
-            {albums.map((album: any, i: number) => {
-              return (
-                <Vinyl
-                  image={`data:image/png;base64,${toBase64(album.cover.data)}`}
-                  id={album.code}
-                  key={i}
-                ></Vinyl>
-              );
-            })}
+            {albums ? (
+              albums.map((album: any, i: number) => {
+                return (
+                  <Vinyl
+                    image={`data:image/png;base64,${toBase64(
+                      album.cover.data
+                    )}`}
+                    id={album.code}
+                    key={i}
+                  ></Vinyl>
+                );
+              })
+            ) : (
+              <Loader>Loading Products</Loader>
+            )}
           </div>
         </div>
       </div>
