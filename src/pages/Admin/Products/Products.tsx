@@ -15,8 +15,12 @@ const Products: React.FC = () => {
   return (
     <div className="admin-products">
       {products ? (
-        products.map((album: any, index: number) => {
-          return <div className="admin-products__album">{album.name}</div>;
+        products.map((album: any, i: number) => {
+          return (
+            <div className="admin-products__album" key={i}>
+              {album.name}
+            </div>
+          );
         })
       ) : (
         <Loader>Loading</Loader>
