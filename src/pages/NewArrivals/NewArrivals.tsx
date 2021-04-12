@@ -3,10 +3,8 @@ import "./NewArrivals.scss";
 import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
-import { Album } from "../../models/Album";
 import axios from "axios";
 import toBase64 from "../../util/toBase64";
-const albums = require("../../data/products.json");
 
 const NewArrivals: React.FC = () => {
   const [albums, setAlbums] = useState<Array<any>>([]);

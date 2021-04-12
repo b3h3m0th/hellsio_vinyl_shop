@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Orders.scss";
-import fetchOrders from "./fetchOrders";
+import fetchData from "../fetchData";
 import Loader from "../../../components/Loader/Loader";
 
 const Orders: React.FC = () => {
@@ -8,7 +8,7 @@ const Orders: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      setOrders(await fetchOrders());
+      setOrders(await fetchData(`orders`));
     })();
   }, []);
   return (

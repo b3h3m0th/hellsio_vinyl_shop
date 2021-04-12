@@ -3,15 +3,19 @@ import {
   getAdminAccessToken,
   getAdminRefreshToken,
   setAdminAccessToken,
-} from "../../../authorization/token";
+} from "../../authorization/token";
 
-const fetchOrders = async (): Promise<any> => {
+export const adminEnpoints = ["orders", "products", "customers"] as const;
+
+export type AdminDataEntpoint = typeof adminEnpoints[number];
+
+const fetchData = async (endpoint: AdminDataEntpoint): Promise<any> => {
   const accessToken = getAdminAccessToken();
   const refreshToken = getAdminRefreshToken();
   let response;
   try {
     response = await axios.get(
-      `${process.env.REACT_APP_BASE_API_URL}/admin/orders`,
+      `${process.env.REACT_APP_BASE_API_URL}/admin/${endpoint}`,
       {
         headers: { authorization: `Bearer ${accessToken}` },
       }
@@ -32,8 +36,8 @@ const fetchOrders = async (): Promise<any> => {
     );
 
     setAdminAccessToken(tokenResponse.data.accessToken);
-    return await fetchOrders();
+    return await fetchData(endpoint);
   }
 };
 
-export default fetchOrders;
+export default fetchData;
