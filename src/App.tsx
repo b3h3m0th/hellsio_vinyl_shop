@@ -95,7 +95,7 @@ const App: React.FC<AppProps> = ({
           {/* product detail page */}
           <Route
             exact
-            path={`/${languageStore?.language}/products/:albumID`}
+            path={`/${languageStore?.language}/products/:albumCode`}
             component={pages.productDetail}
           ></Route>
 
