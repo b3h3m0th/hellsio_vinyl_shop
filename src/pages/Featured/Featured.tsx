@@ -1,17 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Featured.scss";
 import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
-import Vinyl from "../../components/Vinyl/Vinyl";
 import { Album } from "../../models/Album";
-const albums = require("../../data/products.json");
+import { inject, observer } from "mobx-react";
+import { ProductStore } from "../../stores/productStore";
+import Vinyl from "../../components/Vinyl/Vinyl";
+import Loader from "../../components/Loader/Loader";
+import toBase64 from "../../util/toBase64";
 
-const Featured = () => {
-  let albumVinyls: any = [];
-  albums.forEach((album: Album, index: number) => {
-    const vinylImage = require(`../../assets/img/vinyl_covers/${album.img}`);
-    albumVinyls.push(<Vinyl id={album.id} key={index} image={vinylImage} />);
-  });
+interface FeaturedProps {
+  productStore?: ProductStore;
+}
+
+const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
+  const [albums, setAlbums] = useState<Array<any> | undefined>();
+
+  useEffect((): void => {
+    (async (): Promise<void> => {
+      setAlbums(await productStore?.fetchAll());
+    })();
+  }, [productStore]);
 
   useEffect(() => {
     gsap.from(".vinyl-container", 1, {
@@ -29,7 +38,21 @@ const Featured = () => {
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
-            {albumVinyls}
+            {albums ? (
+              albums.map((album: any, i: number) => {
+                return (
+                  <Vinyl
+                    image={`data:image/png;base64,${toBase64(
+                      album.cover.data
+                    )}`}
+                    id={album.code}
+                    key={i}
+                  ></Vinyl>
+                );
+              })
+            ) : (
+              <Loader>Loading Products</Loader>
+            )}
           </div>
         </div>
       </div>
@@ -37,4 +60,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default inject("productStore")(observer(Featured));

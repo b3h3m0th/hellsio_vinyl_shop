@@ -11,6 +11,7 @@ import { languageStore } from "./stores/languageStore";
 import { userStore } from "./stores/userStore";
 import { checkoutStore } from "./stores/checkoutStore";
 import { adminStore } from "./stores/adminStore";
+import { productStore } from "./stores/productStore";
 
 require("dotenv").config({ path: "../" });
 
@@ -21,6 +22,7 @@ const stores = {
   userStore,
   checkoutStore,
   adminStore,
+  productStore,
 };
 
 ReactDOM.render(

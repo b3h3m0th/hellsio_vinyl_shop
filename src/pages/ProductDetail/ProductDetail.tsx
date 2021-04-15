@@ -1,87 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import gsap from "gsap";
 import { inject, observer } from "mobx-react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { Link } from "react-router-dom";
-import { languageStore } from "../../stores/languageStore";
 import { toJS } from "mobx";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import { CheckoutStore } from "../../stores/checkoutStore";
-import { fetchAlbum, fetchAlbums } from "./fetchData";
 import toBase64 from "../../util/toBase64";
+import { ProductStore } from "../../stores/productStore";
+import ArrowButton from "../../components/ArrowButton/ArrowButton";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
+
+export type AlbumData = { currentAlbum: any; followingAlbums: Array<any> };
 
 interface ProductDetailProps {
   match?: any;
   checkoutStore?: CheckoutStore;
+  productStore?: ProductStore;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
   match,
   checkoutStore,
+  productStore,
 }: ProductDetailProps) => {
-  const [albums, setAlbums] = useState<Array<any>>([]);
-  const [currentAlbum, setCurrentAlbum] = useState<any>();
+  const [albumData, setAlbumData] = useState<AlbumData>();
+  const [is404, setIs404] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
-      const albums = await fetchAlbums();
-      const currentAlbum = albums.find(
-        (album: any) => album.code === match.params.albumCode
+      const currentAlbum = await productStore?.fetch(
+        `${match.params.albumCode}`
       );
 
-      console.log(
-        albums.find((album: any) => album.code === match.params.albumCode)
+      if (currentAlbum === -1) setIs404(true);
+
+      const parsedAlbums: any[] = toJS(await productStore?.fetchAll());
+      let startIndex: number = parsedAlbums.findIndex(
+        (product: any) => product.code === currentAlbum.code
       );
-      setAlbums(albums);
-      setCurrentAlbum(currentAlbum);
+      const followingProductsCount = 3;
+      let followingAlbums: any[] = [];
+
+      for (let i = 0; i < followingProductsCount; i++) {
+        if (startIndex + i + 1 >= parsedAlbums.length) startIndex = 0;
+        followingAlbums.push(parsedAlbums[startIndex + i]);
+      }
+
+      console.log("following: ", followingAlbums);
+
+      setAlbumData({
+        currentAlbum: currentAlbum,
+        followingAlbums: followingAlbums,
+      });
     })();
-  }, [match]);
+  }, []);
 
-  console.log("currentAlbum: ", currentAlbum);
-  console.log("albums: ", albums);
-
-  // console.log(albums);
-
-  // let album = albums.find((album) => album.code === match.params.albumCode);
-  // album = currentAlbum;
-
-  // let tracks: any = [];
-
-  // // album?.tracklist.forEach((track, index) => {
-  // //   tracks.push(
-  // //     <p key={index} className="tracks_track">
-  // //       {(index + 1).toString().length > 1 ? index + 1 : "0" + (index + 1)} -{" "}
-  // //       {track.title}
-  // //     </p>
-  // //   );
-  // // });
-
-  // //following albums
-  // let followingAlbums: any = [];
-  // for (let i = 1; i < 4; i++) {
-  //   let currentAlbumIndex = albums.indexOf(album!, 0) + i;
-  //   if (currentAlbumIndex > albums.length - 1)
-  //     currentAlbumIndex = albums.length - 1 - i;
-
-  //   let currentAlbum = albums[currentAlbumIndex];
-  //   let currentAlbumCover = `data:image/png;base64,${toBase64(
-  //     album?.cover.data
-  //   )}`;
-  //   followingAlbums.push(
-  //     <div
-  //       className={`product-detail__nav__next-albums__album`}
-  //       id={`next-albums-${currentAlbum?.code}`}
-  //       key={`next album` + currentAlbum?.code}
-  //       style={{ color: "white" }}
-  //     >
-  //       <img src={currentAlbumCover} key={i} alt="Hellsio album cover" />
-  //     </div>
-  //   );
-  // }
+  console.log("following ", albumData?.followingAlbums);
 
   // let linkNextAlbumIndex = albums.indexOf(album!, 0) + 1;
   // if (linkNextAlbumIndex > albums.length - 1) linkNextAlbumIndex = 0;
@@ -131,106 +109,146 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       y: 100,
       ease: "power4",
     });
-  });
+  }, []);
 
   return (
     <div className="product-detail">
-      <div className="product-detail__album-title">
-        <h2 className="product-detail__album-title__title">
-          {currentAlbum?.name}
-        </h2>
-        <h3 className="product-detail__album-title__subtitle">
-          {currentAlbum?.artist}
-        </h3>
-      </div>
-      <div className="product-detail__nav">
-        <div className="product-detail__nav__buttons">
-          <Link to={"AAA"}>
-            <button className="button-next">
-              <img src={arrowRightSmall} alt="Hellsio arrow right small" />
-            </button>
-          </Link>
-          <Link to={"AAA"}>
-            <button className="button-previous">
-              <img src={arrowRightSmall} alt="Hellsio arrow right small" />
-            </button>
+      {is404 ? (
+        <div className="is404">
+          <div className="is404__header">
+            <span className="is404__header__404">404</span>
+            <span className="is404__header__content">
+              Woah, you have travelled beyond the horizon...
+            </span>
+          </div>
+          <Link to="/" className="is404__back-button">
+            <ArrowButton
+              label="Back into the Ocean"
+              className="is404__back-button__button"
+            />
           </Link>
         </div>
-        <div className="product-detail__nav__current-album">
-          <img
-            src={`data:image/png;base64,${toBase64(currentAlbum?.cover.data)}`}
-            alt="Hellsio album cover"
-          />
-        </div>
-        <div className="product-detail__nav__next-albums">
-          {"FOLLOWING ALBUMS"}
-        </div>
-      </div>
-      <div className="product-detail__background-container">
-        <img
-          src={`data:image/png;base64,${toBase64(currentAlbum?.cover.data)}`}
-          alt={`Hellsio album cover ${currentAlbum?.name}`}
-          className="product-detail__background-container__img"
-        />
-      </div>
-      <div className="product-detail__content">
-        <div className="product-detail__content__wrapper">
-          <div className="album-detail">
-            <div className="album-detail__tracklist">
-              <h4>Tracklist</h4>
-              <div className="album-detail__tracklist__tracks">
-                {currentAlbum?.tracks.forEach((track: any, index: any) => {
-                  return (
-                    <p key={index} className="tracks_track">
-                      {(index + 1).toString().length > 1
-                        ? index + 1
-                        : "0" + (index + 1)}{" "}
-                      - {track.title}
-                    </p>
-                  );
-                })}
-                {currentAlbum?.tracks?.map((track: any) => {
-                  return <div>{track}</div>;
-                })}
-              </div>
+      ) : (
+        <>
+          <div className="product-detail__album-title">
+            <h2 className="product-detail__album-title__title">
+              {albumData?.currentAlbum?.name}
+            </h2>
+            <h3 className="product-detail__album-title__subtitle">
+              {albumData?.currentAlbum?.artist}
+            </h3>
+          </div>
+          <div className="product-detail__nav">
+            <div className="product-detail__nav__buttons">
+              <Link to={"AAA"}>
+                <button className="button-next">
+                  <img src={arrowRightSmall} alt="Hellsio arrow right small" />
+                </button>
+              </Link>
+              <Link to={"AAA"}>
+                <button className="button-previous">
+                  <img src={arrowRightSmall} alt="Hellsio arrow right small" />
+                </button>
+              </Link>
             </div>
-            <div className="album-detail__price">
-              <div className="album-detail__price__content">
-                <div className="album-detail__price__content__left">
-                  <p className="album-detail__price__content__price">$ 0</p>
-                  <QuantityPicker label="Quantity" maxValue={5} />
+            <div className="product-detail__nav__current-album">
+              <img
+                src={`data:image/png;base64,${toBase64(
+                  albumData?.currentAlbum?.cover.data
+                )}`}
+                alt="Hellsio album cover"
+              />
+            </div>
+            <div className="product-detail__nav__next-albums">
+              {albumData?.followingAlbums.map((album: any, i: number) => {
+                return (
+                  <div
+                    className="product-detail__nav__next-albums__album"
+                    key={i}
+                  >
+                    <img
+                      src={`data:image/png;base64,${toBase64(
+                        album?.cover.data
+                      )}`}
+                      alt="Hellsio album cover"
+                      key={i}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="product-detail__background-container">
+            <img
+              src={`data:image/png;base64,${toBase64(
+                albumData?.currentAlbum?.cover.data
+              )}`}
+              alt={`Hellsio album cover ${albumData?.currentAlbum?.name}`}
+              className="product-detail__background-container__img"
+            />
+          </div>
+          <div className="product-detail__content">
+            <div className="product-detail__content__wrapper">
+              <div className="album-detail">
+                <div className="album-detail__tracklist">
+                  <h4>Tracklist</h4>
+                  <div className="album-detail__tracklist__tracks">
+                    {albumData?.currentAlbum?.tracks?.map(
+                      (track: any, index: any) => {
+                        return (
+                          <p key={index} className="tracks_track">
+                            {(index + 1).toString().length > 1
+                              ? index + 1
+                              : "0" + (index + 1)}{" "}
+                            - {track.title}
+                          </p>
+                        );
+                      }
+                    )}
+                  </div>
                 </div>
-                <div className="album-detail__price__content__right">
-                  <p className="album-detail__price__content__right__per-item">
-                    per item
-                  </p>
-                  <DropDownPicker
-                    label="Format"
-                    options={[{ id: "0", price: 4.0 }]}
-                    id="product-detail__drop-down"
-                    onChange={(e) => null}
+                <div className="album-detail__price">
+                  <div className="album-detail__price__content">
+                    <div className="album-detail__price__content__left">
+                      <p className="album-detail__price__content__price">
+                        $ {albumData?.currentAlbum?.price}
+                      </p>
+                      <QuantityPicker label="Quantity" maxValue={5} />
+                    </div>
+                    <div className="album-detail__price__content__right">
+                      <p className="album-detail__price__content__right__per-item">
+                        per item
+                      </p>
+                      <DropDownPicker
+                        label="Format"
+                        options={[{ id: "0", price: 4.0 }]}
+                        id="product-detail__drop-down"
+                        onChange={(e) => null}
+                      />
+                    </div>
+                  </div>
+                  <PrimaryButton
+                    label="Add to cart"
+                    link="shopping-bag"
+                    icon={arrowRight}
+                    onClick={() => {
+                      checkoutStore?.addProduct(albumData?.currentAlbum!);
+                      console.log(albumData?.currentAlbum);
+                      console.log(toJS(checkoutStore?.products));
+                    }}
                   />
                 </div>
               </div>
-              <PrimaryButton
-                label="Add to cart"
-                link="shopping-bag"
-                icon={arrowRight}
-                onClick={() => {
-                  checkoutStore?.addProduct(currentAlbum!);
-                  console.log(currentAlbum);
-                  console.log(toJS(checkoutStore?.products));
-                }}
-              />
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
 
 export default inject(
   "languageStore",
-  "checkoutStore"
+  "checkoutStore",
+  "productStore"
 )(observer(ProductDetail));
