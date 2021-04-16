@@ -6,7 +6,6 @@ export class ProductStore {
 
   setProducts: (products: Array<any>) => void = (products: Array<any>) => {
     this.products = products;
-    console.log(this.products);
   };
 
   fetchAll = async (): Promise<any> => {

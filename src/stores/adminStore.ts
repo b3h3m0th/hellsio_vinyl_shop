@@ -62,8 +62,6 @@ export class AdminStore {
         }
       );
 
-      console.log(authResponse);
-
       this.loggedIn = true;
     } catch (err) {
       this.loggedIn = false;

@@ -80,7 +80,6 @@ export class UserStore {
             { headers: { "Content-Type": "application/json" } }
           );
 
-          console.log(registerResponse);
           setSignInOrRegistration((prev) => !prev);
         } catch (err) {
           setErrorList((prev: any) => [err.response.data.error, ...prev]);
@@ -107,8 +106,6 @@ export class UserStore {
           },
         }
       );
-
-      console.log(authResponse);
 
       this.loggedIn = true;
     } catch (err) {

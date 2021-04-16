@@ -65,8 +65,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     })();
   }, [match]);
 
-  console.log("following ", JSON.stringify(albumData?.followingAlbums));
-
   const albums = productStore?.products;
   let linkNextAlbumIndex: number =
     albums!.findIndex((album) => album.code === albumData?.currentAlbum.code) +
@@ -115,9 +113,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       ease: "power4",
     });
   }, []);
-
-  console.log(linkNextAlbumIndex);
-  console.log(linkPreviousAlbumIndex);
 
   return (
     <div className="product-detail">
@@ -241,8 +236,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     icon={arrowRight}
                     onClick={() => {
                       checkoutStore?.addProduct(albumData?.currentAlbum!);
-                      console.log(albumData?.currentAlbum);
-                      console.log(toJS(checkoutStore?.products));
                     }}
                   />
                 </div>

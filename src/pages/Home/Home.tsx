@@ -71,17 +71,13 @@ const Home = ({ languageStore }: HomeProps) => {
   });
 
   useEffect(() => {
-    (function setHeroVinylHeight() {
+    (() => {
       const vinylContainer = document.getElementById("home-vinyl-container");
       const heroExploreButton = document.getElementById("hero-explore-button");
       const heroTitle = document.querySelector("#hero-banner-title");
       const heroSubtitle = document.getElementById("hero-banner-subtitle");
       const heroArrow = document.getElementById("hero-banner-arrow");
-      // console.log(vinylContainer);
-      // console.log(vinylContainer?.clientHeight);
-      // console.log(window.getComputedStyle(heroTitle!, null).fontSize);
-      // console.log(heroSubtitle!.clientHeight);
-      // console.log(heroArrow!.clientHeight);
+
       vinylContainer!.style.height = `${
         parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
         heroSubtitle!.clientHeight +
@@ -152,6 +148,9 @@ const Home = ({ languageStore }: HomeProps) => {
           className="hero-explore-button"
           id="hero-explore-button"
           type="button"
+          onClick={() =>
+            (window.location.href = `${languageStore?.language}/newarrivals`)
+          }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
