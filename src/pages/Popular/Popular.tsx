@@ -3,7 +3,6 @@ import "./Popular.scss";
 import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
-import { Album } from "../../models/Album";
 import Loader from "../../components/Loader/Loader";
 import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";

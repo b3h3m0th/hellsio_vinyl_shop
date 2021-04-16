@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Featured.scss";
 import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
-import { Album } from "../../models/Album";
 import { inject, observer } from "mobx-react";
 import { ProductStore } from "../../stores/productStore";
 import Vinyl from "../../components/Vinyl/Vinyl";

@@ -11,6 +11,7 @@ import { CheckoutStore } from "../../stores/checkoutStore";
 import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import ArrowButton from "../../components/ArrowButton/ArrowButton";
+import { LanguageStore } from "../../stores/languageStore";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -20,12 +21,14 @@ interface ProductDetailProps {
   match?: any;
   checkoutStore?: CheckoutStore;
   productStore?: ProductStore;
+  languageStore?: LanguageStore;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
   match,
   checkoutStore,
   productStore,
+  languageStore,
 }: ProductDetailProps) => {
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
@@ -38,44 +41,46 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 
       if (currentAlbum === -1) setIs404(true);
 
-      const parsedAlbums: any[] = toJS(await productStore?.fetchAll());
-      let startIndex: number = parsedAlbums.findIndex(
-        (product: any) => product.code === currentAlbum.code
-      );
+      const parsedAlbums: any[] =
+        productStore?.products.length !== 0
+          ? productStore?.products
+          : toJS(await productStore?.fetchAll());
+      let startIndex: number =
+        parsedAlbums.findIndex(
+          (product: any) => product.code === currentAlbum.code
+        ) + 1;
       const followingProductsCount = 3;
       let followingAlbums: any[] = [];
 
       for (let i = 0; i < followingProductsCount; i++) {
-        if (startIndex + i + 1 >= parsedAlbums.length) startIndex = 0;
-        followingAlbums.push(parsedAlbums[startIndex + i]);
+        followingAlbums.push(
+          parsedAlbums[(startIndex + i) % parsedAlbums.length]
+        );
       }
-
-      console.log("following: ", followingAlbums);
 
       setAlbumData({
         currentAlbum: currentAlbum,
         followingAlbums: followingAlbums,
       });
     })();
-  }, []);
+  }, [match]);
 
-  console.log("following ", albumData?.followingAlbums);
+  console.log("following ", JSON.stringify(albumData?.followingAlbums));
 
-  // let linkNextAlbumIndex = albums.indexOf(album!, 0) + 1;
-  // if (linkNextAlbumIndex > albums.length - 1) linkNextAlbumIndex = 0;
-  // let linkPreviousAlbumIndex = albums.indexOf(album!, 0) - 1;
-  // if (linkPreviousAlbumIndex < 0) linkPreviousAlbumIndex = albums.length - 1;
-  // // console.log(linkNextAlbumIndex);
-  // // console.log(linkPreviousAlbumIndex);
+  const albums = productStore?.products;
+  let linkNextAlbumIndex: number =
+    albums!.findIndex((album) => album.code === albumData?.currentAlbum.code) +
+    1;
+  if (linkNextAlbumIndex > albums!.length - 1) linkNextAlbumIndex = 0;
+  let linkPreviousAlbumIndex: number = linkNextAlbumIndex - 2;
+  if (linkPreviousAlbumIndex < 0) linkPreviousAlbumIndex = albums!.length - 1;
 
-  // const linkNext = `/${languageStore.language}/products/${albums[linkNextAlbumIndex]?.code}`;
-  // const linkPrevious = `/${languageStore.language}/products/${albums[linkPreviousAlbumIndex]?.code}`;
-
-  // const [selectedFormat, setSelectedFormat] = useState("7-vinyl");
-
-  // const handleFormatChange = (e: any) => {
-  //   setSelectedFormat(e.target.value);
-  // };
+  const linkNext = `/${languageStore?.language}/products/${
+    albums![linkNextAlbumIndex]?.code
+  }`;
+  const linkPrevious = `/${languageStore?.language}/products/${
+    albums![linkPreviousAlbumIndex]?.code
+  }`;
 
   useEffect(() => {
     gsap.from(".product-detail__background-container", 0.5, {
@@ -111,6 +116,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     });
   }, []);
 
+  console.log(linkNextAlbumIndex);
+  console.log(linkPreviousAlbumIndex);
+
   return (
     <div className="product-detail">
       {is404 ? (
@@ -140,12 +148,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
           </div>
           <div className="product-detail__nav">
             <div className="product-detail__nav__buttons">
-              <Link to={"AAA"}>
+              <Link to={linkNext}>
                 <button className="button-next">
                   <img src={arrowRightSmall} alt="Hellsio arrow right small" />
                 </button>
               </Link>
-              <Link to={"AAA"}>
+              <Link to={linkPrevious}>
                 <button className="button-previous">
                   <img src={arrowRightSmall} alt="Hellsio arrow right small" />
                 </button>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { decorate, observable, action } from "mobx";
 
 export class ProductStore {
-  products: Array<any> = [""];
+  products: Array<any> = [];
 
   setProducts: (products: Array<any>) => void = (products: Array<any>) => {
     this.products = products;
