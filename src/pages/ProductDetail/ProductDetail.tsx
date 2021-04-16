@@ -45,7 +45,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         productStore?.products.length !== 0
           ? productStore?.products
           : toJS(await productStore?.fetchAll());
-      let startIndex: number =
+      const startIndex: number =
         parsedAlbums.findIndex(
           (product: any) => product.code === currentAlbum.code
         ) + 1;
@@ -73,7 +73,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     1;
   if (linkNextAlbumIndex > albums!.length - 1) linkNextAlbumIndex = 0;
   let linkPreviousAlbumIndex: number = linkNextAlbumIndex - 2;
-  if (linkPreviousAlbumIndex < 0) linkPreviousAlbumIndex = albums!.length - 1;
+  if (linkPreviousAlbumIndex < 0) linkPreviousAlbumIndex = albums!.length - 2;
 
   const linkNext = `/${languageStore?.language}/products/${
     albums![linkNextAlbumIndex]?.code
