@@ -130,6 +130,18 @@ const Home: React.FC<HomeProps> = ({
         x: 45,
         ease: "power4",
       });
+      gsap.fromTo(
+        ".hero-explore-button",
+        0.5,
+        {
+          x: 0,
+        },
+        {
+          delay: 2.4,
+          x: -45,
+          ease: "power4",
+        }
+      );
     }
 
     const vinylContainer = document.getElementById("home-vinyl-container");
