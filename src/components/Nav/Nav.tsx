@@ -8,19 +8,16 @@ import { Link } from "react-router-dom";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
 import { LanguageStore } from "../../stores/languageStore";
 import Title from "../../components/Title/Title";
-import { Album } from "../../models/Album";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { UserStore } from "../../stores/userStore";
 import validateRegistrationData, {
   RegistrationData,
 } from "../../validation/registration";
 import { ProductStore } from "../../stores/productStore";
-import { toJS } from "mobx";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const shoppingBagIcon = require("../../assets/icons/shopping_bag/shopping_bag_web_red.png");
-const albumData = require("../../data/products.json");
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 interface NavProps {
@@ -126,12 +123,12 @@ const Nav: React.FC<NavProps> = ({
         </div>
         <div className="nav-modal__column">
           <Title title="Popular" link="popular" />
-          {albumData.map((album: any, index: number) => {
+          {navAlbums?.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
                 <Link
                   key={index}
-                  to={`/${languageStore?.language}/products/${album.id}`}
+                  to={`/${languageStore?.language}/products/${album.code}`}
                 >
                   {album.name} - {album.artist}
                 </Link>
