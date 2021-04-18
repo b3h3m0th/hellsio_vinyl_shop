@@ -9,11 +9,6 @@ import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
 import axios from "axios";
 import toBase64 from "../../util/toBase64";
 
-//vinyls
-const gods_of_violence = require("../../assets/img/vinyl_covers/Gods_of_Violence-Kreator.jpg");
-const berserker = require("../../assets/img/vinyl_covers/Berserker-Amon_Amarth.jpeg");
-const the_infernal_pathway = require("../../assets/img/vinyl_covers/The_Infernal_Pathway-1349.jpg");
-
 interface HomeProps {
   languageStore?: LanguageStore;
 }
