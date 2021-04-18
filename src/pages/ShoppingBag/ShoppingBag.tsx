@@ -9,6 +9,7 @@ import { CheckoutStore } from "../../stores/checkoutStore";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import gsap from "gsap";
+import toBase64 from "../../util/toBase64";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -41,10 +42,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     <div className="checkout">
       <div className="checkout__payment">
         <div className="checkout__payment__content">
-          <Title
-            title="Your shopping bag"
-            link={`/${languageStore?.language}/shopping-bag`}
-          />
+          <Title title="Your shopping bag" link={`shopping-bag`} />
           <p className="checkout__payment__content__subtitle">
             Continue to checkout <br /> and payment process
           </p>
@@ -79,12 +77,11 @@ const Checkout: React.FC<CheckoutProps> = ({
       <div className="checkout__products">
         <div className="checkout__products__wrapper">
           {toJS(checkoutStore?.products)?.map((p: any, index) => {
-            const albumCover = require(`../../assets/img/vinyl_covers/${p.img}`);
             return (
               <div key={index} className="checkout__products__wrapper__product">
                 <img
                   className="checkout__products__wrapper__product__album-cover"
-                  src={albumCover}
+                  src={`data:image/png;base64,${toBase64(p.cover.data)}`}
                   alt="Hellsio album cover"
                 />
                 <div className="checkout__products__wrapper__product__name">
@@ -101,13 +98,13 @@ const Checkout: React.FC<CheckoutProps> = ({
                 <div className="checkout__products__wrapper__product__format">
                   <DropDownPicker
                     label="Format"
-                    options={p.formates}
+                    options={[{ id: "nope", price: p.price }]}
                     onChange={(e) => handleFormatChange(e, index)}
                   />
                 </div>
                 <div className="checkout__products__wrapper__product__price">
                   <div className="checkout__products__wrapper__product__price__price">
-                    $ {p.formates[0].price}
+                    $ {p.price}
                   </div>
                   <div className="checkout__products__wrapper__product__price__per-item">
                     per item

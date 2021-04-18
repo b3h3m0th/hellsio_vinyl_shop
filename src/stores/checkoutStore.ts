@@ -1,21 +1,22 @@
 import { decorate, observable, action } from "mobx";
-import { Album } from "../models/Album";
 
 export class CheckoutStore {
-  products: Album[] = [];
+  products: any[] = [];
 
-  setProducts = (products: Album[]) => {
+  setProducts = (products: any[]) => {
     this.products = products;
   };
 
-  addProduct = (product: Album) => {
+  addProduct = (product: any) => {
     this.products.push(product);
   };
 
   removeProduct = (index: number) => {
-    try {
-      this.products.splice(index, 1);
-    } catch (e) {}
+    this.products.splice(index, 1);
+  };
+
+  clear = () => {
+    this.products = [];
   };
 }
 
