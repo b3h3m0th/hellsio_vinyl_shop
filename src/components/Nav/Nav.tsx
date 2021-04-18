@@ -57,6 +57,7 @@ const Nav: React.FC<NavProps> = ({
     Array<any>
   >([]);
   const [loginErrors, setLoginErrors]: any[] = useState<Array<any>>([]);
+  const navAlbumsCount = 7;
   const [navAlbums, setNavAlbums] = useState<Array<any>>();
 
   const handleRegister = () => {
@@ -88,7 +89,7 @@ const Nav: React.FC<NavProps> = ({
 
   useEffect(() => {
     (async () => {
-      setNavAlbums(await productStore?.fetchFew(5));
+      setNavAlbums(await productStore?.fetchFew(navAlbumsCount));
     })();
   }, []);
 

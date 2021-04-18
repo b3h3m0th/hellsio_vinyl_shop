@@ -8,52 +8,90 @@ import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
 import axios from "axios";
 import toBase64 from "../../util/toBase64";
+import { productStore, ProductStore } from "../../stores/productStore";
 
 interface HomeProps {
   languageStore?: LanguageStore;
+  productstore?: ProductStore;
 }
 
-const Home: React.FC<HomeProps> = ({ languageStore }: HomeProps) => {
+const Home: React.FC<HomeProps> = ({
+  languageStore,
+  productstore,
+}: HomeProps) => {
   const [heroAlbums, setHeroAlbums] = useState<Array<any>>([]);
 
   useEffect(() => {
     (async () => {
-      const albumsResponse = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/product/few/3`
+      setHeroAlbums(
+        [...(await productStore.fetchFew(10))]
+          .sort(() => Math.random() - Math.random())
+          .slice(0, (Math.random() * 4) | 3)
       );
-
-      setHeroAlbums(albumsResponse.data);
     })();
   }, []);
 
-  const tl = gsap.timeline();
+  console.log(heroAlbums);
+
   useEffect(() => {
     if (heroAlbums.length !== 0) {
-      tl.from(".hero-banner__title", 1.8, {
-        x: -70,
-        opacity: 0,
-        ease: "power4",
-      });
-      gsap.from(".hero-banner__title", 1.8, {
-        ease: "power4",
-      });
-      gsap.from(".hero-banner__subtitle", 1.8, {
-        x: -60,
-        opacity: 0,
-        delay: 0.3,
-        ease: "power4",
-      });
-      gsap.from(".shop-now-button", 1.8, {
-        x: -50,
-        opacity: 0,
-        delay: 0.5,
-        ease: "power4",
-      });
-      gsap.from(".home__background-container__img", 1, {
-        opacity: 0,
-        ease: "power1",
-        delay: 0.5,
-      });
+      gsap.fromTo(
+        ".hero-banner__title",
+        1.8,
+        {
+          x: -70,
+          opacity: 0,
+          ease: "power4",
+        },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "power4",
+        }
+      );
+      gsap.fromTo(
+        ".hero-banner__subtitle",
+        1.8,
+        {
+          x: -60,
+          opacity: 0,
+          ease: "power4",
+        },
+        {
+          x: 0,
+          opacity: 0.2,
+          ease: "power4",
+          delay: 0.3,
+        }
+      );
+      gsap.fromTo(
+        ".shop-now-button",
+        1.8,
+        {
+          x: -50,
+          opacity: 0,
+          ease: "power4",
+        },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "power4",
+          delay: 0.5,
+        }
+      );
+      gsap.fromTo(
+        ".home__background-container__img",
+        1,
+        {
+          opacity: 0,
+          ease: "power1",
+        },
+        {
+          opacity: 0.2,
+          ease: "power1",
+          delay: 0.5,
+        }
+      );
       gsap.from(".hero-vinyl", 1.8, {
         delay: 0.5,
         stagger: -0.5,
@@ -61,6 +99,20 @@ const Home: React.FC<HomeProps> = ({ languageStore }: HomeProps) => {
         ease: "power4",
         x: 100,
       });
+      gsap.fromTo(
+        ".hero-vinyl",
+        1.8,
+        {
+          opacity: 0,
+          ease: "power4",
+          x: 100,
+        },
+        {
+          opacity: 1,
+          delay: 0.5,
+          stagger: -0.5,
+        }
+      );
       gsap.from(".hero-vinyl__link", 1.8, {
         delay: 0.5,
         stagger: -0.2,
@@ -190,4 +242,4 @@ const Home: React.FC<HomeProps> = ({ languageStore }: HomeProps) => {
   );
 };
 
-export default inject("languageStore")(observer(Home));
+export default inject("languageStore", "productStore")(observer(Home));

@@ -28,14 +28,19 @@
         width: 100%;
         font-size: 6em;
         font-weight: 600;
+        opacity: 0;
       }
 
       &__subtitle {
         text-align: right;
         color: var(--color-white);
-        opacity: 0.2;
+        opacity: 0;
         font-size: 20px;
         margin: 0;
+      }
+
+      .shop-now-button {
+        opacity: 0;
       }
     }
   }
@@ -55,7 +60,7 @@
       box-shadow: 50px -50px 50px 0px var(--color-black) inset;
       z-index: 2;
       background-image: url("../../assets/img/background/F8-Five_Finger_Death_Punch.jpg");
-      opacity: 0.2;
+      opacity: 0;
     }
 
     &__vinyls {
