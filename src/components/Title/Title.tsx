@@ -16,7 +16,7 @@ const Title = ({ title, languageStore, link }: TitleProps) => {
       className="title-container"
       to={`/${languageStore?.language}/${link}`}
     >
-      <h3 className="title-container__text"> {title.toUpperCase()}</h3>
+      <h3 className="title-container__text">{title.toUpperCase()}</h3>
       <div className="title-container__after"></div>
     </Link>
   );

@@ -115,6 +115,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     });
   }, []);
 
+  console.log(albumData?.currentAlbum);
+
   return (
     <div className="product-detail">
       {is404 ? (

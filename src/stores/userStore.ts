@@ -16,7 +16,6 @@ export class UserStore {
   user: User = {
     username: "Profile",
     email: "",
-    registrationDate: new Date(1),
   };
 
   login(
@@ -44,6 +43,7 @@ export class UserStore {
 
           console.log(loginResponse);
 
+          this.setUser({ email: email, username: email });
           return await this.isLoggedIn();
         } catch (err) {
           setErrorList((prev: any) => [err.response.data.error, ...prev]);

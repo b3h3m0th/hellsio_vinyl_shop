@@ -31,12 +31,25 @@ export class ProductStore {
       return -1;
     }
   };
+
+  fetchFew = async (amount: number): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/few/${amount}`
+      );
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+      return -1;
+    }
+  };
 }
 
 decorate(ProductStore, {
   products: observable,
   setProducts: action,
   fetch: action,
+  fetchAll: action,
 });
 
 export const productStore = new ProductStore();

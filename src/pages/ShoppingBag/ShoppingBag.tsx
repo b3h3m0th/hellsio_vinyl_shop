@@ -78,7 +78,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       </div>
       <div className="checkout__products">
         <div className="checkout__products__wrapper">
-          {toJS(checkoutStore?.products)?.map((p, index) => {
+          {toJS(checkoutStore?.products)?.map((p: any, index) => {
             const albumCover = require(`../../assets/img/vinyl_covers/${p.img}`);
             return (
               <div key={index} className="checkout__products__wrapper__product">
@@ -92,7 +92,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     {p.name}
                   </p>
                   <p className="checkout__products__wrapper__product__name__artist">
-                    {p.artists[0].name}
+                    {p.artist}
                   </p>
                 </div>
                 <div className="checkout__products__wrapper__product__quantity">

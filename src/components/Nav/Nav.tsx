@@ -14,6 +14,8 @@ import { UserStore } from "../../stores/userStore";
 import validateRegistrationData, {
   RegistrationData,
 } from "../../validation/registration";
+import { ProductStore } from "../../stores/productStore";
+import { toJS } from "mobx";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
@@ -25,23 +27,23 @@ interface NavProps {
   burgerMenuStore?: BurgerMenuStore;
   languageStore?: LanguageStore;
   userStore?: UserStore;
+  productStore?: ProductStore;
 }
 
 const Nav: React.FC<NavProps> = ({
   burgerMenuStore,
   languageStore,
   userStore,
+  productStore,
 }: NavProps) => {
   const [genres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
     true
   );
-
   const [signInDataChange, setSignInDataChange] = useState({
     email: "",
     password: "",
   });
-
   const [
     registrationDataChange,
     setRegistrationDataChange,
@@ -51,12 +53,11 @@ const Nav: React.FC<NavProps> = ({
     password: "",
     password2: "",
   });
-
   const [registrationErrors, setRegistrationErrors]: any[] = useState<
     Array<any>
   >([]);
-
   const [loginErrors, setLoginErrors]: any[] = useState<Array<any>>([]);
+  const [navAlbums, setNavAlbums] = useState<Array<any>>();
 
   const handleRegister = () => {
     userStore?.register(
@@ -85,6 +86,12 @@ const Nav: React.FC<NavProps> = ({
     })();
   }, [userStore]);
 
+  useEffect(() => {
+    (async () => {
+      setNavAlbums(await productStore?.fetchFew(5));
+    })();
+  }, []);
+
   return (
     <>
       <div
@@ -94,14 +101,11 @@ const Nav: React.FC<NavProps> = ({
       >
         <div className="nav-modal__column">
           <Title title="New Arrivals" link="newarrivals" />
-          {albumData.map((album: Album, index: number) => {
+          {navAlbums?.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
-                <Link
-                  key={index}
-                  to={`/${languageStore?.language}/products/${album.id}`}
-                >
-                  {album.name} - {album.artists[0].name}
+                <Link to={`/${languageStore?.language}/products/${album.code}`}>
+                  {album.name} - {album.artist}
                 </Link>
               </p>
             );
@@ -121,14 +125,14 @@ const Nav: React.FC<NavProps> = ({
         </div>
         <div className="nav-modal__column">
           <Title title="Popular" link="popular" />
-          {albumData.map((album: Album, index: number) => {
+          {albumData.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
                 <Link
                   key={index}
                   to={`/${languageStore?.language}/products/${album.id}`}
                 >
-                  {album.name} - {album.artists[0].name}
+                  {album.name} - {album.artist}
                 </Link>
               </p>
             );
@@ -397,5 +401,6 @@ const Nav: React.FC<NavProps> = ({
 export default inject(
   "burgerMenuStore",
   "languageStore",
-  "userStore"
+  "userStore",
+  "productStore"
 )(observer(Nav));
