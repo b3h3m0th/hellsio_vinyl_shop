@@ -17,9 +17,11 @@
     margin-top: 10px;
 
     a {
+      display: inline-block;
       color: rgba($color: #fff, $alpha: 0.5);
       opacity: 0.5;
       font-size: 1.1em;
+      margin-bottom: 2px;
     }
 
     &:hover .hero-link__after {

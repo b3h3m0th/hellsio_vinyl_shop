@@ -159,7 +159,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
             <div className="product-detail__nav__next-albums">
               {albumData?.followingAlbums.map((album: any, i: number) => {
                 return (
-                  <div
+                  <Link
+                    to={`/${languageStore?.language}/products/${album.code}`}
                     className="product-detail__nav__next-albums__album"
                     key={i}
                   >
@@ -170,7 +171,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       alt="Hellsio album cover"
                       key={i}
                     />
-                  </div>
+                  </Link>
                 );
               })}
             </div>

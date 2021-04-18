@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({
   useEffect(() => {
     (async () => {
       setHeroAlbums(
-        [...(await productStore.fetchFew(10))]
+        [...(await productStore.fetchFew(7))]
           .sort(() => Math.random() - Math.random())
           .slice(0, (Math.random() * 4) | 3)
       );
