@@ -12,6 +12,7 @@ import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import ArrowButton from "../../components/ArrowButton/ArrowButton";
 import { LanguageStore } from "../../stores/languageStore";
+import Display404 from "../../components/Display404/Display404";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -117,20 +118,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   return (
     <div className="product-detail">
       {is404 ? (
-        <div className="is404">
-          <div className="is404__header">
-            <span className="is404__header__404">404</span>
-            <span className="is404__header__content">
-              Woah, you have travelled beyond the horizon...
-            </span>
-          </div>
-          <Link to="/" className="is404__back-button">
-            <ArrowButton
-              label="Back into the Ocean"
-              className="is404__back-button__button"
-            />
-          </Link>
-        </div>
+        <Display404
+          header="Back into the Ocean"
+          text="
+          Woah, you have travelled beyond the horizon..."
+        ></Display404>
       ) : (
         <>
           <div className="product-detail__album-title">

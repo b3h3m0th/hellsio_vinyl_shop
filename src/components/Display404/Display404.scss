@@ -1,0 +1,21 @@
+.is404 {
+  &__header {
+    &__404 {
+      font-size: 4rem;
+      font-weight: 600;
+    }
+
+    &__content {
+      margin-left: 40px;
+    }
+  }
+
+  &__back-button {
+    text-align: right;
+    justify-content: flex-start;
+
+    &__button span {
+      text-transform: inherit;
+    }
+  }
+}

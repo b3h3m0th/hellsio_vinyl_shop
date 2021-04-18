@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.scss";
 import ArrowButton from "../../components/ArrowButton/ArrowButton";
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { inject, observer } from "mobx-react";
 import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
+import axios from "axios";
+import toBase64 from "../../util/toBase64";
 
 //vinyls
 const gods_of_violence = require("../../assets/img/vinyl_covers/Gods_of_Violence-Kreator.jpg");
@@ -16,90 +18,100 @@ interface HomeProps {
   languageStore?: LanguageStore;
 }
 
-const Home = ({ languageStore }: HomeProps) => {
+const Home: React.FC<HomeProps> = ({ languageStore }: HomeProps) => {
+  const [heroAlbums, setHeroAlbums] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    (async () => {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/few/3`
+      );
+
+      setHeroAlbums(albumsResponse.data);
+    })();
+  }, []);
+
   const tl = gsap.timeline();
   useEffect(() => {
-    tl.from(".hero-banner__title", 1.8, {
-      x: -70,
-      opacity: 0,
-      ease: "power4",
-    });
-    gsap.from(".hero-banner__title", 1.8, {
-      ease: "power4",
-    });
-    gsap.from(".hero-banner__subtitle", 1.8, {
-      x: -60,
-      opacity: 0,
-      delay: 0.3,
-      ease: "power4",
-    });
-    gsap.from(".shop-now-button", 1.8, {
-      x: -50,
-      opacity: 0,
-      delay: 0.5,
-      ease: "power4",
-    });
-    gsap.from(".home__background-container__img", 1, {
-      opacity: 0,
-      ease: "power1",
-      delay: 0.5,
-    });
-    gsap.from(".hero-vinyl", 1.8, {
-      delay: 0.5,
-      stagger: -0.5,
-      opacity: 0,
-      ease: "power4",
-      x: 100,
-    });
-    gsap.from(".hero-vinyl__link", 1.8, {
-      delay: 0.5,
-      stagger: -0.2,
-      opacity: 0,
-      ease: "power4",
-      y: 50,
-    });
-    gsap.from(".hero-link__after", 0.5, {
-      delay: 2,
-      width: 0,
-      ease: "power4",
-    });
-    gsap.from(".hero-explore-button", 0.5, {
-      delay: 2.4,
-      x: 45,
-      ease: "power4",
-    });
-  });
+    if (heroAlbums.length !== 0) {
+      tl.from(".hero-banner__title", 1.8, {
+        x: -70,
+        opacity: 0,
+        ease: "power4",
+      });
+      gsap.from(".hero-banner__title", 1.8, {
+        ease: "power4",
+      });
+      gsap.from(".hero-banner__subtitle", 1.8, {
+        x: -60,
+        opacity: 0,
+        delay: 0.3,
+        ease: "power4",
+      });
+      gsap.from(".shop-now-button", 1.8, {
+        x: -50,
+        opacity: 0,
+        delay: 0.5,
+        ease: "power4",
+      });
+      gsap.from(".home__background-container__img", 1, {
+        opacity: 0,
+        ease: "power1",
+        delay: 0.5,
+      });
+      gsap.from(".hero-vinyl", 1.8, {
+        delay: 0.5,
+        stagger: -0.5,
+        opacity: 0,
+        ease: "power4",
+        x: 100,
+      });
+      gsap.from(".hero-vinyl__link", 1.8, {
+        delay: 0.5,
+        stagger: -0.2,
+        opacity: 0,
+        ease: "power4",
+        y: 50,
+      });
+      gsap.from(".hero-link__after", 0.5, {
+        delay: 2,
+        width: 0,
+        ease: "power4",
+      });
+      gsap.from(".hero-explore-button", 0.5, {
+        delay: 2.4,
+        x: 45,
+        ease: "power4",
+      });
+    }
 
-  useEffect(() => {
-    (() => {
-      const vinylContainer = document.getElementById("home-vinyl-container");
-      const heroExploreButton = document.getElementById("hero-explore-button");
-      const heroTitle = document.querySelector("#hero-banner-title");
-      const heroSubtitle = document.getElementById("hero-banner-subtitle");
-      const heroArrow = document.getElementById("hero-banner-arrow");
+    const vinylContainer = document.getElementById("home-vinyl-container");
+    const heroExploreButton = document.getElementById("hero-explore-button");
+    const heroTitle = document.querySelector("#hero-banner-title");
+    const heroSubtitle = document.getElementById("hero-banner-subtitle");
+    const heroArrow = document.getElementById("hero-banner-arrow");
 
-      vinylContainer!.style.height = `${
-        parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
-        heroSubtitle!.clientHeight +
-        heroArrow!.clientHeight
-      }px`;
-      vinylContainer!.style.marginTop = `${
-        (heroTitle!.clientHeight -
-          parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
-          2 +
-        10
-      }px`;
-      heroExploreButton!.style.height = `${
-        parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
-        heroSubtitle!.clientHeight +
-        heroArrow!.clientHeight
-      }px`;
-      heroExploreButton!.style.marginTop = `${
-        (heroTitle!.clientHeight -
-          parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
-        2
-      }px`;
-    })();
+    vinylContainer!.style.height = `${
+      parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
+      heroSubtitle!.clientHeight +
+      heroArrow!.clientHeight
+    }px`;
+    vinylContainer!.style.marginTop = `${
+      (heroTitle!.clientHeight -
+        parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
+        2 +
+      10
+    }px`;
+    heroExploreButton!.style.height = `${
+      parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize) +
+      heroSubtitle!.clientHeight +
+      heroArrow!.clientHeight
+    }px`;
+    heroExploreButton!.style.marginTop = `${
+      (heroTitle!.clientHeight -
+        parseInt("" + window.getComputedStyle(heroTitle!, null).fontSize)) /
+      2
+    }px`;
   });
 
   return (
@@ -127,21 +139,16 @@ const Home = ({ languageStore }: HomeProps) => {
           id="home-vinyl-container"
         >
           <div className="home__background-container__vinyls__wrapper">
-            <HeroVinyl
-              img={the_infernal_pathway}
-              genre="Black"
-              productID="the_infernal_pathway-1439"
-            />
-            <HeroVinyl
-              img={gods_of_violence}
-              genre="Trash"
-              productID="gods_of_violence-kreator"
-            />
-            <HeroVinyl
-              img={berserker}
-              genre="Death"
-              productID="berserker-amon_amarth"
-            />
+            {heroAlbums?.map((album: any, i: number) => {
+              return (
+                <HeroVinyl
+                  img={`data:image/png;base64,${toBase64(album.cover.data)}`}
+                  name={album.name}
+                  productCode={album.code}
+                  key={i}
+                />
+              );
+            })}
           </div>
         </div>
         <button

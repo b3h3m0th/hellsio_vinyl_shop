@@ -6,25 +6,27 @@ import { inject, observer } from "mobx-react";
 
 interface HeroVinylProps {
   img: string;
-  genre: string;
-  productID: string;
+  name: string;
+  productCode: string;
   languageStore?: LanguageStore;
 }
 
-const HeroVinyl = ({
+const HeroVinyl: React.FC<HeroVinylProps> = ({
   img,
-  genre,
+  name,
   languageStore,
-  productID,
+  productCode,
 }: HeroVinylProps) => {
   return (
     <div className="hero-vinyl">
-      <Link to={`/${languageStore?.language}/products/${productID}`}>
+      <Link to={`/${languageStore?.language}/products/${productCode}`}>
         <img src={img} alt="Hellsio hero vinyl" />
       </Link>
 
       <div className="hero-vinyl__link">
-        <Link to={`/${languageStore?.language}/newarrivals`}>{genre}</Link>
+        <Link to={`/${languageStore?.language}/products/${productCode}`}>
+          {name}
+        </Link>
         <div className="hero-link__after"></div>
       </div>
     </div>
