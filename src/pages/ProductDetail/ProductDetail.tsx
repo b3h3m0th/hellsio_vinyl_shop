@@ -10,7 +10,6 @@ import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
-import ArrowButton from "../../components/ArrowButton/ArrowButton";
 import { LanguageStore } from "../../stores/languageStore";
 import Display404 from "../../components/Display404/Display404";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -64,6 +63,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         followingAlbums: followingAlbums,
       });
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match]);
 
   const albums = productStore?.products;

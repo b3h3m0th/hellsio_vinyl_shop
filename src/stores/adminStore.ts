@@ -52,7 +52,7 @@ export class AdminStore {
     const refreshToken = getAdminRefreshToken();
 
     try {
-      const authResponse = await axios.get(
+      await axios.get(
         `${`${process.env.REACT_APP_BASE_API_URL}/admin/` || ""}`,
         {
           headers: {

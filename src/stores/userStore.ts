@@ -69,7 +69,7 @@ export class UserStore {
     if (errorList.length === 0) {
       (async () => {
         try {
-          const registerResponse = await axios.post(
+          await axios.post(
             `${`${process.env.REACT_APP_BASE_API_URL}/user/register` || ""}`,
             {
               username: username,
@@ -97,7 +97,7 @@ export class UserStore {
     const refreshToken = getUserRefreshToken();
 
     try {
-      const authResponse = await axios.get(
+      await axios.get(
         `${`${process.env.REACT_APP_BASE_API_URL}/user/` || ""}`,
         {
           headers: {

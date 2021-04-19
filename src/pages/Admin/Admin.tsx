@@ -11,7 +11,6 @@ import Title from "../../components/Title/Title";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
-import { KeyObject } from "crypto";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 const adminPages = {

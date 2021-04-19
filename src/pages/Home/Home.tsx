@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { inject, observer } from "mobx-react";
 import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
-import axios from "axios";
 import toBase64 from "../../util/toBase64";
 import { productStore, ProductStore } from "../../stores/productStore";
 

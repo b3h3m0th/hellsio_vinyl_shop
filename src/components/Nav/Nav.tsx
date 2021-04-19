@@ -88,6 +88,7 @@ const Nav: React.FC<NavProps> = ({
     (async () => {
       setNavAlbums(await productStore?.fetchFew(navAlbumsCount));
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
