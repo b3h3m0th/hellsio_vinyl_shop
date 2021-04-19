@@ -1,7 +1,21 @@
 .admin-products {
   width: 100%;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  overflow-x: hidden;
 
-  &__album {
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    max-height: 100vh;
   }
 }

@@ -219,7 +219,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       </p>
                       <DropDownPicker
                         label="Format"
-                        options={[{ id: "0", price: 4.0 }]}
+                        options={[
+                          {
+                            id: albumData?.currentAlbum?.format,
+                            price: albumData?.currentAlbum?.price,
+                          },
+                        ]}
                         id="product-detail__drop-down"
                         onChange={(e) => null}
                       />
