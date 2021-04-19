@@ -58,6 +58,25 @@
             margin-top: 10px;
             height: 25px;
           }
+
+          #shopping_bag_product-count {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 19px;
+            left: 10%;
+            top: 10px;
+            transform: translate(-50%, -50%);
+            color: var(--color-red);
+            color: white;
+            border-radius: 50px;
+            background-color: var(--color-red);
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px 4px 3px 4px;
+            font-size: 0.8em;
+          }
         }
       }
     }

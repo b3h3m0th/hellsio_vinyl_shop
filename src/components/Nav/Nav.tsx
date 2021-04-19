@@ -375,9 +375,11 @@ const Nav: React.FC<NavProps> = ({
                   alt="Hellsio shopping bag icon"
                   id="shopping_bag_icon"
                 />
-                <span className="shopping_bag_icon_count">
-                  {checkoutStore.products.length || 0}
-                </span>
+                {checkoutStore.products.length > 0 ? (
+                  <span id="shopping_bag_product-count">
+                    {checkoutStore.products.length}
+                  </span>
+                ) : null}
               </Link>
             </div>
             <div className="nav-icons__icon">
