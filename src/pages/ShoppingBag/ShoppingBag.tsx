@@ -10,6 +10,7 @@ import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import gsap from "gsap";
 import toBase64 from "../../util/toBase64";
+import axios from "axios";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -23,20 +24,34 @@ const Checkout: React.FC<CheckoutProps> = ({
   languageStore,
   checkoutStore,
 }: CheckoutProps) => {
-  const [selectedFormats, setSelectedFormats] = useState(["7-vinyl"]);
+  const [formats, setFormats] = useState<Array<any>>([]);
 
-  const handleFormatChange = (e: any, index: number) => {
-    setSelectedFormats([...selectedFormats, e.target.value]);
+  const handleFormatChange = (e: any) => {
+    setFormats([...formats, e.target.value]);
   };
 
   useEffect(() => {
-    gsap.from(".checkout__products__wrapper__product", 1.8, {
-      opacity: 0,
-      x: 100,
-      ease: "power4",
-      stagger: 0.2,
-    });
-  });
+    gsap.fromTo(
+      ".checkout__products__wrapper__product",
+      1.8,
+      {
+        opacity: 0,
+        x: 100,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        ease: "power4",
+        stagger: 0.2,
+      }
+    );
+
+    (async () => {
+      setFormats((await checkoutStore?.fetchFormates()) || []);
+    })();
+  }, []);
+
+  console.log(formats);
 
   return (
     <div className="checkout">
@@ -98,8 +113,12 @@ const Checkout: React.FC<CheckoutProps> = ({
                 <div className="checkout__products__wrapper__product__format">
                   <DropDownPicker
                     label="Format"
-                    options={[{ id: "nope", price: p.price }]}
-                    onChange={(e) => handleFormatChange(e, index)}
+                    options={[
+                      ...formats.map((format: any) => {
+                        return { id: format.name, optionValue: p.price };
+                      }),
+                    ]}
+                    onChange={(e) => handleFormatChange(e)}
                   />
                 </div>
                 <div className="checkout__products__wrapper__product__price">
