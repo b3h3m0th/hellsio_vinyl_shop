@@ -90,6 +90,15 @@
         margin: 20px 0;
         opacity: 0;
 
+        &:first-child {
+          margin-top: 120px;
+        }
+
+        &:last-child {
+          box-sizing: content-box;
+          padding-bottom: 120px;
+        }
+
         &__album-cover {
           max-width: 150px;
           box-shadow: 0px 0px 50px 0px #000;
