@@ -75,7 +75,10 @@ const Admin: React.FC<AdminProps> = ({
           <PrimaryButton
             label="View in DB"
             icon={arrowRight}
-            onClick={() => window.open(databaseTableURL, "_blank")}
+            onClick={() => {
+              window.open(databaseTableURL, "_blank");
+              window.location.href = `${path}/${endpoint}`;
+            }}
           ></PrimaryButton>
         </div>
       </div>
