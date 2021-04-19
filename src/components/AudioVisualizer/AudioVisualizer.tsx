@@ -21,19 +21,23 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     musicStore?.playing
   );
 
-  const songs = [
+  let songs: any = [
     ecclesia_diabolica_catholica,
     temple_of_hate,
     rats,
     wash_it_all_away,
   ];
 
+  songs = "https://rautemusik-de-hz-fal-stream15.radiohost.de/wackenradio";
+
   useEffect(() => {
     new Howl({
       src: songs,
+      format: ["mp3", "aac"],
       autoplay: true,
       volume: 0.1,
       mute: audioPlaying ? false : true,
+      html5: true,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

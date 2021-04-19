@@ -14,6 +14,11 @@ const Footer = () => {
     <div className="footer">
       <div className="audio-wrapper">
         <AudioVisualizer />
+        <div className="audio-wrapper__credits">
+          <a href="https://www.rm.fm/wackenradio" target="tab">
+            RAUTEMUSIK - Wacken Radio
+          </a>
+        </div>
       </div>
       <LanguageSwitch />
     </div>
