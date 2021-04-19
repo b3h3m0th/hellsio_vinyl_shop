@@ -14,6 +14,7 @@ import validateRegistrationData, {
   RegistrationData,
 } from "../../validation/registration";
 import { ProductStore } from "../../stores/productStore";
+import { checkoutStore, CheckoutStore } from "../../stores/checkoutStore";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
@@ -25,6 +26,7 @@ interface NavProps {
   languageStore?: LanguageStore;
   userStore?: UserStore;
   productStore?: ProductStore;
+  checkoutStore?: CheckoutStore;
 }
 
 const Nav: React.FC<NavProps> = ({
@@ -373,6 +375,9 @@ const Nav: React.FC<NavProps> = ({
                   alt="Hellsio shopping bag icon"
                   id="shopping_bag_icon"
                 />
+                <span className="shopping_bag_icon_count">
+                  {checkoutStore.products.length || 0}
+                </span>
               </Link>
             </div>
             <div className="nav-icons__icon">
@@ -401,5 +406,6 @@ export default inject(
   "burgerMenuStore",
   "languageStore",
   "userStore",
-  "productStore"
+  "productStore",
+  "checkoutStore"
 )(observer(Nav));
