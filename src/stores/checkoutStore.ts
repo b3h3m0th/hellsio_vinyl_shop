@@ -1,5 +1,5 @@
 import axios from "axios";
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action, toJS } from "mobx";
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
@@ -15,7 +15,14 @@ export class CheckoutStore {
   addProduct: (product: CheckoutProduct) => void = (
     product: CheckoutProduct
   ) => {
-    this.products.push(product);
+    if (this.products.some((p: any) => p.code === product.code)) {
+      this.products[
+        this.products.findIndex((p: any) => p.code === product.code)
+      ].amount += product.amount;
+    } else {
+      this.products.push(product);
+    }
+    console.log(toJS(this.products));
   };
 
   removeProduct: (index: number) => void = (index: number) => {

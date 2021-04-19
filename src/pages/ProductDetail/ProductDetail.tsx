@@ -36,6 +36,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 }: ProductDetailProps) => {
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
     (async () => {
@@ -223,7 +224,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       <p className="album-detail__price__content__price">
                         $ {albumData?.currentAlbum?.price}
                       </p>
-                      <QuantityPicker label="Quantity" maxValue={5} />
+                      <QuantityPicker
+                        label="Quantity"
+                        maxValue={5}
+                        value={quantity}
+                        setValue={setQuantity}
+                      />
                     </div>
                     <div className="album-detail__price__content__right">
                       <p className="album-detail__price__content__right__per-item">
@@ -242,7 +248,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     link="shopping-bag"
                     icon={arrowRight}
                     onClick={() => {
-                      checkoutStore?.addProduct(albumData?.currentAlbum!);
+                      checkoutStore?.addProduct({
+                        ...albumData?.currentAlbum,
+                        amount: quantity,
+                      });
                     }}
                   />
                 </div>

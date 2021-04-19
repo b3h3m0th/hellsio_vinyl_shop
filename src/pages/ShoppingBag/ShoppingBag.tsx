@@ -10,7 +10,6 @@ import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import gsap from "gsap";
 import toBase64 from "../../util/toBase64";
-import axios from "axios";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -49,9 +48,8 @@ const Checkout: React.FC<CheckoutProps> = ({
     (async () => {
       setFormats((await checkoutStore?.fetchFormates()) || []);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(formats);
 
   return (
     <div className="checkout">
@@ -108,7 +106,12 @@ const Checkout: React.FC<CheckoutProps> = ({
                   </p>
                 </div>
                 <div className="checkout__products__wrapper__product__quantity">
-                  <QuantityPicker label="Quantity" maxValue={5} />
+                  <QuantityPicker
+                    label="Quantity"
+                    maxValue={10}
+                    value={p.amount}
+                    setValue={() => 0}
+                  />
                 </div>
                 <div className="checkout__products__wrapper__product__format">
                   <DropDownPicker

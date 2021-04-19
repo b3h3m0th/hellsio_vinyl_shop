@@ -6,24 +6,29 @@ const plusIcon = require("../../assets/icons/plus/plus.svg");
 interface QuantityPickerProps {
   label: string;
   maxValue: number;
+  value: number;
+  setValue: (value: number) => void;
 }
 
-const QuantityPicker = ({ label, maxValue }: QuantityPickerProps) => {
-  const [quantity, setQuantity] = useState(1);
-
+const QuantityPicker = ({
+  label,
+  maxValue,
+  value,
+  setValue,
+}: QuantityPickerProps) => {
   const handleDecrease = () => {
-    if (quantity - 1 < 1) {
-      setQuantity(1);
+    if (value - 1 < 1) {
+      setValue(1);
     } else {
-      setQuantity(quantity - 1);
+      setValue(value - 1);
     }
   };
 
   const handleIncrease = () => {
-    if (quantity + 1 > maxValue) {
-      setQuantity(maxValue);
+    if (value + 1 > maxValue) {
+      setValue(maxValue);
     } else {
-      setQuantity(quantity + 1);
+      setValue(value + 1);
     }
   };
 
@@ -37,7 +42,7 @@ const QuantityPicker = ({ label, maxValue }: QuantityPickerProps) => {
         >
           <img src={minusIcon} alt="Hellsio icon minus" />
         </button>
-        <div className="quantity-picker__wrapper__value">{quantity}</div>
+        <div className="quantity-picker__wrapper__value">{value}</div>
         <button
           className="quantity-picker__wrapper__increase"
           onClick={handleIncrease}
