@@ -11,12 +11,13 @@ import Title from "../../components/Title/Title";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import { KeyObject } from "crypto";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 const adminPages = {
   orders: Orders,
-  customers: Customers,
   products: Products,
+  customers: Customers,
 } as const;
 
 interface AdminProps {
@@ -34,9 +35,9 @@ const Admin: React.FC<AdminProps> = ({
   const databaseTableURL: string = `${
     process.env.REACT_APP_BASE_DATABASE_URL
   }&table=${
-    endpoint === "orders"
+    endpoint === Object.keys(adminPages)[0]
       ? "invoice"
-      : endpoint === "products"
+      : endpoint === Object.keys(adminPages)[1]
       ? "album"
       : "user"
   }&pos=0`;
@@ -75,7 +76,7 @@ const Admin: React.FC<AdminProps> = ({
           <PrimaryButton
             label="View in DB"
             icon={arrowRight}
-            onClick={() => (window.location.href = databaseTableURL)}
+            onClick={() => window.open(databaseTableURL, "_blank")}
           ></PrimaryButton>
         </div>
       </div>
