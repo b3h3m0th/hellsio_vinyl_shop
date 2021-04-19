@@ -8,12 +8,13 @@
   &__sidenav {
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex: 2;
 
     &__nav {
       text-align: left;
+      width: 80%;
 
       &__link {
         margin-bottom: 10px;
@@ -28,6 +29,7 @@
         display: block;
         margin-top: 50px;
         color: var(--color-red);
+        margin-bottom: 40px;
       }
     }
   }

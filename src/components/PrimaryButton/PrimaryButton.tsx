@@ -15,7 +15,7 @@ interface PrimaryButtonProps {
 
 const PrimaryButton = ({
   label,
-  link,
+  link = "",
   languageStore,
   icon,
   submit,

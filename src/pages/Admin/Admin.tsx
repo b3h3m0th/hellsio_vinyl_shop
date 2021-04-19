@@ -10,12 +10,14 @@ import Products from "./Products/Products";
 import Title from "../../components/Title/Title";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 const adminPages = {
   orders: Orders,
   customers: Customers,
   products: Products,
-};
+} as const;
 
 interface AdminProps {
   adminStore?: AdminStore;
@@ -27,6 +29,17 @@ const Admin: React.FC<AdminProps> = ({
   languageStore,
 }: AdminProps) => {
   const { path } = useRouteMatch();
+
+  const endpoint = window.location.href.split("/").reverse()[0];
+  const databaseTableURL: string = `${
+    process.env.REACT_APP_BASE_DATABASE_URL
+  }&table=${
+    endpoint === "orders"
+      ? "invoice"
+      : endpoint === "products"
+      ? "album"
+      : "user"
+  }&pos=0`;
 
   const handleLogout: () => void = () => {
     adminStore?.logout();
@@ -52,7 +65,6 @@ const Admin: React.FC<AdminProps> = ({
           >
             Customers
           </Link>
-
           <Link
             to={`${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
             className="admin__sidenav__nav__logout"
@@ -60,6 +72,11 @@ const Admin: React.FC<AdminProps> = ({
           >
             Logout
           </Link>
+          <PrimaryButton
+            label="View in DB"
+            icon={arrowRight}
+            onClick={() => (window.location.href = databaseTableURL)}
+          ></PrimaryButton>
         </div>
       </div>
       <div className="admin__content">
