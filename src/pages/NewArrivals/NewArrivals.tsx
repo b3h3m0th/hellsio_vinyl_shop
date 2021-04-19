@@ -24,11 +24,19 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
   }, [productStore]);
 
   useEffect(() => {
-    gsap.from(".vinyl-container", 1, {
-      y: 50,
-      stagger: 0.1,
-      opacity: 0,
-    });
+    gsap.fromTo(
+      ".vinyl-container",
+      1,
+      {
+        y: 50,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        stagger: 0.1,
+        opacity: 1,
+      }
+    );
   });
 
   return (

@@ -9,6 +9,9 @@ interface HeroVinylProps {
   name: string;
   productCode: string;
   languageStore?: LanguageStore;
+  onMouseEnter?: any;
+  onMouseLeave?: any;
+  className?: string;
 }
 
 const HeroVinyl: React.FC<HeroVinylProps> = ({
@@ -16,9 +19,16 @@ const HeroVinyl: React.FC<HeroVinylProps> = ({
   name,
   languageStore,
   productCode,
+  onMouseEnter = () => console.log("mjaoisdfa"),
+  onMouseLeave = () => console.log("mjaoisdfa"),
+  className = "",
 }: HeroVinylProps) => {
   return (
-    <div className="hero-vinyl">
+    <div
+      className={`hero-vinyl ${className}`}
+      onMouseEnter={() => onMouseEnter()}
+      onMouseLeave={() => onMouseLeave()}
+    >
       <Link to={`/${languageStore?.language}/products/${productCode}`}>
         <img src={img} alt="Hellsio hero vinyl" />
       </Link>

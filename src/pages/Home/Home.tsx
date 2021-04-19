@@ -8,6 +8,7 @@ import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
 import toBase64 from "../../util/toBase64";
 import { productStore, ProductStore } from "../../stores/productStore";
+import { Tween } from "framer-motion";
 
 interface HomeProps {
   languageStore?: LanguageStore;
@@ -29,8 +30,6 @@ const Home: React.FC<HomeProps> = ({
       );
     })();
   }, []);
-
-  console.log(heroAlbums);
 
   useEffect(() => {
     if (heroAlbums.length !== 0) {
@@ -200,10 +199,23 @@ const Home: React.FC<HomeProps> = ({
             {heroAlbums?.map((album: any, i: number) => {
               return (
                 <HeroVinyl
+                  className={`hero-vinyl-${i}`}
                   img={`data:image/png;base64,${toBase64(album.cover.data)}`}
                   name={album.name}
                   productCode={album.code}
                   key={i}
+                  onMouseEnter={() =>
+                    gsap.to(`.hero-vinyl-${i}`, 0.02, {
+                      x: 20,
+                      ease: "power2",
+                    })
+                  }
+                  onMouseLeave={() =>
+                    gsap.to(".hero-vinyl", 0.02, {
+                      x: 0,
+                      ease: "power2",
+                    })
+                  }
                 />
               );
             })}
