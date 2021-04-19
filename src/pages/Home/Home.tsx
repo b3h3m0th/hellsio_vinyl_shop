@@ -8,7 +8,6 @@ import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
 import toBase64 from "../../util/toBase64";
 import { productStore, ProductStore } from "../../stores/productStore";
-import { Tween } from "framer-motion";
 
 interface HomeProps {
   languageStore?: LanguageStore;

@@ -15,7 +15,11 @@ import Display404 from "../../components/Display404/Display404";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
-export type AlbumData = { currentAlbum: any; followingAlbums: Array<any> };
+export type AlbumData = {
+  currentAlbum: any;
+  followingAlbums: Array<any>;
+  formates: { id: string; optionValue: any }[];
+};
 
 interface ProductDetailProps {
   match?: any;
@@ -58,9 +62,19 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         );
       }
 
+      let formates = [...(await checkoutStore?.fetchFormates())].map(
+        (format: any) => {
+          return {
+            id: format.name,
+            optionValue: format.inches,
+          };
+        }
+      );
+
       setAlbumData({
         currentAlbum: currentAlbum,
         followingAlbums: followingAlbums,
+        formates: formates,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,8 +128,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       ease: "power4",
     });
   }, []);
-
-  console.log(albumData?.currentAlbum);
 
   return (
     <div className="product-detail">
@@ -219,12 +231,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       </p>
                       <DropDownPicker
                         label="Format"
-                        options={[
-                          {
-                            id: albumData?.currentAlbum?.format,
-                            price: albumData?.currentAlbum?.price,
-                          },
-                        ]}
+                        options={albumData?.formates || []}
                         id="product-detail__drop-down"
                         onChange={(e) => null}
                       />

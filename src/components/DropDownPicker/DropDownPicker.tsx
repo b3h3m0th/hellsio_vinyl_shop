@@ -3,7 +3,7 @@ import "./DropDownPicker.scss";
 // const dropDownArrow = require("../../assets/icons/dropDownArrow/dropDownArrow.svg");
 
 interface DropDownPickerProps {
-  options: [{ id: string; price: number }];
+  options: { id: string; optionValue: number }[];
   label: string;
   id?: string;
   onChange?: (e: any) => void;
