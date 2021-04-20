@@ -6,6 +6,7 @@ import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
 import Title from "../Title/Title";
+import axios from "axios";
 
 // const genres = require("../../data/genres.json");
 
@@ -15,21 +16,20 @@ interface GenresListProps {
   link: string;
 }
 
-const GenreList = ({ title, languageStore, link }: GenresListProps) => {
-  const [genres] = useState([]);
+const GenreList: React.FC<GenresListProps> = ({
+  title,
+  languageStore,
+  link,
+}: GenresListProps) => {
+  const [genres, setGenres] = useState<Array<any>>([]);
   useEffect(() => {
-    // (async () => {
-    //   const response = await fetch("/.netlify/functions/api/genres");
-    //   const genres = await response.json();
-    //   setGenres(() => genres);
-    // })();
+    (async () => {
+      const genresResponse = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}`
+      );
+      setGenres(genresResponse.data);
+    })();
   }, []);
-
-  let genresList: any = [];
-
-  genres.forEach((genre: Genre) =>
-    genresList.push(<GenreCheckBox label={genre.genre} key={genre.genre} />)
-  );
 
   useEffect(() => {
     gsap.from(".genres-list__title", 1, {
@@ -51,7 +51,11 @@ const GenreList = ({ title, languageStore, link }: GenresListProps) => {
   return (
     <div className="genres-list">
       <Title title={title} link={link} />
-      <div className="genres-list__genres-container">{genresList}</div>
+      <div className="genres-list__genres-container">
+        {genres.map((genre: any, index: number) => {
+          return <GenreCheckBox label={genre.name} key={genre.genre_id} />;
+        })}
+      </div>
     </div>
   );
 };
