@@ -9,7 +9,7 @@ interface FooterProps {
   musicStore?: MusicStore;
 }
 
-const Footer = () => {
+const Footer: React.FC<FooterProps> = ({}: FooterProps) => {
   return (
     <div className="footer">
       <div className="audio-wrapper">
