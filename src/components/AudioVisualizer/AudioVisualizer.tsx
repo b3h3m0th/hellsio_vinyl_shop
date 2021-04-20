@@ -21,7 +21,7 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     musicStore?.playing
   );
 
-  let songs: any = [
+  let songs: any[] | string = [
     ecclesia_diabolica_catholica,
     temple_of_hate,
     rats,

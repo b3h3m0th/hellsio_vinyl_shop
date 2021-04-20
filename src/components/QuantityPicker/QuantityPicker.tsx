@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./QuantityPicker.scss";
 const minusIcon = require("../../assets/icons/minus/minus.svg");
 const plusIcon = require("../../assets/icons/plus/plus.svg");
