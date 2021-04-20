@@ -5,6 +5,7 @@ export type CheckoutProduct = { amount: number; [key: string]: any };
 
 export class CheckoutStore {
   products: Array<CheckoutProduct> = [];
+  isAllowedToCheckout: boolean = false;
 
   setProducts: (product: Array<CheckoutProduct>) => void = (
     products: Array<CheckoutProduct>

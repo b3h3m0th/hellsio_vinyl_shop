@@ -30,16 +30,33 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   burgerMenuStore,
 }: ShoppingBagProps) => {
   const [formats, setFormats] = useState<Array<any>>([]);
-  const [checkoutErrors, setCheckoutErrors] = useState<Array<string>>();
+  const [checkoutErrors, setCheckoutErrors] = useState<Array<string>>([]);
 
   useEffect(() => {
     (async (): Promise<void> => {
       await userStore?.isLoggedIn();
     })();
-  }, [userStore]);
+  }, []);
 
   const handleFormatChange = (e: any) => {
     setFormats([...formats, e.target.value]);
+  };
+
+  const validateShoppingBag = () => {
+    const notLoggedInErr = "Please login first!";
+    const cartEmptyErr = "Please add something to your cart before continuing!";
+    if (!userStore?.loggedIn && checkoutErrors?.length === 0) {
+      setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
+      burgerMenuStore?.open();
+    } else if (
+      (checkoutStore?.products.length === 0 || !checkoutStore?.products) &&
+      checkoutErrors?.length === 0
+    ) {
+      setCheckoutErrors([...(checkoutErrors || []), cartEmptyErr]);
+    }
+    setTimeout(() => {
+      setCheckoutErrors([]);
+    }, 4000);
   };
 
   useEffect(() => {
@@ -100,20 +117,11 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
           <PrimaryButton
             label="checkout"
             icon={arrowRight}
-            link={userStore?.loggedIn ? "checkout" : "shopping-bag"}
-            onClick={() => {
-              const notLoggedInErr = "Please login first!";
-              if (
-                !userStore?.loggedIn &&
-                !checkoutErrors?.includes(notLoggedInErr)
-              ) {
-                setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
-                burgerMenuStore?.open();
-                setTimeout(() => {
-                  setCheckoutErrors([]);
-                }, 4000);
-              }
-            }}
+            link={
+              userStore?.loggedIn && checkoutStore?.isAllowedToCheckout
+                ? "checkout"
+                : "shopping-bag"
+            }
           />
           <div className="checkout__payment__content__errors">
             {checkoutErrors?.map((message: any) => {

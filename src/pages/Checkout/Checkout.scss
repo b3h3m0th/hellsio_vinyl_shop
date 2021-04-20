@@ -1,0 +1,15 @@
+.checkout-final {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__wrapper {
+    min-width: 50%;
+    text-align: left;
+
+    &__info {
+    }
+  }
+}
