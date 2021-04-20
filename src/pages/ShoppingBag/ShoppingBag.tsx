@@ -10,20 +10,33 @@ import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import gsap from "gsap";
 import toBase64 from "../../util/toBase64";
+import { UserStore } from "../../stores/userStore";
+import { BurgerMenuStore } from "../../stores/burgerMenuStore";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
 
-interface CheckoutProps {
+interface ShoppingBagProps {
   languageStore?: LanguageStore;
   checkoutStore?: CheckoutStore;
+  userStore?: UserStore;
+  burgerMenuStore?: BurgerMenuStore;
 }
 
-const Checkout: React.FC<CheckoutProps> = ({
+const ShoppingBag: React.FC<ShoppingBagProps> = ({
   languageStore,
   checkoutStore,
-}: CheckoutProps) => {
+  userStore,
+  burgerMenuStore,
+}: ShoppingBagProps) => {
   const [formats, setFormats] = useState<Array<any>>([]);
+  const [checkoutErrors, setCheckoutErrors] = useState<Array<string>>();
+
+  useEffect(() => {
+    (async (): Promise<void> => {
+      await userStore?.isLoggedIn();
+    })();
+  }, [userStore]);
 
   const handleFormatChange = (e: any) => {
     setFormats([...formats, e.target.value]);
@@ -84,7 +97,33 @@ const Checkout: React.FC<CheckoutProps> = ({
               </li>
             </ul>
           </div>
-          <PrimaryButton label="checkout" icon={arrowRight} link="checkout" />
+          <PrimaryButton
+            label="checkout"
+            icon={arrowRight}
+            link={userStore?.loggedIn ? "checkout" : "shopping-bag"}
+            onClick={() => {
+              const notLoggedInErr = "Please login first!";
+              if (
+                !userStore?.loggedIn &&
+                !checkoutErrors?.includes(notLoggedInErr)
+              ) {
+                setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
+                burgerMenuStore?.open();
+                setTimeout(() => {
+                  setCheckoutErrors([]);
+                }, 4000);
+              }
+            }}
+          />
+          <div className="checkout__payment__content__errors">
+            {checkoutErrors?.map((message: any) => {
+              return (
+                <p className="checkout__payment__content__errors__error">
+                  {message}
+                </p>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="checkout__products">
@@ -150,4 +189,9 @@ const Checkout: React.FC<CheckoutProps> = ({
   );
 };
 
-export default inject("languageStore", "checkoutStore")(observer(Checkout));
+export default inject(
+  "languageStore",
+  "checkoutStore",
+  "userStore",
+  "burgerMenuStore"
+)(observer(ShoppingBag));

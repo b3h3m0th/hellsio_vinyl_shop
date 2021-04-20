@@ -9,7 +9,10 @@ import {
 import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
+
 import { LanguageStore } from "./stores/languageStore";
+import { AdminStore } from "./stores/adminStore";
+import { UserStore } from "./stores/userStore";
 
 //pages
 import Home from "./pages/Home/Home";
@@ -19,9 +22,8 @@ import Popular from "./pages/Popular/Popular";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
-import { AdminStore } from "./stores/adminStore";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
-import { UserStore } from "./stores/userStore";
+import Checkout from "./pages/Checkout/Checkout";
 
 const pages = {
   home: Home,
@@ -32,6 +34,7 @@ const pages = {
   shoppingBag: ShoppingBag,
   admin: Admin,
   adminLogin: AdminLogin,
+  checkout: Checkout,
 };
 
 interface AppProps {
@@ -49,7 +52,8 @@ const App: React.FC<AppProps> = ({
     (async (): Promise<void> => {
       await adminStore?.isLoggedIn();
     })();
-  }, [userStore, adminStore]);
+  }, [adminStore]);
+
   return (
     <div className="App">
       <Router>
@@ -71,12 +75,17 @@ const App: React.FC<AppProps> = ({
             path={`/${languageStore?.language}/popular`}
             component={pages.popular}
           />
-
           <Route
             exact
             path={`/${languageStore?.language}/shopping-bag`}
             component={pages.shoppingBag}
           />
+
+          <Route
+            exact
+            path={`/${languageStore?.language}/checkout`}
+            component={pages.checkout}
+          ></Route>
 
           {/* products page */}
           <Route
@@ -84,21 +93,18 @@ const App: React.FC<AppProps> = ({
             path={`/${languageStore?.language}/products`}
             component={pages.newArrivals}
           ></Route>
-
           {/* genres page */}
           <Route
             exact
             path={`/${languageStore?.language}/genres`}
             component={pages.productDetail}
           ></Route>
-
           {/* product detail page */}
           <Route
             exact
             path={`/${languageStore?.language}/products/:albumCode`}
             component={pages.productDetail}
           ></Route>
-
           {/* Admin */}
           <Route
             path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
@@ -112,7 +118,6 @@ const App: React.FC<AppProps> = ({
                   )
             }
           ></Route>
-
           <Route
             path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
             component={pages.adminLogin}

@@ -54,6 +54,21 @@
           }
         }
       }
+
+      &__errors {
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        &__error {
+          margin: 5px 0px 0px 0px;
+          color: var(--color-red);
+          width: 250px;
+          transition: 0.2s;
+        }
+      }
     }
   }
 
