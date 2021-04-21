@@ -8,13 +8,20 @@
   &__wrapper {
     min-width: 50%;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     &__info {
       &__form {
         width: 100%;
 
         &__firstname,
-        &__lastname {
+        &__lastname,
+        &__street,
+        &__street-number,
+        &__postal-code,
+        &__city {
           display: flex;
           justify-content: flex-start;
           align-items: flex-start;
@@ -35,6 +42,43 @@
             color: var(--color-white);
             width: 100%;
             max-width: 280px;
+          }
+        }
+
+        &__street,
+        &__street-number,
+        &__city,
+        &__postal-code {
+          display: inline-flex;
+        }
+
+        &__street-number {
+          width: 100px;
+          margin-left: 10px;
+        }
+
+        &__street {
+          width: 170px;
+        }
+
+        &__postal-code {
+          margin-right: 10px;
+          width: 90px;
+        }
+
+        &__birthdate {
+          margin-bottom: 20px;
+
+          input {
+            margin-left: 75px;
+            width: 150px;
+          }
+        }
+
+        &__country {
+          select {
+            width: 150px;
+            margin-left: 80px;
           }
         }
       }
