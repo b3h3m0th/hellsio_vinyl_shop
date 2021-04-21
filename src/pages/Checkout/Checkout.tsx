@@ -52,7 +52,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           <div className="checkout-final__wrapper">
             <div className="checkout-final__wrapper__info">
               <Title
-                title="Checkout - Contact Information"
+                title="Checkout - Shipping Details"
                 link="checkout"
               ></Title>
               <form className="checkout-final__wrapper__info__form">
@@ -135,18 +135,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                 <div className="checkout-final__wrapper__info__form__country">
                   <label htmlFor="birthdate">Country</label>
                   <CountryDropdown
+                    priorityOptions={["Austria"]}
                     value={billingData.country}
                     onChange={(val) =>
                       setBillingData({
-                        firstname: val,
+                        firstname: billingData.firstname,
                         lastname: billingData?.lastname,
                         birthdate: billingData?.birthdate,
                         street: billingData?.street,
                         street_number: billingData?.street_number,
                         postal_code: billingData?.postal_code,
                         city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
+                        state: billingData.state,
+                        country: val,
                       })
                     }
                   />
@@ -157,7 +158,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           <div className="checkout-final__wrapper">
             <div className="checkout-final__wrapper__info">
               <Title
-                title="Checkout - Shipping Information"
+                title="Checkout - Your Order Summary"
                 link="checkout"
               ></Title>
               <form className="checkout-final__wrapper__info__form">

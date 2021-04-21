@@ -10,6 +10,8 @@ const ecclesia_diabolica_catholica = require("../../assets/audio/behemoth-eccles
 const wash_it_all_away = require("../../assets/audio/five_finger_death_punch-wash_it_all_away.mp3");
 const rats = require("../../assets/audio/ghost-rats.mp3");
 
+//https://api.laut.fm/station/wacken
+
 interface AudioVisualizerProps {
   musicStore?: MusicStore;
 }
@@ -28,7 +30,7 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     wash_it_all_away,
   ];
 
-  songs = "https://rautemusik-de-hz-fal-stream15.radiohost.de/wackenradio";
+  songs = "http://stream.laut.fm/wacken";
 
   useEffect(() => {
     new Howl({

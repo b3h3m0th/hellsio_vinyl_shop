@@ -12,18 +12,33 @@
   .audio-wrapper {
     background-color: transparent;
     height: 100%;
-    width: 30%;
+    width: auto;
     min-width: 100px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 
-    &__credits {
-      margin-left: 20px;
+    &__content {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--color-red);
+      flex-direction: column;
+
+      &__song {
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-red);
+      }
+
+      &__credits {
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-white);
+        font-size: 0.9em;
+        opacity: 0.2;
+      }
     }
   }
 }
