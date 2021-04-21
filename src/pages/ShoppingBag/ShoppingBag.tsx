@@ -155,64 +155,71 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
         </div>
         <div className="checkout__products">
           <div className="checkout__products__wrapper">
-            {toJS(checkoutStore?.products)?.map((p: any, index) => {
-              return (
-                <div
-                  key={index}
-                  className="checkout__products__wrapper__product"
-                >
-                  <img
-                    className="checkout__products__wrapper__product__album-cover"
-                    src={`data:image/png;base64,${toBase64(p.cover.data)}`}
-                    alt="Hellsio album cover"
-                  />
-                  <div className="checkout__products__wrapper__product__name">
-                    <p className="checkout__products__wrapper__product__name__title">
-                      {p.name}
-                    </p>
-                    <p className="checkout__products__wrapper__product__name__artist">
-                      {p.artist}
-                    </p>
-                  </div>
-                  <div className="checkout__products__wrapper__product__quantity">
-                    <QuantityPicker
-                      label="Quantity"
-                      maxValue={10}
-                      value={p.amount}
-                      setValue={() => 0}
+            {!toJS(checkoutStore?.products) ||
+            toJS(checkoutStore?.products)?.length === 0 ? (
+              <div className="checkout__products__wrapper__empty">
+                Your shopping bag is empty ... The Void
+              </div>
+            ) : (
+              toJS(checkoutStore?.products)?.map((p: any, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="checkout__products__wrapper__product"
+                  >
+                    <img
+                      className="checkout__products__wrapper__product__album-cover"
+                      src={`data:image/png;base64,${toBase64(p.cover.data)}`}
+                      alt="Hellsio album cover"
                     />
-                  </div>
-                  <div className="checkout__products__wrapper__product__format">
-                    <DropDownPicker
-                      label="Format"
-                      options={[
-                        ...formats.map((format: any) => {
-                          return { id: format.name, optionValue: p.price };
-                        }),
-                      ]}
-                      onChange={(e) => handleFormatChange(e)}
-                    />
-                  </div>
-                  <div className="checkout__products__wrapper__product__price">
-                    <div className="checkout__products__wrapper__product__price__price">
-                      $ {p.price}
+                    <div className="checkout__products__wrapper__product__name">
+                      <p className="checkout__products__wrapper__product__name__title">
+                        {p.name}
+                      </p>
+                      <p className="checkout__products__wrapper__product__name__artist">
+                        {p.artist}
+                      </p>
                     </div>
-                    <div className="checkout__products__wrapper__product__price__per-item">
-                      per item
+                    <div className="checkout__products__wrapper__product__quantity">
+                      <QuantityPicker
+                        label="Quantity"
+                        maxValue={10}
+                        value={p.amount}
+                        setValue={() => 0}
+                      />
                     </div>
-                  </div>
+                    <div className="checkout__products__wrapper__product__format">
+                      <DropDownPicker
+                        label="Format"
+                        options={[
+                          ...formats.map((format: any) => {
+                            return { id: format.name, optionValue: p.price };
+                          }),
+                        ]}
+                        onChange={(e) => handleFormatChange(e)}
+                      />
+                    </div>
+                    <div className="checkout__products__wrapper__product__price">
+                      <div className="checkout__products__wrapper__product__price__price">
+                        $ {p.price}
+                      </div>
+                      <div className="checkout__products__wrapper__product__price__per-item">
+                        per item
+                      </div>
+                    </div>
 
-                  <div className="checkout__products__wrapper__product__remove">
-                    <span
-                      className="checkout__products__wrapper__product__remove__text"
-                      onClick={() => checkoutStore?.removeProduct(index)}
-                    >
-                      remove
-                    </span>
+                    <div className="checkout__products__wrapper__product__remove">
+                      <span
+                        className="checkout__products__wrapper__product__remove__text"
+                        onClick={() => checkoutStore?.removeProduct(index)}
+                      >
+                        remove
+                      </span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </div>

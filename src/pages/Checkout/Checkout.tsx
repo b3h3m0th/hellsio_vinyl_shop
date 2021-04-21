@@ -44,7 +44,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
-  const [billingErrors, setBillingErrors] = useState<Array<any>>();
+  const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
   console.log(billingData);
 
@@ -173,26 +173,27 @@ const Checkout: React.FC<CheckoutProps> = ({
               ></Title>
               <form className="checkout-final__wrapper__info__form">
                 <ul className="checkout-final__wrapper__info__form__products">
-                  {checkoutStore?.products.map((p: any, i: number) => {
-                    console.log(toJS(p));
-                    return (
-                      <li>
-                        <Link
-                          to={`/${languageStore.language}/products/${p.code}`}
-                        >
-                          {`${p.name} by ${p.artist}`}
-                        </Link>
-                        <span>{p.amount}x</span>
-                        <span>${p.price}</span>
-                      </li>
-                    );
-                  })}
+                  {toJS(checkoutStore?.products || []).map(
+                    (p: any, i: number) => {
+                      return (
+                        <li key={i}>
+                          <Link
+                            to={`/${languageStore.language}/products/${p.code}`}
+                          >
+                            {`${p.name} by ${p.artist}`}
+                          </Link>
+                          <span>{p.amount}x</span>
+                          <span>${p.price}</span>
+                        </li>
+                      );
+                    }
+                  )}
                   <hr />
                   <div className="checkout-final__wrapper__info__form__products__sum">
                     <span>Total</span>
                     <span>
                       $
-                      {checkoutStore?.products
+                      {toJS(checkoutStore?.products || [])
                         .map((p: any) => p)
                         .reduce((a, c) => {
                           return a.price * a.amount + c.price * c.amount;
@@ -206,13 +207,13 @@ const Checkout: React.FC<CheckoutProps> = ({
                   icon={arrowRightWhite}
                   onClick={() => {}}
                 />
-                <div className="sign-in-errors">
-                  <ul className="sign-in-errors__errors">
-                    {[].map((err: any, index: number) => {
+                <div className="billing-errors">
+                  <ul className="billing-errors__errors">
+                    {billingErrors?.map((err: any, index: number) => {
                       return (
                         <li
                           key={index}
-                          className="sign-in-errors__errors__error"
+                          className="billing-errors__errors__error"
                         >
                           {err}
                         </li>

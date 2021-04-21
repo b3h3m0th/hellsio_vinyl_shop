@@ -99,6 +99,10 @@
       max-height: 100vh;
       margin-top: 11vh;
 
+      &__empty {
+        opacity: 0.2;
+      }
+
       &__product {
         width: 100%;
         display: flex;
