@@ -9,6 +9,7 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CountryDropdown } from "react-country-region-selector";
 import { Link } from "react-router-dom";
 import { toJS } from "mobx";
+import arrayUniq from "array-uniq";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -47,6 +48,13 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
   console.log(billingData);
+  console.log(
+    toJS(checkoutStore?.products || [])
+      .map((p: any) => p)
+      .reduce((a, c) => {
+        return a.price * a.amount + c.price * c.amount;
+      })
+  );
 
   return (
     <>
@@ -192,12 +200,12 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <div className="checkout-final__wrapper__info__form__products__sum">
                     <span>Total</span>
                     <span>
-                      $
-                      {toJS(checkoutStore?.products || [])
-                        .map((p: any) => p)
-                        .reduce((a, c) => {
-                          return a.price * a.amount + c.price * c.amount;
-                        })}
+                      ${/* FIX THIS BULLSHIT!!!!!!!!!! */}
+                      {/* {toJS(checkoutStore?.products || [])
+                        .map((p: any, _: number) => p)
+                        .reduce((a, c, _, array: any[]) => {
+                          return `${a.price * a.amount + c.price * c.amount}`;
+                        })} */}
                     </span>
                   </div>
                 </ul>
