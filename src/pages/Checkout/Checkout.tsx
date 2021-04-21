@@ -7,8 +7,11 @@ import { Redirect } from "react-router";
 import { languageStore, LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CountryDropdown } from "react-country-region-selector";
+import { Link } from "react-router-dom";
+import { toJS } from "mobx";
 
-const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
+const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
+const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 export type BillingData = {
   firstname: string;
@@ -51,6 +54,13 @@ const Checkout: React.FC<CheckoutProps> = ({
         <div className="checkout-final">
           <div className="checkout-final__wrapper">
             <div className="checkout-final__wrapper__info">
+              <Link
+                to="shopping-bag"
+                className="checkout-final__wrapper__info__back"
+              >
+                <img src={arrowRight} alt="Hellsio arrow left" /> Back to
+                Shopping bag
+              </Link>
               <Title
                 title="Checkout - Shipping Details"
                 link="checkout"
@@ -162,13 +172,38 @@ const Checkout: React.FC<CheckoutProps> = ({
                 link="checkout"
               ></Title>
               <form className="checkout-final__wrapper__info__form">
-                <div className="checkout-final__wrapper__info__form__price">
-                  19.90
-                </div>
+                <ul className="checkout-final__wrapper__info__form__products">
+                  {checkoutStore?.products.map((p: any, i: number) => {
+                    console.log(toJS(p));
+                    return (
+                      <li>
+                        <Link
+                          to={`/${languageStore.language}/products/${p.code}`}
+                        >
+                          {`${p.name} by ${p.artist}`}
+                        </Link>
+                        <span>{p.amount}x</span>
+                        <span>${p.price}</span>
+                      </li>
+                    );
+                  })}
+                  <hr />
+                  <div className="checkout-final__wrapper__info__form__products__sum">
+                    <span>Total</span>
+                    <span>
+                      $
+                      {checkoutStore?.products
+                        .map((p: any) => p)
+                        .reduce((a, c) => {
+                          return a.price * a.amount + c.price * c.amount;
+                        })}
+                    </span>
+                  </div>
+                </ul>
                 <PrimaryButton
                   label="Order now"
                   link=""
-                  icon={arrowRight}
+                  icon={arrowRightWhite}
                   onClick={() => {}}
                 />
                 <div className="sign-in-errors">

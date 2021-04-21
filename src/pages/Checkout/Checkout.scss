@@ -13,6 +13,27 @@
     align-items: center;
 
     &__info {
+      &:last-child {
+        width: 350px;
+
+        .primary-button {
+          max-width: 100% !important;
+        }
+      }
+
+      &__back {
+        display: flex;
+        color: var(--color-red);
+        margin-bottom: 20px;
+        align-items: center;
+
+        img {
+          margin-right: 10px;
+          transform: rotate(180deg);
+          max-height: 12px;
+        }
+      }
+
       &__form {
         width: 100%;
 
@@ -79,6 +100,31 @@
           select {
             width: 150px;
             margin-left: 80px;
+          }
+        }
+
+        &__products {
+          padding: 0;
+
+          a {
+            max-width: 200px;
+            overflow: hidden;
+          }
+
+          li {
+            display: flex;
+            justify-content: space-between;
+          }
+
+          hr {
+            border-style: solid;
+            opacity: 0.2;
+          }
+
+          &__sum {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
           }
         }
       }
