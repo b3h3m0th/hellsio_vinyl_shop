@@ -36,7 +36,7 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
     (async (): Promise<void> => {
       await userStore?.isLoggedIn();
     })();
-  }, []);
+  }, [userStore]);
 
   const handleFormatChange = (e: any) => {
     setFormats([...formats, e.target.value]);
@@ -45,18 +45,32 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   const validateShoppingBag = () => {
     const notLoggedInErr = "Please login first!";
     const cartEmptyErr = "Please add something to your cart before continuing!";
-    if (!userStore?.loggedIn && checkoutErrors?.length === 0) {
-      setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
+
+    if (!userStore?.loggedIn) {
       burgerMenuStore?.open();
+      if (checkoutErrors?.length === 0) {
+        setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
+      }
+
+      setTimeout(() => {
+        setCheckoutErrors([]);
+      }, 4000);
+      checkoutStore?.setIsAllowedToCheckout(false);
     } else if (
-      (checkoutStore?.products.length === 0 || !checkoutStore?.products) &&
-      checkoutErrors?.length === 0
+      checkoutStore?.products.length === 0 ||
+      !checkoutStore?.products
     ) {
-      setCheckoutErrors([...(checkoutErrors || []), cartEmptyErr]);
+      if (checkoutErrors?.length === 0) {
+        setCheckoutErrors([...(checkoutErrors || []), cartEmptyErr]);
+      }
+
+      setTimeout(() => {
+        setCheckoutErrors([]);
+      }, 4000);
+      checkoutStore?.setIsAllowedToCheckout(false);
+    } else {
+      checkoutStore?.setIsAllowedToCheckout(true);
     }
-    setTimeout(() => {
-      setCheckoutErrors([]);
-    }, 4000);
   };
 
   useEffect(() => {
@@ -82,118 +96,127 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   }, []);
 
   return (
-    <div className="checkout">
-      <div className="checkout__payment">
-        <div className="checkout__payment__content">
-          <Title title="Your shopping bag" link={`shopping-bag`} />
-          <p className="checkout__payment__content__subtitle">
-            Continue to checkout <br /> and payment process
-          </p>
-          <div className="checkout__payment__content__payment-info">
-            <ul>
-              <li>
-                <span>Free shipping</span>
-              </li>
-              <li>
-                <span> 2 - 7 days delivery time</span>
-              </li>
-              <li>
-                <span className="payment-options">
-                  {paymentOptions.map((opt: any, index: number) => {
-                    const img = require(`../../assets/img/payment_options/${opt.img}`);
-                    return (
-                      <img
-                        key={index}
-                        src={img}
-                        alt="Hellsio payment option"
-                        style={{ height: opt.imgSize }}
-                      />
-                    );
-                  })}
-                </span>
-              </li>
-            </ul>
+    <>
+      <div className="checkout">
+        <div className="checkout__payment">
+          <div className="checkout__payment__content">
+            <Title title="Your shopping bag" link={`shopping-bag`} />
+            <p className="checkout__payment__content__subtitle">
+              Continue to checkout <br /> and payment process
+            </p>
+            <div className="checkout__payment__content__payment-info">
+              <ul>
+                <li>
+                  <span>Free shipping</span>
+                </li>
+                <li>
+                  <span> 2 - 7 days delivery time</span>
+                </li>
+                <li>
+                  <span className="payment-options">
+                    {paymentOptions.map((opt: any, index: number) => {
+                      const img = require(`../../assets/img/payment_options/${opt.img}`);
+                      return (
+                        <img
+                          key={index}
+                          src={img}
+                          alt="Hellsio payment option"
+                          style={{ height: opt.imgSize }}
+                        />
+                      );
+                    })}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <PrimaryButton
+              label="checkout"
+              icon={arrowRight}
+              link={
+                checkoutStore?.isAllowedToCheckout ? "checkout" : "shopping-bag"
+              }
+              onClick={() => {
+                validateShoppingBag();
+              }}
+            />
+            <div className="checkout__payment__content__errors">
+              {checkoutErrors?.map((message: any, i: number) => {
+                return (
+                  <p
+                    className="checkout__payment__content__errors__error"
+                    key={i}
+                  >
+                    {message}
+                  </p>
+                );
+              })}
+            </div>
           </div>
-          <PrimaryButton
-            label="checkout"
-            icon={arrowRight}
-            link={
-              userStore?.loggedIn && checkoutStore?.isAllowedToCheckout
-                ? "checkout"
-                : "shopping-bag"
-            }
-          />
-          <div className="checkout__payment__content__errors">
-            {checkoutErrors?.map((message: any) => {
+        </div>
+        <div className="checkout__products">
+          <div className="checkout__products__wrapper">
+            {toJS(checkoutStore?.products)?.map((p: any, index) => {
               return (
-                <p className="checkout__payment__content__errors__error">
-                  {message}
-                </p>
+                <div
+                  key={index}
+                  className="checkout__products__wrapper__product"
+                >
+                  <img
+                    className="checkout__products__wrapper__product__album-cover"
+                    src={`data:image/png;base64,${toBase64(p.cover.data)}`}
+                    alt="Hellsio album cover"
+                  />
+                  <div className="checkout__products__wrapper__product__name">
+                    <p className="checkout__products__wrapper__product__name__title">
+                      {p.name}
+                    </p>
+                    <p className="checkout__products__wrapper__product__name__artist">
+                      {p.artist}
+                    </p>
+                  </div>
+                  <div className="checkout__products__wrapper__product__quantity">
+                    <QuantityPicker
+                      label="Quantity"
+                      maxValue={10}
+                      value={p.amount}
+                      setValue={() => 0}
+                    />
+                  </div>
+                  <div className="checkout__products__wrapper__product__format">
+                    <DropDownPicker
+                      label="Format"
+                      options={[
+                        ...formats.map((format: any) => {
+                          return { id: format.name, optionValue: p.price };
+                        }),
+                      ]}
+                      onChange={(e) => handleFormatChange(e)}
+                    />
+                  </div>
+                  <div className="checkout__products__wrapper__product__price">
+                    <div className="checkout__products__wrapper__product__price__price">
+                      $ {p.price}
+                    </div>
+                    <div className="checkout__products__wrapper__product__price__per-item">
+                      per item
+                    </div>
+                  </div>
+
+                  <div className="checkout__products__wrapper__product__remove">
+                    <span
+                      className="checkout__products__wrapper__product__remove__text"
+                      onClick={() => checkoutStore?.removeProduct(index)}
+                    >
+                      remove
+                    </span>
+                  </div>
+                </div>
               );
             })}
           </div>
         </div>
       </div>
-      <div className="checkout__products">
-        <div className="checkout__products__wrapper">
-          {toJS(checkoutStore?.products)?.map((p: any, index) => {
-            return (
-              <div key={index} className="checkout__products__wrapper__product">
-                <img
-                  className="checkout__products__wrapper__product__album-cover"
-                  src={`data:image/png;base64,${toBase64(p.cover.data)}`}
-                  alt="Hellsio album cover"
-                />
-                <div className="checkout__products__wrapper__product__name">
-                  <p className="checkout__products__wrapper__product__name__title">
-                    {p.name}
-                  </p>
-                  <p className="checkout__products__wrapper__product__name__artist">
-                    {p.artist}
-                  </p>
-                </div>
-                <div className="checkout__products__wrapper__product__quantity">
-                  <QuantityPicker
-                    label="Quantity"
-                    maxValue={10}
-                    value={p.amount}
-                    setValue={() => 0}
-                  />
-                </div>
-                <div className="checkout__products__wrapper__product__format">
-                  <DropDownPicker
-                    label="Format"
-                    options={[
-                      ...formats.map((format: any) => {
-                        return { id: format.name, optionValue: p.price };
-                      }),
-                    ]}
-                    onChange={(e) => handleFormatChange(e)}
-                  />
-                </div>
-                <div className="checkout__products__wrapper__product__price">
-                  <div className="checkout__products__wrapper__product__price__price">
-                    $ {p.price}
-                  </div>
-                  <div className="checkout__products__wrapper__product__price__per-item">
-                    per item
-                  </div>
-                </div>
-
-                <div className="checkout__products__wrapper__product__remove">
-                  <span
-                    className="checkout__products__wrapper__product__remove__text"
-                    onClick={() => checkoutStore?.removeProduct(index)}
-                  >
-                    remove
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

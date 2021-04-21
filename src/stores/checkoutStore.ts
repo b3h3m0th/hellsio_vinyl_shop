@@ -44,6 +44,10 @@ export class CheckoutStore {
       console.log(err);
     }
   };
+
+  setIsAllowedToCheckout: (value: boolean) => void = (value: boolean) => {
+    this.isAllowedToCheckout = value;
+  };
 }
 
 decorate(CheckoutStore, {

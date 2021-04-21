@@ -10,6 +10,34 @@
     text-align: left;
 
     &__info {
+      &__form {
+        width: 100%;
+
+        &__firstname,
+        &__lastname {
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+          flex-direction: column;
+          margin-bottom: 20px;
+
+          label {
+            color: var(--color-white);
+            display: block;
+          }
+
+          input {
+            border: none;
+            border-bottom: 2px solid rgba($color: #fff, $alpha: 0.5);
+            background-color: transparent;
+            padding: 10px 5px;
+            outline: none;
+            color: var(--color-white);
+            width: 100%;
+            max-width: 280px;
+          }
+        }
+      }
     }
   }
 }

@@ -11,6 +11,7 @@ interface PrimaryButtonProps {
   icon?: any;
   submit?: boolean;
   onClick?: () => void;
+  onMouseEnter?: () => void;
 }
 
 const PrimaryButton = ({
@@ -19,12 +20,14 @@ const PrimaryButton = ({
   languageStore,
   icon,
   submit,
-  onClick,
+  onClick = () => void 0,
+  onMouseEnter = () => void 0,
 }: PrimaryButtonProps) => {
   return (
     <Link
       to={`/${languageStore?.language}/${link}`}
-      onClick={onClick && onClick}
+      onClick={() => onClick()}
+      onMouseEnter={() => onMouseEnter()}
     >
       <button className="primary-button" type={submit ? "submit" : "button"}>
         <p>{label}</p>
