@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import "./GenreCheckBox.scss";
-// import { Genre } from "../../../models/Genre";
-// import gsap from "gsap";
 
 interface GenreCheckBoxProps {
   label: string;
+  checked: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const GenreCheckBox: React.FC<GenreCheckBoxProps> = ({
   label,
+  checked,
+  onChange,
 }: GenreCheckBoxProps) => {
-  const [checked, setChecked] = useState(false);
-
   return (
     <label
       className={`genre-checkbox__container ${
@@ -24,8 +24,8 @@ const GenreCheckBox: React.FC<GenreCheckBoxProps> = ({
         className="genre-checkbox__container__checkbox"
         type="checkbox"
         checked={checked}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setChecked(!checked);
+        onChange={(e) => {
+          onChange(e);
         }}
       />
     </label>

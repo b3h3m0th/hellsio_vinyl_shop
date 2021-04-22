@@ -1,6 +1,16 @@
 import axios from "axios";
 import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
 import { create, persist } from "mobx-persist";
+import * as localForage from "localforage";
+
+localForage.config({
+  driver: localForage.WEBSQL, // Force WebSQL; same as using setDriver()
+  name: "hellsio",
+  version: 1.0,
+  size: 500000000,
+  storeName: "hellsio",
+  description: "Hellsio vinyl shop localForage",
+});
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
@@ -11,9 +21,11 @@ export class CheckoutStore {
   );
 
   @observable isAllowedToCheckout: boolean = false;
+  @persist @observable saveProductsInStorage: boolean;
 
   constructor() {
     makeAutoObservable(this);
+    this.saveProductsInStorage = false;
   }
 
   @action setProducts: (products: Array<CheckoutProduct>) => void = (
@@ -58,9 +70,16 @@ export class CheckoutStore {
   ) => {
     this.isAllowedToCheckout = value;
   };
+
+  @action setSaveProductsInStorage: (value: boolean) => void = (
+    value: boolean
+  ) => {
+    this.saveProductsInStorage = value;
+  };
 }
 
-const hydrate = create({});
+const hydrate = create({ storage: localForage, jsonify: false });
 
 export const checkoutStore = new CheckoutStore();
-hydrate("checkoutStore", checkoutStore);
+if (checkoutStore.saveProductsInStorage)
+  hydrate("checkoutStore", checkoutStore);

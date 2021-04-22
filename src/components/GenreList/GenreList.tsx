@@ -52,7 +52,7 @@ const GenreList: React.FC<GenresListProps> = ({
       <Title title={title} link={link} />
       <div className="genres-list__genres-container">
         {genres.map((genre: any, index: number) => {
-          return <GenreCheckBox label={genre.name} key={genre.genre_id} />;
+          return null;
         })}
       </div>
     </div>

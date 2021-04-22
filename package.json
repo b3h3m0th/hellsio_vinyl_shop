@@ -23,6 +23,7 @@
     "framer-motion": "^2.6.5",
     "gsap": "^3.5.1",
     "howler": "^2.2.0",
+    "localforage": "^1.9.0",
     "mobx": "^6.2.0",
     "mobx-persist": "^0.4.1",
     "mobx-react": "^7.1.0",

@@ -12,6 +12,7 @@ import gsap from "gsap";
 import toBase64 from "../../util/toBase64";
 import { UserStore } from "../../stores/userStore";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
+import GenreCheckBox from "../../components/GenreList/GenreCheckBox/GenreCheckBox";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -38,21 +39,6 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   }, [userStore]);
 
   useEffect(() => {
-    gsap.fromTo(
-      ".checkout__products__wrapper__product",
-      1.8,
-      {
-        opacity: 0,
-        x: 100,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        ease: "power4",
-        stagger: 0.2,
-      }
-    );
-
     (async () => {
       setFormats((await checkoutStore?.fetchFormates()) || []);
     })();
@@ -92,6 +78,19 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                   </span>
                 </li>
               </ul>
+            </div>
+            <div className="checkout__payment__content__cache">
+              <GenreCheckBox
+                label="Save your cart when leaving?"
+                checked={
+                  checkoutStore?.saveProductsInStorage !== undefined
+                    ? checkoutStore.saveProductsInStorage
+                    : false
+                }
+                onChange={(e) => {
+                  checkoutStore?.setSaveProductsInStorage(e.target.checked);
+                }}
+              />
             </div>
             <PrimaryButton
               label="checkout"
