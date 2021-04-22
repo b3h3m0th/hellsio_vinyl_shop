@@ -59,8 +59,6 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(checkoutStore?.products);
-
   return (
     <>
       <div className="checkout">

@@ -9,6 +9,7 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CountryDropdown } from "react-country-region-selector";
 import { Link } from "react-router-dom";
 import { toJS } from "mobx";
+import { userStore } from "../../stores/userStore";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -16,7 +17,7 @@ const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.p
 export type BillingData = {
   firstname: string;
   lastname: string;
-  birthdate: Date;
+  birthdate: Date | null;
   street: string;
   street_number: string;
   postal_code: string;
@@ -36,7 +37,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [billingData, setBillingData] = useState<BillingData>({
     firstname: "",
     lastname: "",
-    birthdate: new Date(0),
+    birthdate: null,
     street: "",
     street_number: "",
     postal_code: "",
@@ -44,9 +45,29 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
-  const [billingErrors] = useState<Array<any>>([]);
+  const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
-  // const validateOrder: () => void = () => {};
+  const validateOrder: () => void = () => {
+    setBillingErrors(["hi"]);
+    let billingErrors: Array<string> = [];
+
+    if (!userStore.loggedIn) billingErrors.push("Please Login before checkout");
+
+    let fieldRequiredError = "Please fill out all required fields!";
+
+    let k: keyof typeof billingData;
+    for (k in billingData as BillingData) {
+      console.log(billingData[k]);
+      if (!billingData[k] && !billingErrors.includes(fieldRequiredError))
+        billingErrors.push(fieldRequiredError);
+    }
+
+    setBillingErrors(billingErrors);
+
+    setTimeout(() => {
+      setBillingErrors([]);
+    }, 4000);
+  };
 
   return (
     <>
@@ -308,24 +329,21 @@ const Checkout: React.FC<CheckoutProps> = ({
                   link="checkout"
                   icon={arrowRightWhite}
                   onClick={() => {
-                    console.log(billingData);
+                    validateOrder();
                   }}
                 />
-                <div className="billing-errors">
-                  <ul className="billing-errors__errors">
-                    {billingErrors?.map((err: any, index: number) => {
-                      return (
-                        <li
-                          key={index}
-                          className="billing-errors__errors__error"
-                        >
-                          {err}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
               </form>
+              <div className="billing-errors">
+                <ul className="billing-errors__errors">
+                  {billingErrors?.map((err: any, index: number) => {
+                    return (
+                      <li key={index} className="billing-errors__errors__error">
+                        {err}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

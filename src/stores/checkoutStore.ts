@@ -12,7 +12,6 @@ export class CheckoutStore {
   @action setProducts: (products: Array<CheckoutProduct>) => void = (
     products: Array<CheckoutProduct>
   ) => {
-    this.products.clear();
     products.forEach((product: CheckoutProduct) => this.products.push(product));
   };
 
