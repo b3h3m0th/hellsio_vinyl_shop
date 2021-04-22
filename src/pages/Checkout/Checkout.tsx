@@ -10,6 +10,7 @@ import { CountryDropdown } from "react-country-region-selector";
 import { Link } from "react-router-dom";
 import { toJS } from "mobx";
 import { userStore } from "../../stores/userStore";
+import { fetchCheckout } from "./fetchCheckout";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -48,25 +49,31 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
   const validateOrder: () => void = () => {
-    setBillingErrors(["hi"]);
     let billingErrors: Array<string> = [];
+
+    if (!checkoutStore?.products || checkoutStore.products.length <= 0)
+      billingErrors.push("Please add items to your order before checkout");
 
     if (!userStore.loggedIn) billingErrors.push("Please Login before checkout");
 
     let fieldRequiredError = "Please fill out all required fields!";
-
     let k: keyof typeof billingData;
     for (k in billingData as BillingData) {
-      console.log(billingData[k]);
       if (!billingData[k] && !billingErrors.includes(fieldRequiredError))
         billingErrors.push(fieldRequiredError);
     }
 
-    setBillingErrors(billingErrors);
-
-    setTimeout(() => {
-      setBillingErrors([]);
-    }, 4000);
+    if (billingErrors && billingErrors.length >= 1) {
+      setBillingErrors(billingErrors);
+      setTimeout(() => {
+        setBillingErrors([]);
+      }, 4000);
+    } else {
+      console.log(billingData);
+      (async () => {
+        await fetchCheckout(billingData);
+      })();
+    }
   };
 
   return (

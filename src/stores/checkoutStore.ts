@@ -1,13 +1,20 @@
 import axios from "axios";
-import { observable, action, IObservableArray } from "mobx";
+import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
+import { create, persist } from "mobx-persist";
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
 export class CheckoutStore {
+  @persist("list")
   products: IObservableArray<CheckoutProduct> = observable.array<CheckoutProduct>(
     []
   );
+
   @observable isAllowedToCheckout: boolean = false;
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   @action setProducts: (products: Array<CheckoutProduct>) => void = (
     products: Array<CheckoutProduct>
@@ -53,4 +60,7 @@ export class CheckoutStore {
   };
 }
 
+const hydrate = create({});
+
 export const checkoutStore = new CheckoutStore();
+hydrate("checkoutStore", checkoutStore);
