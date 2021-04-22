@@ -9,7 +9,6 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CountryDropdown } from "react-country-region-selector";
 import { Link } from "react-router-dom";
 import { toJS } from "mobx";
-import arrayUniq from "array-uniq";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -47,7 +46,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   });
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
-  console.log(billingData);
+  const validateOrder: () => void = () => {};
 
   return (
     <>
@@ -73,7 +72,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="firstname"
                     name="firstname"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: e.target.value,
                         lastname: billingData?.lastname,
@@ -84,8 +83,8 @@ const Checkout: React.FC<CheckoutProps> = ({
                         city: billingData?.city,
                         state: billingData?.state,
                         country: billingData?.country,
-                      });
-                    }}
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__lastname">
@@ -94,7 +93,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="lastname"
                     name="lastname"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: e.target.value,
+                        birthdate: billingData?.birthdate,
+                        street: billingData?.street,
+                        street_number: billingData?.street_number,
+                        postal_code: billingData?.postal_code,
+                        city: billingData?.city,
+                        state: billingData?.state,
+                        country: billingData?.country,
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__birthdate">
@@ -103,7 +114,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="date"
                     id="birthdate"
                     name="birthdate"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: new Date(e.target.value),
+                        street: billingData?.street,
+                        street_number: billingData?.street_number,
+                        postal_code: billingData?.postal_code,
+                        city: billingData?.city,
+                        state: billingData?.state,
+                        country: billingData?.country,
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__street">
@@ -112,7 +135,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="street"
                     name="street"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: billingData?.birthdate,
+                        street: e.target.value,
+                        street_number: billingData?.street_number,
+                        postal_code: billingData?.postal_code,
+                        city: billingData?.city,
+                        state: billingData?.state,
+                        country: billingData?.country,
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__street-number">
@@ -121,7 +156,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="street-number"
                     name="street-number"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: billingData?.birthdate,
+                        street: billingData?.street,
+                        street_number: e.target.value,
+                        postal_code: billingData?.postal_code,
+                        city: billingData?.city,
+                        state: billingData?.state,
+                        country: billingData?.country,
+                      })
+                    }
                   />
                 </div>
                 <br />
@@ -131,7 +178,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="postal-code"
                     name="postal-code"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: billingData?.birthdate,
+                        street: billingData?.street,
+                        street_number: billingData?.street_number,
+                        postal_code: e.target.value,
+                        city: billingData?.city,
+                        state: billingData?.state,
+                        country: billingData?.country,
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__city">
@@ -140,7 +199,40 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="city"
                     name="city"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: billingData?.birthdate,
+                        street: billingData?.street,
+                        street_number: billingData?.street_number,
+                        postal_code: billingData?.postal_code,
+                        city: e.target.value,
+                        state: billingData?.state,
+                        country: billingData.country,
+                      })
+                    }
+                  />
+                </div>
+                <div className="checkout-final__wrapper__info__form__state">
+                  <label htmlFor="city">State</label>
+                  <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setBillingData({
+                        firstname: billingData.firstname,
+                        lastname: billingData?.lastname,
+                        birthdate: billingData?.birthdate,
+                        street: billingData?.street,
+                        street_number: billingData?.street_number,
+                        postal_code: billingData?.postal_code,
+                        city: billingData.city,
+                        state: e.target.value,
+                        country: billingData.country,
+                      })
+                    }
                   />
                 </div>
                 <div className="checkout-final__wrapper__info__form__country">
@@ -213,9 +305,11 @@ const Checkout: React.FC<CheckoutProps> = ({
                 </ul>
                 <PrimaryButton
                   label="Order now"
-                  link=""
+                  link="checkout"
                   icon={arrowRightWhite}
-                  onClick={() => {}}
+                  onClick={() => {
+                    console.log(billingData);
+                  }}
                 />
                 <div className="billing-errors">
                   <ul className="billing-errors__errors">

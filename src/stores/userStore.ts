@@ -10,6 +10,8 @@ import {
 } from "../authorization/token";
 import { register } from "../serviceWorker";
 
+const userLocalstoragePrefix = "hellsio-user" as const;
+
 export class UserStore {
   loggedIn: boolean = false;
 
@@ -40,8 +42,6 @@ export class UserStore {
             loginResponse.data.accessToken,
             loginResponse.data.refreshToken
           );
-
-          console.log(loginResponse);
 
           this.setUser({ email: email, username: email });
           return await this.isLoggedIn();
@@ -131,6 +131,14 @@ export class UserStore {
 
   setUser = (user: User) => {
     this.user = user;
+    localStorage.setItem(`${userLocalstoragePrefix}`, JSON.stringify(user));
+  };
+
+  getUser: () => User = () => {
+    return JSON.parse(
+      localStorage.getItem(`${userLocalstoragePrefix}`) ||
+        JSON.stringify({ email: "Profile", username: "Profile" } as User)
+    );
   };
 
   toggleLoggedIn() {

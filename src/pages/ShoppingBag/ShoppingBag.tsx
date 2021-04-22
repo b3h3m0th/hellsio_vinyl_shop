@@ -30,48 +30,12 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   burgerMenuStore,
 }: ShoppingBagProps) => {
   const [formats, setFormats] = useState<Array<any>>([]);
-  const [checkoutErrors, setCheckoutErrors] = useState<Array<string>>([]);
 
   useEffect(() => {
     (async (): Promise<void> => {
       await userStore?.isLoggedIn();
     })();
   }, [userStore]);
-
-  const handleFormatChange = (e: any) => {
-    setFormats([...formats, e.target.value]);
-  };
-
-  const validateShoppingBag = () => {
-    const notLoggedInErr = "Please login first!";
-    const cartEmptyErr = "Please add something to your cart before continuing!";
-
-    if (!userStore?.loggedIn) {
-      burgerMenuStore?.open();
-      if (checkoutErrors?.length === 0) {
-        setCheckoutErrors([...(checkoutErrors || []), notLoggedInErr]);
-      }
-
-      setTimeout(() => {
-        setCheckoutErrors([]);
-      }, 4000);
-      checkoutStore?.setIsAllowedToCheckout(false);
-    } else if (
-      checkoutStore?.products.length === 0 ||
-      !checkoutStore?.products
-    ) {
-      if (checkoutErrors?.length === 0) {
-        setCheckoutErrors([...(checkoutErrors || []), cartEmptyErr]);
-      }
-
-      setTimeout(() => {
-        setCheckoutErrors([]);
-      }, 4000);
-      checkoutStore?.setIsAllowedToCheckout(false);
-    } else {
-      checkoutStore?.setIsAllowedToCheckout(true);
-    }
-  };
 
   useEffect(() => {
     gsap.fromTo(
@@ -132,25 +96,8 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
             <PrimaryButton
               label="checkout"
               icon={arrowRight}
-              link={
-                checkoutStore?.isAllowedToCheckout ? "checkout" : "shopping-bag"
-              }
-              onClick={() => {
-                validateShoppingBag();
-              }}
+              link={"checkout"}
             />
-            <div className="checkout__payment__content__errors">
-              {checkoutErrors?.map((message: any, i: number) => {
-                return (
-                  <p
-                    className="checkout__payment__content__errors__error"
-                    key={i}
-                  >
-                    {message}
-                  </p>
-                );
-              })}
-            </div>
           </div>
         </div>
         <div className="checkout__products">
@@ -196,7 +143,6 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                             return { id: format.name, optionValue: p.price };
                           }),
                         ]}
-                        onChange={(e) => handleFormatChange(e)}
                       />
                     </div>
                     <div className="checkout__products__wrapper__product__price">

@@ -42,7 +42,8 @@
         &__street,
         &__street-number,
         &__postal-code,
-        &__city {
+        &__city,
+        &__state {
           display: flex;
           justify-content: flex-start;
           align-items: flex-start;
