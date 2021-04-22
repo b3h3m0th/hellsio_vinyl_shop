@@ -1,16 +1,15 @@
-import { decorate, observable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 import { Genre } from "../models/Genre";
 const genres = require("../data/genres.json");
 
 export class GenreListStore {
-  genres = genres;
+  @observable genres = genres;
 
-  selectedGenres: Genre[] = [];
+  @observable selectedGenres: Genre[] = [];
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 }
-
-decorate(GenreListStore, {
-  genres: observable,
-  selectedGenres: observable,
-});
 
 export const genreListStore = new GenreListStore();

@@ -1,4 +1,4 @@
-import { decorate, observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 import axios from "axios";
 import {
   deleteAdminTokenSet,
@@ -9,9 +9,13 @@ import {
 } from "../authorization/token";
 
 export class AdminStore {
-  loggedIn: boolean = false;
+  @observable loggedIn: boolean = false;
 
-  login(
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  @action login(
     username: string,
     password: string,
     errorList: string[],
@@ -84,11 +88,11 @@ export class AdminStore {
     return this.loggedIn;
   };
 
-  toggleLoggedIn() {
+  @action toggleLoggedIn() {
     this.loggedIn = !this.loggedIn;
   }
 
-  logout() {
+  @action logout() {
     (async () => {
       try {
         await axios.delete(
@@ -104,12 +108,5 @@ export class AdminStore {
     })();
   }
 }
-
-decorate(AdminStore, {
-  loggedIn: observable,
-  login: action,
-  toggleLoggedIn: action,
-  logout: action,
-});
 
 export const adminStore = new AdminStore();

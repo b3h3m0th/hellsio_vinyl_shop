@@ -1,19 +1,19 @@
 import axios from "axios";
-import { decorate, observable, action, toJS } from "mobx";
+import { observable, action, toJS } from "mobx";
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
 export class CheckoutStore {
-  products: Array<CheckoutProduct> = [];
-  isAllowedToCheckout: boolean = false;
+  @observable products: Array<CheckoutProduct> = [];
+  @observable isAllowedToCheckout: boolean = false;
 
-  setProducts: (product: Array<CheckoutProduct>) => void = (
+  @action setProducts: (product: Array<CheckoutProduct>) => void = (
     products: Array<CheckoutProduct>
   ) => {
     this.products = products;
   };
 
-  addProduct: (product: CheckoutProduct) => void = (
+  @action addProduct: (product: CheckoutProduct) => void = (
     product: CheckoutProduct
   ) => {
     if (this.products.some((p: any) => p.code === product.code)) {
@@ -26,11 +26,11 @@ export class CheckoutStore {
     console.log(toJS(this.products));
   };
 
-  removeProduct: (index: number) => void = (index: number) => {
+  @action removeProduct: (index: number) => void = (index: number) => {
     this.products.splice(index, 1);
   };
 
-  clear: () => void = () => {
+  @action clear: () => void = () => {
     this.products = [];
   };
 
@@ -45,15 +45,11 @@ export class CheckoutStore {
     }
   };
 
-  setIsAllowedToCheckout: (value: boolean) => void = (value: boolean) => {
+  @action setIsAllowedToCheckout: (value: boolean) => void = (
+    value: boolean
+  ) => {
     this.isAllowedToCheckout = value;
   };
 }
-
-decorate(CheckoutStore, {
-  products: observable,
-  setProducts: action,
-  addProduct: action,
-});
 
 export const checkoutStore = new CheckoutStore();

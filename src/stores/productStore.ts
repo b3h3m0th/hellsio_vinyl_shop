@@ -1,14 +1,20 @@
 import axios from "axios";
-import { decorate, observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 
 export class ProductStore {
-  products: Array<any> = [];
+  @observable products: Array<any> = [];
 
-  setProducts: (products: Array<any>) => void = (products: Array<any>) => {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  @action setProducts: (products: Array<any>) => void = (
+    products: Array<any>
+  ) => {
     this.products = products;
   };
 
-  fetchAll = async (): Promise<any> => {
+  @action fetchAll = async (): Promise<any> => {
     try {
       const albumsResponse = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/product`
@@ -20,7 +26,7 @@ export class ProductStore {
     }
   };
 
-  fetch = async (albumCode: string): Promise<any> => {
+  @action fetch = async (albumCode: string): Promise<any> => {
     try {
       const albumsResponse = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/product/${albumCode}`
@@ -32,7 +38,7 @@ export class ProductStore {
     }
   };
 
-  fetchFew = async (amount: number): Promise<any> => {
+  @action fetchFew = async (amount: number): Promise<any> => {
     try {
       const albumsResponse = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/product/few/${amount}`
@@ -44,12 +50,5 @@ export class ProductStore {
     }
   };
 }
-
-decorate(ProductStore, {
-  products: observable,
-  setProducts: action,
-  fetch: action,
-  fetchAll: action,
-});
 
 export const productStore = new ProductStore();

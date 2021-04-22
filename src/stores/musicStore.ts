@@ -1,16 +1,15 @@
-import { decorate, observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 
 export class MusicStore {
-  playing: boolean = true;
+  @observable playing: boolean = true;
 
-  togglePlaying: () => void = () => {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  @action togglePlaying: () => void = () => {
     this.playing = !this.playing;
   };
 }
-
-decorate(MusicStore, {
-  playing: observable,
-  togglePlaying: action,
-});
 
 export const musicStore = new MusicStore();

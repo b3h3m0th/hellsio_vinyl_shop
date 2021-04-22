@@ -144,7 +144,7 @@ const Nav: React.FC<NavProps> = ({
             <Title
               title={
                 userStore.user
-                  ? userStore?.getUser()?.username || "Profile"
+                  ? userStore?.getUser()?.username || userStore.user.username
                   : "Profile"
               }
               link="/"

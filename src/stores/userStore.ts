@@ -1,4 +1,4 @@
-import { decorate, observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 import { User } from "../models/User";
 import axios from "axios";
 import {
@@ -8,19 +8,22 @@ import {
   setUserAccessToken,
   setUserTokenSet,
 } from "../authorization/token";
-import { register } from "../serviceWorker";
 
 const userLocalstoragePrefix = "hellsio-user" as const;
 
 export class UserStore {
-  loggedIn: boolean = false;
+  @observable loggedIn: boolean = false;
 
-  user: User = {
+  @observable user: User = {
     username: "Profile",
     email: "",
   };
 
-  login(
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  @action login(
     email: string,
     password: string,
     errorList: any[],
@@ -57,7 +60,7 @@ export class UserStore {
     }
   }
 
-  register(
+  @action register(
     username: string,
     email: string,
     password: string,
@@ -92,7 +95,7 @@ export class UserStore {
     }
   }
 
-  isLoggedIn = async (): Promise<any> => {
+  @action isLoggedIn = async (): Promise<any> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
 
@@ -129,23 +132,23 @@ export class UserStore {
     return this.loggedIn;
   };
 
-  setUser = (user: User) => {
+  @action setUser = (user: User) => {
     this.user = user;
     localStorage.setItem(`${userLocalstoragePrefix}`, JSON.stringify(user));
   };
 
-  getUser: () => User = () => {
+  @action getUser: () => User = () => {
     return JSON.parse(
       localStorage.getItem(`${userLocalstoragePrefix}`) ||
         JSON.stringify({ email: "Profile", username: "Profile" } as User)
     );
   };
 
-  toggleLoggedIn() {
+  @action toggleLoggedIn() {
     this.loggedIn = !this.loggedIn;
   }
 
-  logout() {
+  @action logout() {
     const refreshToken = getUserRefreshToken();
     (async () => {
       try {
@@ -167,16 +170,5 @@ export class UserStore {
     })();
   }
 }
-
-decorate(UserStore, {
-  loggedIn: observable,
-  register: register,
-  login: action,
-  isLoggedIn: action,
-  toggleLoggedIn: action,
-  user: observable,
-  setUser: action,
-  logout: action,
-});
 
 export const userStore = new UserStore();

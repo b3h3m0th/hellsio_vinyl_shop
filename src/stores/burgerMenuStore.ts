@@ -1,26 +1,23 @@
-import { decorate, observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 
 export class BurgerMenuStore {
-  opened: boolean = false;
+  @observable opened: boolean = false;
 
-  toggleBurgerMenu = () => {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  @action toggleBurgerMenu = () => {
     this.opened = !this.opened;
   };
 
-  open = () => {
+  @action open = () => {
     this.opened = true;
   };
 
-  close = () => {
+  @action close = () => {
     this.opened = false;
   };
 }
-
-decorate(BurgerMenuStore, {
-  opened: observable,
-  toggleBurgerMenu: action,
-  open: action,
-  close: action,
-});
 
 export const burgerMenuStore = new BurgerMenuStore();
