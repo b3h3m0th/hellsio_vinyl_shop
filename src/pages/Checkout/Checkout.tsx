@@ -44,9 +44,9 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
-  const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
+  const [billingErrors] = useState<Array<any>>([]);
 
-  const validateOrder: () => void = () => {};
+  // const validateOrder: () => void = () => {};
 
   return (
     <>
@@ -266,7 +266,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               ></Title>
               <form className="checkout-final__wrapper__info__form">
                 <ul className="checkout-final__wrapper__info__form__products">
-                  {toJS(checkoutStore?.products || []).map(
+                  {[...toJS(checkoutStore?.products || [])].map(
                     (p: any, i: number) => {
                       return (
                         <li key={i}>
@@ -285,7 +285,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <div className="checkout-final__wrapper__info__form__products__sum">
                     <span>Total</span>
                     <span>
-                      {toJS(checkoutStore?.products || [])
+                      {[...toJS(checkoutStore?.products || [])]
                         .map((p: any, _: number) => p)
                         .reduce((total: number, current) => {
                           return current.amount + total;
@@ -294,7 +294,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     </span>
                     <span>
                       $
-                      {toJS(checkoutStore?.products || [])
+                      {[...toJS(checkoutStore?.products || [])]
                         .map((p: any, _: number) => p)
                         .reduce((total: number, current) => {
                           return current.price * current.amount + total;

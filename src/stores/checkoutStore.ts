@@ -1,16 +1,19 @@
 import axios from "axios";
-import { observable, action, toJS } from "mobx";
+import { observable, action, IObservableArray } from "mobx";
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
 export class CheckoutStore {
-  @observable products: Array<CheckoutProduct> = [];
+  products: IObservableArray<CheckoutProduct> = observable.array<CheckoutProduct>(
+    []
+  );
   @observable isAllowedToCheckout: boolean = false;
 
-  @action setProducts: (product: Array<CheckoutProduct>) => void = (
+  @action setProducts: (products: Array<CheckoutProduct>) => void = (
     products: Array<CheckoutProduct>
   ) => {
-    this.products = products;
+    this.products.clear();
+    products.forEach((product: CheckoutProduct) => this.products.push(product));
   };
 
   @action addProduct: (product: CheckoutProduct) => void = (
@@ -23,7 +26,6 @@ export class CheckoutStore {
     } else {
       this.products.push(product);
     }
-    console.log(toJS(this.products));
   };
 
   @action removeProduct: (index: number) => void = (index: number) => {
@@ -31,7 +33,7 @@ export class CheckoutStore {
   };
 
   @action clear: () => void = () => {
-    this.products = [];
+    this.products.clear();
   };
 
   fetchFormates = async (): Promise<any> => {

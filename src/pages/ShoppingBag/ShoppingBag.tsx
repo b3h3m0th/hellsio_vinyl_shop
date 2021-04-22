@@ -59,6 +59,8 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(checkoutStore?.products);
+
   return (
     <>
       <div className="checkout">
@@ -108,7 +110,7 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                 Your shopping bag is empty ... The Void
               </div>
             ) : (
-              toJS(checkoutStore?.products)?.map((p: any, index) => {
+              toJS(checkoutStore?.products)?.map((p: any, index: number) => {
                 return (
                   <div
                     key={index}
