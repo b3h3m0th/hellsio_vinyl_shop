@@ -24,6 +24,7 @@ import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Checkout from "./pages/Checkout/Checkout";
+import { cacheStore, CacheStore } from "./stores/cacheStore";
 
 const pages = {
   home: Home,

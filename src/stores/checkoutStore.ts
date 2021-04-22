@@ -1,15 +1,16 @@
 import axios from "axios";
 import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
 import { create, persist } from "mobx-persist";
-import * as localForage from "localforage";
+import * as LocalForage from "localforage";
+import { cacheStore } from "./cacheStore";
 
-localForage.config({
-  driver: localForage.WEBSQL, // Force WebSQL; same as using setDriver()
-  name: "hellsio",
+const checkoutLocalForage = LocalForage.createInstance({
+  driver: LocalForage.WEBSQL, // Force WebSQL; same as using setDriver()
+  name: "hellsio_checkout",
   version: 1.0,
   size: 500000000,
-  storeName: "hellsio",
-  description: "Hellsio vinyl shop localForage",
+  storeName: "hellsio_checkout",
+  description: "Checkout Hellsio vinyl shop localForage",
 });
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
@@ -21,11 +22,10 @@ export class CheckoutStore {
   );
 
   @observable isAllowedToCheckout: boolean = false;
-  @persist @observable saveProductsInStorage: boolean;
+  @persist @observable saveProductsInStorage: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
-    this.saveProductsInStorage = false;
   }
 
   @action setProducts: (products: Array<CheckoutProduct>) => void = (
@@ -78,8 +78,7 @@ export class CheckoutStore {
   };
 }
 
-const hydrate = create({ storage: localForage, jsonify: false });
+const hydrate = create({ storage: checkoutLocalForage, jsonify: false });
 
 export const checkoutStore = new CheckoutStore();
-if (checkoutStore.saveProductsInStorage)
-  hydrate("checkoutStore", checkoutStore);
+hydrate("checkoutStore", checkoutStore);
