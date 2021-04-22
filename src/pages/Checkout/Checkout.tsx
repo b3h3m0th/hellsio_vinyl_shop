@@ -48,13 +48,6 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
 
   console.log(billingData);
-  console.log(
-    toJS(checkoutStore?.products || [])
-      .map((p: any) => p)
-      .reduce((a, c) => {
-        return a.price * a.amount + c.price * c.amount;
-      })
-  );
 
   return (
     <>
@@ -200,12 +193,21 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <div className="checkout-final__wrapper__info__form__products__sum">
                     <span>Total</span>
                     <span>
-                      ${/* FIX THIS BULLSHIT!!!!!!!!!! */}
-                      {/* {toJS(checkoutStore?.products || [])
+                      {toJS(checkoutStore?.products || [])
                         .map((p: any, _: number) => p)
-                        .reduce((a, c, _, array: any[]) => {
-                          return `${a.price * a.amount + c.price * c.amount}`;
-                        })} */}
+                        .reduce((total: number, current) => {
+                          return current.amount + total;
+                        }, 0)}
+                      x
+                    </span>
+                    <span>
+                      $
+                      {toJS(checkoutStore?.products || [])
+                        .map((p: any, _: number) => p)
+                        .reduce((total: number, current) => {
+                          return current.price * current.amount + total;
+                        }, 0)
+                        .toFixed(2)}
                     </span>
                   </div>
                 </ul>

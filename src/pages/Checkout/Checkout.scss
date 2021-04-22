@@ -114,6 +114,10 @@
           li {
             display: flex;
             justify-content: space-between;
+
+            a {
+              width: 150px;
+            }
           }
 
           hr {
@@ -125,6 +129,12 @@
             display: flex;
             justify-content: space-between;
             font-weight: 600;
+
+            span {
+              &:first-child {
+                width: 165px;
+              }
+            }
           }
         }
       }
