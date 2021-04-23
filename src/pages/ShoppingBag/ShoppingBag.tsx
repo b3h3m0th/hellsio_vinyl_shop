@@ -8,12 +8,9 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import QuantityPicker from "../../components/QuantityPicker/QuantityPicker";
 import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
-import gsap from "gsap";
 import toBase64 from "../../util/toBase64";
 import { UserStore } from "../../stores/userStore";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
-import GenreCheckBox from "../../components/GenreList/GenreCheckBox/GenreCheckBox";
-import { cacheStore } from "../../stores/cacheStore";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");

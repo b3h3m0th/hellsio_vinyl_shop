@@ -15,7 +15,7 @@ const checkoutLocalForage = LocalForage.createInstance({
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
 export class CheckoutStore {
-  @persist("list")
+  @observable
   products: IObservableArray<CheckoutProduct> = observable.array<CheckoutProduct>(
     []
   );
@@ -73,4 +73,4 @@ export class CheckoutStore {
 const hydrate = create({ storage: checkoutLocalForage, jsonify: false });
 
 export const checkoutStore = new CheckoutStore();
-hydrate("checkoutStore", checkoutStore);
+// hydrate("checkoutStore", checkoutStore);

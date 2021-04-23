@@ -76,6 +76,8 @@ const Checkout: React.FC<CheckoutProps> = ({
     }
   };
 
+  console.log("rerender");
+
   return (
     <>
       {checkoutStore?.isAllowedToCheckout || true ? (
@@ -100,6 +102,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="firstname"
                     name="firstname"
+                    value={billingData.firstname}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: e.target.value,
@@ -121,6 +124,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="lastname"
                     name="lastname"
+                    value={billingData.lastname}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -142,6 +146,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="date"
                     id="birthdate"
                     name="birthdate"
+                    value={billingData.birthdate?.toString()}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -163,6 +168,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="street"
                     name="street"
+                    value={billingData.street}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -184,6 +190,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="street-number"
                     name="street-number"
+                    value={billingData.street_number}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -206,6 +213,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="postal-code"
                     name="postal-code"
+                    value={billingData.postal_code}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -227,6 +235,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="city"
                     name="city"
+                    value={billingData.city}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
@@ -248,6 +257,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     type="text"
                     id="state"
                     name="state"
+                    value={billingData.state}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setBillingData({
                         firstname: billingData.firstname,
