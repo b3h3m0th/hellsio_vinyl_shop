@@ -1,4 +1,4 @@
-import { observable, makeAutoObservable } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 import { create, persist } from "mobx-persist";
 import * as LocalForage from "localforage";
 
@@ -17,6 +17,12 @@ export class CacheStore {
   constructor() {
     makeAutoObservable(this);
   }
+
+  @action setSaveProductsInStorage: (value: boolean) => void = (
+    value: boolean
+  ) => {
+    this.saveProductsInStorage = value;
+  };
 }
 
 const hydrate = create({ storage: cacheLocalForage, jsonify: false });

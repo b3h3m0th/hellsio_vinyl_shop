@@ -13,6 +13,7 @@ import toBase64 from "../../util/toBase64";
 import { UserStore } from "../../stores/userStore";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
 import GenreCheckBox from "../../components/GenreList/GenreCheckBox/GenreCheckBox";
+import { cacheStore } from "../../stores/cacheStore";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -79,19 +80,7 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                 </li>
               </ul>
             </div>
-            <div className="checkout__payment__content__cache">
-              <GenreCheckBox
-                label="Save your cart when leaving?"
-                checked={
-                  checkoutStore?.saveProductsInStorage !== undefined
-                    ? checkoutStore.saveProductsInStorage
-                    : false
-                }
-                onChange={(e) => {
-                  checkoutStore?.setSaveProductsInStorage(e.target.checked);
-                }}
-              />
-            </div>
+            <div className="checkout__payment__content__cache"></div>
             <PrimaryButton
               label="checkout"
               icon={arrowRight}

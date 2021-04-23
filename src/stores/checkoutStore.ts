@@ -2,7 +2,6 @@ import axios from "axios";
 import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
 import { create, persist } from "mobx-persist";
 import * as LocalForage from "localforage";
-import { cacheStore } from "./cacheStore";
 
 const checkoutLocalForage = LocalForage.createInstance({
   driver: LocalForage.WEBSQL, // Force WebSQL; same as using setDriver()
@@ -22,7 +21,6 @@ export class CheckoutStore {
   );
 
   @observable isAllowedToCheckout: boolean = false;
-  @persist @observable saveProductsInStorage: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -69,12 +67,6 @@ export class CheckoutStore {
     value: boolean
   ) => {
     this.isAllowedToCheckout = value;
-  };
-
-  @action setSaveProductsInStorage: (value: boolean) => void = (
-    value: boolean
-  ) => {
-    this.saveProductsInStorage = value;
   };
 }
 
