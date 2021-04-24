@@ -13,13 +13,7 @@ import { orderErrors } from "./validateOrder";
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
-import axios from "axios";
 import validateOrder from "./validateOrder";
-import {
-  getUserAccessToken,
-  getUserRefreshToken,
-  setUserAccessToken,
-} from "../../authorization/token";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");

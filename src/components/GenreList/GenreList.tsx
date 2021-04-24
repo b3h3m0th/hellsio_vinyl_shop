@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./GenreList.scss";
-import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
 import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
