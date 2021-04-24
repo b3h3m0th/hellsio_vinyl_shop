@@ -119,6 +119,8 @@ export class CheckoutStore {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
 
+    console.log(billingData);
+
     try {
       const paymentIntentResponse = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/create-payment-intent`,
