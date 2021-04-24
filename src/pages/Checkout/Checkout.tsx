@@ -3,7 +3,6 @@ import "./Checkout.scss";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import { inject, observer } from "mobx-react";
 import Title from "../../components/Title/Title";
-import { Redirect } from "react-router";
 import { languageStore, LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { CountryDropdown } from "react-country-region-selector";

@@ -175,7 +175,7 @@ const Home: React.FC<HomeProps> = ({
       <div className="home__hero-banner">
         <div className="hero-banner">
           <h1 className="hero-banner__title" id="hero-banner-title">
-            This is Hell
+            This is hell
           </h1>
           <p className="hero-banner__subtitle" id="hero-banner-subtitle">
             The newest <br /> metal albums on <br /> every available format
