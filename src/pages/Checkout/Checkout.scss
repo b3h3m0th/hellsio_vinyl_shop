@@ -104,6 +104,17 @@
           }
         }
 
+        &__payment {
+          margin-top: 20px;
+          width: 280px;
+
+          .StripeElement {
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba($color: #fff, $alpha: 0.5);
+          }
+        }
+
         &__products {
           padding: 0;
 

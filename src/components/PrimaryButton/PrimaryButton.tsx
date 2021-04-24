@@ -12,6 +12,7 @@ interface PrimaryButtonProps {
   submit?: boolean;
   onClick?: () => void;
   onMouseEnter?: () => void;
+  disabled?: boolean;
 }
 
 const PrimaryButton = ({
@@ -22,6 +23,7 @@ const PrimaryButton = ({
   submit,
   onClick = () => void 0,
   onMouseEnter = () => void 0,
+  disabled = false,
 }: PrimaryButtonProps) => {
   return (
     <Link
@@ -29,7 +31,11 @@ const PrimaryButton = ({
       onClick={() => onClick()}
       onMouseEnter={() => onMouseEnter()}
     >
-      <button className="primary-button" type={submit ? "submit" : "button"}>
+      <button
+        className="primary-button"
+        type={submit ? "submit" : "button"}
+        disabled={disabled}
+      >
         <p>{label}</p>
         {icon && <img src={icon} alt="Hellsio primary button icon" />}
       </button>

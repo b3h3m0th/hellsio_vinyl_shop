@@ -24,7 +24,8 @@ import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Checkout from "./pages/Checkout/Checkout";
-import { cacheStore, CacheStore } from "./stores/cacheStore";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const pages = {
   home: Home,
@@ -44,6 +45,8 @@ interface AppProps {
   userStore?: UserStore;
 }
 
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+
 const App: React.FC<AppProps> = ({
   languageStore,
   adminStore,
@@ -56,88 +59,90 @@ const App: React.FC<AppProps> = ({
   }, [adminStore]);
 
   return (
-    <div className="App">
-      <Router>
-        <Nav />
-        <Switch>
-          {/* nav pages */}
-          <Route
-            exact
-            path={`/${languageStore?.language}/newarrivals`}
-            component={pages.newArrivals}
-          />
-          <Route
-            exact
-            path={`/${languageStore?.language}/featured`}
-            component={pages.featured}
-          />
-          <Route
-            exact
-            path={`/${languageStore?.language}/popular`}
-            component={pages.popular}
-          />
-          <Route
-            exact
-            path={`/${languageStore?.language}/shopping-bag`}
-            component={pages.shoppingBag}
-          />
+    <Elements stripe={stripePromise}>
+      <div className="App">
+        <Router>
+          <Nav />
+          <Switch>
+            {/* nav pages */}
+            <Route
+              exact
+              path={`/${languageStore?.language}/newarrivals`}
+              component={pages.newArrivals}
+            />
+            <Route
+              exact
+              path={`/${languageStore?.language}/featured`}
+              component={pages.featured}
+            />
+            <Route
+              exact
+              path={`/${languageStore?.language}/popular`}
+              component={pages.popular}
+            />
+            <Route
+              exact
+              path={`/${languageStore?.language}/shopping-bag`}
+              component={pages.shoppingBag}
+            />
 
-          <Route
-            exact
-            path={`/${languageStore?.language}/checkout`}
-            component={pages.checkout}
-          ></Route>
+            <Route
+              exact
+              path={`/${languageStore?.language}/checkout`}
+              component={pages.checkout}
+            ></Route>
 
-          {/* products page */}
-          <Route
-            exact
-            path={`/${languageStore?.language}/products`}
-            component={pages.newArrivals}
-          ></Route>
-          {/* genres page */}
-          <Route
-            exact
-            path={`/${languageStore?.language}/genres`}
-            component={pages.productDetail}
-          ></Route>
-          {/* product detail page */}
-          <Route
-            exact
-            path={`/${languageStore?.language}/products/:albumCode`}
-            component={pages.productDetail}
-          ></Route>
-          {/* Admin */}
-          <Route
-            path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
-            component={
-              adminStore?.loggedIn
-                ? pages.admin
-                : () => (
-                    <Redirect
-                      to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
-                    />
-                  )
-            }
-          ></Route>
-          <Route
-            path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
-            component={pages.adminLogin}
-          ></Route>
+            {/* products page */}
+            <Route
+              exact
+              path={`/${languageStore?.language}/products`}
+              component={pages.newArrivals}
+            ></Route>
+            {/* genres page */}
+            <Route
+              exact
+              path={`/${languageStore?.language}/genres`}
+              component={pages.productDetail}
+            ></Route>
+            {/* product detail page */}
+            <Route
+              exact
+              path={`/${languageStore?.language}/products/:albumCode`}
+              component={pages.productDetail}
+            ></Route>
+            {/* Admin */}
+            <Route
+              path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
+              component={
+                adminStore?.loggedIn
+                  ? pages.admin
+                  : () => (
+                      <Redirect
+                        to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
+                      />
+                    )
+              }
+            ></Route>
+            <Route
+              path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
+              component={pages.adminLogin}
+            ></Route>
 
-          {/* Home */}
-          <Route
-            exact
-            path={`/${languageStore?.language}`}
-            component={pages.home}
-          />
-          <Route
-            path={`/`}
-            component={() => <Redirect to={`/${languageStore?.language}`} />}
-          />
-        </Switch>
-        <Footer />
-      </Router>
-    </div>
+            {/* Home */}
+            <Route
+              exact
+              path={`/${languageStore?.language}`}
+              component={pages.home}
+            />
+            <Route
+              path={`/`}
+              component={() => <Redirect to={`/${languageStore?.language}`} />}
+            />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>
+    </Elements>
   );
 };
 

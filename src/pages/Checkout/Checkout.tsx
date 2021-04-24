@@ -11,6 +11,9 @@ import { toJS } from "mobx";
 import { userStore } from "../../stores/userStore";
 import { fetchCheckout } from "./fetchCheckout";
 
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { StripeCardElementOptions } from "@stripe/stripe-js";
+
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
@@ -45,7 +48,11 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
+
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
+
+  const elements = useElements();
+  const stripe = useStripe();
 
   const validateOrder: () => void = () => {
     let billingErrors: Array<string> = [];
@@ -61,6 +68,27 @@ const Checkout: React.FC<CheckoutProps> = ({
       if (!billingData[k] && !billingErrors.includes(fieldRequiredError))
         billingErrors.push(fieldRequiredError);
     }
+
+    if (!stripe || !elements)
+      return billingErrors.push("An error occured during your payment");
+
+    console.log(stripe);
+
+    const cardElement = elements.getElement(CardElement);
+
+    // Use your card Element with other Stripe.js APIs
+    (async () => {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement!,
+      });
+
+      if (error) {
+        console.log("[error]", error);
+      } else {
+        console.log("[PaymentMethod]", paymentMethod);
+      }
+    })();
 
     if (billingErrors && billingErrors.length >= 1) {
       setBillingErrors(billingErrors);
@@ -278,6 +306,24 @@ const Checkout: React.FC<CheckoutProps> = ({
                   }
                 />
               </div>
+              <div className="checkout-final__wrapper__info__form__payment">
+                <label htmlFor="payment">Payment Details</label>
+                <CardElement
+                  options={
+                    {
+                      style: {
+                        base: {
+                          color: "white",
+                          padding: "20px 0px 0px 0px",
+                        },
+                      },
+                      hidePostalCode: true,
+                      iconStyle: "solid",
+                    } as StripeCardElementOptions
+                  }
+                  onChange={(e) => console.log(e)}
+                />
+              </div>
             </form>
           </div>
         </div>
@@ -334,6 +380,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   validateOrder();
                   console.log("final", billingData);
                 }}
+                disabled={!stripe}
               />
             </form>
             <div className="billing-errors">
