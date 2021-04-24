@@ -1,16 +1,38 @@
 import axios from "axios";
-import { getUserAccessToken } from "../../authorization/token";
+import {
+  getUserAccessToken,
+  getUserRefreshToken,
+  setUserAccessToken,
+} from "../../authorization/token";
 import { BillingData } from "./Checkout";
 
 export const fetchCheckout = async (
   billingData: BillingData
 ): Promise<any | string> => {
+  const accessToken = getUserAccessToken();
+  const refreshToken = getUserRefreshToken();
+  let response;
+
   try {
-    const checkoutResponse = await axios.post(
+    response = await axios.post(
       `${process.env.REACT_APP_BASE_API_URL}/user/checkout`,
       {
         billingData: billingData,
-        token: getUserAccessToken(),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (err) {
+    const tokenResponse = await axios.post(
+      `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+      {
+        token: refreshToken,
       },
       {
         headers: {
@@ -19,9 +41,7 @@ export const fetchCheckout = async (
       }
     );
 
-    return checkoutResponse.data;
-  } catch (err) {
-    console.log(err);
-    return err;
+    setUserAccessToken(tokenResponse.data.accessToken);
+    return await fetchCheckout(billingData);
   }
 };
