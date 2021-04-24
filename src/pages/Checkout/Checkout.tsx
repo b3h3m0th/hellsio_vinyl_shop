@@ -50,7 +50,6 @@ const Checkout: React.FC<CheckoutProps> = ({
   });
 
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
-  const [orderSuccessful, setOrderSuccessful] = useState<boolean>(false);
 
   const elements = useElements();
   const stripe = useStripe();
@@ -105,8 +104,8 @@ const Checkout: React.FC<CheckoutProps> = ({
 
   return (
     <>
-      {orderSuccessful ? (
-        <Redirect to="" />
+      {checkoutStore?.orderPlaced ? (
+        <Redirect to={`/${languageStore.language}/order-placed`} />
       ) : (
         <div className="checkout-final">
           <div className="checkout-final__wrapper">

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
-import { create, persist } from "mobx-persist";
+import { create } from "mobx-persist";
 import * as LocalForage from "localforage";
 
 const checkoutLocalForage = LocalForage.createInstance({
@@ -19,6 +19,8 @@ export class CheckoutStore {
   products: IObservableArray<CheckoutProduct> = observable.array<CheckoutProduct>(
     []
   );
+
+  @observable orderPlaced: boolean = false;
 
   constructor() {
     makeAutoObservable(this);

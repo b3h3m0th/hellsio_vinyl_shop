@@ -26,6 +26,7 @@ import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Checkout from "./pages/Checkout/Checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
 
 const pages = {
   home: Home,
@@ -37,6 +38,7 @@ const pages = {
   admin: Admin,
   adminLogin: AdminLogin,
   checkout: Checkout,
+  orderPlaced: OrderPlaced,
 };
 
 interface AppProps {
@@ -92,24 +94,33 @@ const App: React.FC<AppProps> = ({
               component={pages.checkout}
             ></Route>
 
+            <Route
+              exact
+              path={`/${languageStore?.language}/order-placed`}
+              component={pages.orderPlaced}
+            ></Route>
+
             {/* products page */}
             <Route
               exact
               path={`/${languageStore?.language}/products`}
               component={pages.newArrivals}
             ></Route>
+
             {/* genres page */}
             <Route
               exact
               path={`/${languageStore?.language}/genres`}
               component={pages.productDetail}
             ></Route>
+
             {/* product detail page */}
             <Route
               exact
               path={`/${languageStore?.language}/products/:albumCode`}
               component={pages.productDetail}
             ></Route>
+
             {/* Admin */}
             <Route
               path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
