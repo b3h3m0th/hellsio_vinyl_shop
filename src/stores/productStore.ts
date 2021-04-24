@@ -26,6 +26,18 @@ export class ProductStore {
     }
   };
 
+  @action fetchNewArrivals = async (): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/new-arrivals`
+      );
+      this.setProducts(albumsResponse.data);
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   @action fetch = async (albumCode: string): Promise<any> => {
     try {
       const albumsResponse = await axios.get(

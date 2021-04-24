@@ -19,7 +19,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
 
   useEffect((): void => {
     (async (): Promise<void> => {
-      setAlbums([...(await productStore?.fetchAll())].reverse());
+      setAlbums([...(await productStore?.fetchNewArrivals())]);
     })();
   }, [productStore]);
 
