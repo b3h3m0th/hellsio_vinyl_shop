@@ -30,7 +30,7 @@ export const fetchCheckout = async (
     return response.data;
   } catch (err) {
     const tokenResponse = await axios.post(
-      `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+      `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
       {
         token: refreshToken,
       },

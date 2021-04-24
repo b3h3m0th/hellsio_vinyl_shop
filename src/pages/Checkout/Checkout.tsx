@@ -70,45 +70,11 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [stripeSecret, setStripeSecret] = useState<string>();
 
   useEffect(() => {
-    const accessToken = getUserAccessToken();
-    const refreshToken = getUserRefreshToken();
-
-    const createPaymentIntent = async (): Promise<any> => {
-      try {
-        const paymentIntentResponse = await axios.post(
-          `${process.env.REACT_APP_BASE_API_URL}/user/create-payment-intent`,
-          {
-            billingData: {
-              ...billingData,
-              amount: totalAmount.current,
-            },
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        setStripeSecret(paymentIntentResponse.data.clientSecret);
-      } catch (err) {
-        const tokenResponse = await axios.post(
-          `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
-          {
-            token: refreshToken,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        setUserAccessToken(tokenResponse.data.accessToken);
-        return await createPaymentIntent();
-      }
-    };
-    createPaymentIntent();
+    checkoutStore?.createPaymentIntent(
+      billingData,
+      setStripeSecret,
+      totalAmount
+    );
   }, []);
 
   const createPayment: () => void = () => {
@@ -137,6 +103,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               setBillingErrors([]);
             }, 4000);
           } else {
+            await checkoutStore?.checkout(billingData);
             checkoutStore?.setOrderPlaced(true);
           }
         })();
