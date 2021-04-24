@@ -76,7 +76,6 @@ const Checkout: React.FC<CheckoutProps> = ({
 
     const cardElement = elements.getElement(CardElement);
 
-    // Use your card Element with other Stripe.js APIs
     (async () => {
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
