@@ -58,11 +58,12 @@ const Checkout: React.FC<CheckoutProps> = ({
     let billingErrors: Array<string> = [];
 
     if (!checkoutStore?.products || checkoutStore.products.length <= 0)
-      billingErrors.push("Please add items to your order before checkout");
+      billingErrors.push("Please add items to your order before checkout.");
 
-    if (!userStore.loggedIn) billingErrors.push("Please Login before checkout");
+    if (!userStore.loggedIn)
+      billingErrors.push("Please Login before checkout.");
 
-    let fieldRequiredError = "Please fill out all required fields!";
+    let fieldRequiredError = "Please fill out all required fields.";
     let k: keyof typeof billingData;
     for (k in billingData as BillingData) {
       if (!billingData[k] && !billingErrors.includes(fieldRequiredError))
@@ -70,7 +71,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     }
 
     if (!stripe || !elements)
-      return billingErrors.push("An error occured during your payment");
+      return billingErrors.push("An error occured during your payment.");
 
     console.log(stripe);
 
@@ -84,8 +85,21 @@ const Checkout: React.FC<CheckoutProps> = ({
 
       if (error) {
         console.log("[error]", error);
+        billingErrors.push(
+          error.message || "An error occured during your payment."
+        );
       } else {
         console.log("[PaymentMethod]", paymentMethod);
+      }
+
+      if (billingErrors && billingErrors.length >= 1) {
+        setBillingErrors(billingErrors);
+        setTimeout(() => {
+          setBillingErrors([]);
+        }, 4000);
+      } else {
+        console.log("final", billingData);
+        await fetchCheckout(billingData);
       }
     })();
 
@@ -95,7 +109,7 @@ const Checkout: React.FC<CheckoutProps> = ({
         setBillingErrors([]);
       }, 4000);
     } else {
-      console.log(billingData);
+      console.log("final", billingData);
       (async () => {
         await fetchCheckout(billingData);
       })();
@@ -383,7 +397,6 @@ const Checkout: React.FC<CheckoutProps> = ({
                   icon={arrowRightWhite}
                   onClick={() => {
                     validateOrder();
-                    console.log("final", billingData);
                   }}
                   disabled={!stripe}
                 />
