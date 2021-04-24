@@ -25,7 +25,7 @@ import Admin from "./pages/Admin/Admin";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Checkout from "./pages/Checkout/Checkout";
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
 
 const pages = {
@@ -47,7 +47,10 @@ interface AppProps {
   userStore?: UserStore;
 }
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+const stripePromise = loadStripe(
+  process.env.REACT_APP_STRIPE_PUBLIC_KEY || "",
+  { locale: "en" } as StripeConstructorOptions
+);
 
 const App: React.FC<AppProps> = ({
   languageStore,

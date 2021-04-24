@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Checkout.scss";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import { inject, observer } from "mobx-react";
@@ -9,10 +9,17 @@ import { CountryDropdown } from "react-country-region-selector";
 import { Link, Redirect } from "react-router-dom";
 import { toJS } from "mobx";
 import { userStore } from "../../stores/userStore";
-import { fetchCheckout } from "./fetchCheckout";
+import { orderErrors } from "./validateOrder";
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
+import axios from "axios";
+import validateOrder from "./validateOrder";
+import {
+  getUserAccessToken,
+  getUserRefreshToken,
+  setUserAccessToken,
+} from "../../authorization/token";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -37,6 +44,9 @@ interface CheckoutProps {
 const Checkout: React.FC<CheckoutProps> = ({
   checkoutStore,
 }: CheckoutProps) => {
+  const elements = useElements();
+  const stripe = useStripe();
+
   const [billingData, setBillingData] = useState<BillingData>({
     firstname: "",
     lastname: "",
@@ -48,72 +58,80 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
-
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
+  const [stripeSecret, setStripeSecret] = useState<string>();
 
-  const elements = useElements();
-  const stripe = useStripe();
+  useEffect(() => {
+    const accessToken = getUserAccessToken();
+    const refreshToken = getUserRefreshToken();
 
-  const validateOrder: () => void = () => {
-    let billingErrors: Array<string> = [];
-
-    if (!checkoutStore?.products || checkoutStore.products.length <= 0)
-      billingErrors.push("Please add items to your order before checkout.");
-
-    if (!userStore.loggedIn)
-      billingErrors.push("Please Login before checkout.");
-
-    let fieldRequiredError = "Please fill out all required fields.";
-    let k: keyof typeof billingData;
-    for (k in billingData as BillingData) {
-      if (!billingData[k] && !billingErrors.includes(fieldRequiredError))
-        billingErrors.push(fieldRequiredError);
-    }
-
-    if (!stripe || !elements)
-      return billingErrors.push("An error occured during your payment.");
-
-    console.log(stripe);
-
-    const cardElement = elements.getElement(CardElement);
-
-    (async () => {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement!,
-      });
-
-      if (error) {
-        console.log("[error]", error);
-        billingErrors.push(
-          error.message || "An error occured during your payment."
+    const createPaymentIntent = async (): Promise<any> => {
+      try {
+        const paymentIntentResponse = await axios.post(
+          `${process.env.REACT_APP_BASE_API_URL}/user/create-payment-intent`,
+          {
+            billingData,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
-      } else {
-        console.log("[PaymentMethod]", paymentMethod);
-      }
+        console.log(paymentIntentResponse);
+        setStripeSecret(paymentIntentResponse.data.clientSecret);
+      } catch (err) {
+        const tokenResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
+          {
+            token: refreshToken,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      if (billingErrors && billingErrors.length >= 1) {
-        setBillingErrors(billingErrors);
-        setTimeout(() => {
-          setBillingErrors([]);
-        }, 4000);
-      } else {
-        console.log("final", billingData);
-        await fetchCheckout(billingData);
+        setUserAccessToken(tokenResponse.data.accessToken);
+        return await createPaymentIntent();
       }
-    })();
+    };
+    createPaymentIntent();
+  }, []);
 
-    if (billingErrors && billingErrors.length >= 1) {
-      setBillingErrors(billingErrors);
-      setTimeout(() => {
-        setBillingErrors([]);
-      }, 4000);
-    } else {
-      console.log("final", billingData);
-      (async () => {
-        await fetchCheckout(billingData);
-      })();
-    }
+  const createPayment: () => void = () => {
+    const cardElement = elements!.getElement(CardElement)!;
+    validateOrder(
+      stripe!,
+      elements!,
+      checkoutStore!,
+      userStore,
+      billingData,
+      setBillingErrors,
+      () => {
+        (async () => {
+          const payload = await stripe!.confirmCardPayment(stripeSecret || "", {
+            payment_method: {
+              card: cardElement,
+            },
+          });
+
+          if (payload.error) {
+            setBillingErrors([
+              ...billingErrors,
+              payload.error.message || orderErrors.paymentError,
+            ]);
+            setTimeout(() => {
+              setBillingErrors([]);
+            }, 4000);
+          } else {
+            checkoutStore?.setOrderPlaced(true);
+          }
+        })();
+      }
+    );
   };
 
   return (
@@ -396,7 +414,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   link="checkout"
                   icon={arrowRightWhite}
                   onClick={() => {
-                    validateOrder();
+                    createPayment();
                   }}
                   disabled={!stripe}
                 />

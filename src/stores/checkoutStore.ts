@@ -62,6 +62,10 @@ export class CheckoutStore {
       console.log(err);
     }
   };
+
+  @action setOrderPlaced: (value: boolean) => void = (value) => {
+    this.orderPlaced = value;
+  };
 }
 
 const hydrate = create({ storage: checkoutLocalForage, jsonify: false });
