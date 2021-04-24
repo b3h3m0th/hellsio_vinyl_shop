@@ -4,4 +4,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &__wrapper {
+    &__header {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      &__thank-you {
+        font-size: 4rem;
+        font-weight: 600;
+      }
+    }
+
+    &__content {
+      margin-left: 10px;
+    }
+
+    &__back-button {
+      text-align: right;
+      justify-content: flex-start;
+
+      &__button span {
+        text-transform: inherit;
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Checkout.scss";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import { inject, observer } from "mobx-react";
@@ -58,6 +58,14 @@ const Checkout: React.FC<CheckoutProps> = ({
     state: "",
     country: "",
   });
+  const totalAmount = useRef<number>(
+    +[...toJS(checkoutStore?.products || [])]
+      .map((p: any, _: number) => p)
+      .reduce((total: number, current) => {
+        return current.price * current.amount + total;
+      }, 0)
+      .toFixed(2)
+  );
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
   const [stripeSecret, setStripeSecret] = useState<string>();
 
@@ -70,7 +78,10 @@ const Checkout: React.FC<CheckoutProps> = ({
         const paymentIntentResponse = await axios.post(
           `${process.env.REACT_APP_BASE_API_URL}/user/create-payment-intent`,
           {
-            billingData,
+            billingData: {
+              ...billingData,
+              amount: totalAmount.current,
+            },
           },
           {
             headers: {
@@ -79,7 +90,6 @@ const Checkout: React.FC<CheckoutProps> = ({
             },
           }
         );
-        console.log(paymentIntentResponse);
         setStripeSecret(paymentIntentResponse.data.clientSecret);
       } catch (err) {
         const tokenResponse = await axios.post(
