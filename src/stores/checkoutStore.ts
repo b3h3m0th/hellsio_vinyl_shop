@@ -20,8 +20,6 @@ export class CheckoutStore {
     []
   );
 
-  @observable isAllowedToCheckout: boolean = false;
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -61,12 +59,6 @@ export class CheckoutStore {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  @action setIsAllowedToCheckout: (value: boolean) => void = (
-    value: boolean
-  ) => {
-    this.isAllowedToCheckout = value;
   };
 }
 

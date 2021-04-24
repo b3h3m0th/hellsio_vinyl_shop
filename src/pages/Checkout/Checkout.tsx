@@ -76,297 +76,284 @@ const Checkout: React.FC<CheckoutProps> = ({
     }
   };
 
-  console.log("rerender");
-
   return (
     <>
-      {checkoutStore?.isAllowedToCheckout || true ? (
-        <div className="checkout-final">
-          <div className="checkout-final__wrapper">
-            <div className="checkout-final__wrapper__info">
-              <Link
-                to="shopping-bag"
-                className="checkout-final__wrapper__info__back"
-              >
-                <img src={arrowRight} alt="Hellsio arrow left" /> Back to
-                Shopping bag
-              </Link>
-              <Title
-                title="Checkout - Shipping Details"
-                link="checkout"
-              ></Title>
-              <form className="checkout-final__wrapper__info__form">
-                <div className="checkout-final__wrapper__info__form__firstname">
-                  <label htmlFor="firstname">First name</label>
-                  <input
-                    type="text"
-                    id="firstname"
-                    name="firstname"
-                    value={billingData.firstname}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: e.target.value,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__lastname">
-                  <label htmlFor="firstname">Last name</label>
-                  <input
-                    type="text"
-                    id="lastname"
-                    name="lastname"
-                    value={billingData.lastname}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: e.target.value,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__birthdate">
-                  <label htmlFor="birthdate">Birthdate</label>
-                  <input
-                    type="date"
-                    id="birthdate"
-                    name="birthdate"
-                    value={billingData.birthdate?.toString()}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: new Date(e.target.value),
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__street">
-                  <label htmlFor="street">Street</label>
-                  <input
-                    type="text"
-                    id="street"
-                    name="street"
-                    value={billingData.street}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: e.target.value,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__street-number">
-                  <label htmlFor="street-number">Street Number</label>
-                  <input
-                    type="text"
-                    id="street-number"
-                    name="street-number"
-                    value={billingData.street_number}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: e.target.value,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <br />
-                <div className="checkout-final__wrapper__info__form__postal-code">
-                  <label htmlFor="postal-code">Postal Code</label>
-                  <input
-                    type="text"
-                    id="postal-code"
-                    name="postal-code"
-                    value={billingData.postal_code}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: e.target.value,
-                        city: billingData?.city,
-                        state: billingData?.state,
-                        country: billingData?.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__city">
-                  <label htmlFor="city">City</label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={billingData.city}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: e.target.value,
-                        state: billingData?.state,
-                        country: billingData.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__state">
-                  <label htmlFor="city">State</label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    value={billingData.state}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData.city,
-                        state: e.target.value,
-                        country: billingData.country,
-                      })
-                    }
-                  />
-                </div>
-                <div className="checkout-final__wrapper__info__form__country">
-                  <label htmlFor="birthdate">Country</label>
-                  <CountryDropdown
-                    priorityOptions={["Austria"]}
-                    value={billingData.country}
-                    onChange={(val) =>
-                      setBillingData({
-                        firstname: billingData.firstname,
-                        lastname: billingData?.lastname,
-                        birthdate: billingData?.birthdate,
-                        street: billingData?.street,
-                        street_number: billingData?.street_number,
-                        postal_code: billingData?.postal_code,
-                        city: billingData?.city,
-                        state: billingData.state,
-                        country: val,
-                      })
-                    }
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="checkout-final__wrapper">
-            <div className="checkout-final__wrapper__info">
-              <Title
-                title="Checkout - Your Order Summary"
-                link="checkout"
-              ></Title>
-              <form className="checkout-final__wrapper__info__form">
-                <ul className="checkout-final__wrapper__info__form__products">
-                  {[...toJS(checkoutStore?.products || [])].map(
-                    (p: any, i: number) => {
-                      return (
-                        <li key={i}>
-                          <Link
-                            to={`/${languageStore.language}/products/${p.code}`}
-                          >
-                            {`${p.name} by ${p.artist}`}
-                          </Link>
-                          <span>{p.amount}x</span>
-                          <span>${p.price}</span>
-                        </li>
-                      );
-                    }
-                  )}
-                  <hr />
-                  <div className="checkout-final__wrapper__info__form__products__sum">
-                    <span>Total</span>
-                    <span>
-                      {[...toJS(checkoutStore?.products || [])]
-                        .map((p: any, _: number) => p)
-                        .reduce((total: number, current) => {
-                          return current.amount + total;
-                        }, 0)}
-                      x
-                    </span>
-                    <span>
-                      $
-                      {[...toJS(checkoutStore?.products || [])]
-                        .map((p: any, _: number) => p)
-                        .reduce((total: number, current) => {
-                          return current.price * current.amount + total;
-                        }, 0)
-                        .toFixed(2)}
-                    </span>
-                  </div>
-                </ul>
-                <PrimaryButton
-                  label="Order now"
-                  link="checkout"
-                  icon={arrowRightWhite}
-                  onClick={() => {
-                    validateOrder();
-                  }}
+      <div className="checkout-final">
+        <div className="checkout-final__wrapper">
+          <div className="checkout-final__wrapper__info">
+            <Link
+              to="shopping-bag"
+              className="checkout-final__wrapper__info__back"
+            >
+              <img src={arrowRight} alt="Hellsio arrow left" /> Back to Shopping
+              bag
+            </Link>
+            <Title title="Checkout - Shipping Details" link="checkout"></Title>
+            <form className="checkout-final__wrapper__info__form">
+              <div className="checkout-final__wrapper__info__form__firstname">
+                <label htmlFor="firstname">First name</label>
+                <input
+                  type="text"
+                  id="firstname"
+                  name="firstname"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: e.target.value,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
                 />
-              </form>
-              <div className="billing-errors">
-                <ul className="billing-errors__errors">
-                  {billingErrors?.map((err: any, index: number) => {
+              </div>
+              <div className="checkout-final__wrapper__info__form__lastname">
+                <label htmlFor="firstname">Last name</label>
+                <input
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: e.target.value,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__birthdate">
+                <label htmlFor="birthdate">Birthdate</label>
+                <input
+                  type="date"
+                  id="birthdate"
+                  name="birthdate"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: new Date(e.target.value),
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__street">
+                <label htmlFor="street">Street</label>
+                <input
+                  type="text"
+                  id="street"
+                  name="street"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: e.target.value,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__street-number">
+                <label htmlFor="street-number">Street Number</label>
+                <input
+                  type="text"
+                  id="street-number"
+                  name="street-number"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: e.target.value,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
+                />
+              </div>
+              <br />
+              <div className="checkout-final__wrapper__info__form__postal-code">
+                <label htmlFor="postal-code">Postal Code</label>
+                <input
+                  type="text"
+                  id="postal-code"
+                  name="postal-code"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: e.target.value,
+                      city: billingData?.city,
+                      state: billingData?.state,
+                      country: billingData?.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__city">
+                <label htmlFor="city">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: e.target.value,
+                      state: billingData?.state,
+                      country: billingData.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__state">
+                <label htmlFor="city">State</label>
+                <input
+                  type="text"
+                  id="state"
+                  name="state"
+                  onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData.city,
+                      state: e.target.value,
+                      country: billingData.country,
+                    })
+                  }
+                />
+              </div>
+              <div className="checkout-final__wrapper__info__form__country">
+                <label htmlFor="birthdate">Country</label>
+                <CountryDropdown
+                  priorityOptions={["Austria"]}
+                  value={billingData.country}
+                  onChange={(val) =>
+                    setBillingData({
+                      firstname: billingData.firstname,
+                      lastname: billingData?.lastname,
+                      birthdate: billingData?.birthdate,
+                      street: billingData?.street,
+                      street_number: billingData?.street_number,
+                      postal_code: billingData?.postal_code,
+                      city: billingData?.city,
+                      state: billingData.state,
+                      country: val,
+                    })
+                  }
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div className="checkout-final__wrapper">
+          <div className="checkout-final__wrapper__info">
+            <Title
+              title="Checkout - Your Order Summary"
+              link="checkout"
+            ></Title>
+            <form className="checkout-final__wrapper__info__form">
+              <ul className="checkout-final__wrapper__info__form__products">
+                {[...toJS(checkoutStore?.products || [])].map(
+                  (p: any, i: number) => {
                     return (
-                      <li key={index} className="billing-errors__errors__error">
-                        {err}
+                      <li key={`checkout-product-${i}`}>
+                        <Link
+                          to={`/${languageStore.language}/products/${p.code}`}
+                        >
+                          {`${p.name} by ${p.artist}`}
+                        </Link>
+                        <span>{p.amount}x</span>
+                        <span>${p.price}</span>
                       </li>
                     );
-                  })}
-                </ul>
-              </div>
+                  }
+                )}
+                <hr />
+                <div className="checkout-final__wrapper__info__form__products__sum">
+                  <span>Total</span>
+                  <span>
+                    {[...toJS(checkoutStore?.products || [])]
+                      .map((p: any, _: number) => p)
+                      .reduce((total: number, current) => {
+                        return current.amount + total;
+                      }, 0)}
+                    x
+                  </span>
+                  <span>
+                    $
+                    {[...toJS(checkoutStore?.products || [])]
+                      .map((p: any, _: number) => p)
+                      .reduce((total: number, current) => {
+                        return current.price * current.amount + total;
+                      }, 0)
+                      .toFixed(2)}
+                  </span>
+                </div>
+              </ul>
+              <PrimaryButton
+                label="Order now"
+                link="checkout"
+                icon={arrowRightWhite}
+                onClick={() => {
+                  validateOrder();
+                  console.log("final", billingData);
+                }}
+              />
+            </form>
+            <div className="billing-errors">
+              <ul className="billing-errors__errors">
+                {billingErrors?.map((err: any, i: number) => {
+                  return (
+                    <li
+                      key={`billing-errors-${i}`}
+                      className="billing-errors__errors__error"
+                    >
+                      {err}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
         </div>
-      ) : (
-        <Redirect to={`/${languageStore.language}/shopping-bag`} />
-      )}
+      </div>
     </>
   );
 };
