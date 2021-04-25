@@ -13,6 +13,7 @@ import { orderErrors } from "./validateOrder";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
 import validateOrder from "./validateOrder";
+import Loader from "../../components/Loader/Loader";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");

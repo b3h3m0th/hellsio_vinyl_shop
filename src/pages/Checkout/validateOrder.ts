@@ -40,7 +40,7 @@ const validateOrder: (
       billingErrors.push(orderErrors.unfilledFields);
   }
 
-  if (!stripe || !elements) return billingErrors.push(orderErrors.paymentError);
+  if (!stripe || !elements) billingErrors.push(orderErrors.paymentError);
 
   if (billingErrors && billingErrors.length >= 1) {
     setBillingErrors(billingErrors);
