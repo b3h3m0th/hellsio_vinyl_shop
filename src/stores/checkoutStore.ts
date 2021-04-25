@@ -73,7 +73,8 @@ export class CheckoutStore {
   };
 
   @action checkout = async (
-    billingData: BillingData
+    billingData: BillingData,
+    stripSecret: string
   ): Promise<any | string> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
@@ -93,6 +94,7 @@ export class CheckoutStore {
           headers: {
             "Content-Type": "application/json",
             authorization: `Bearer ${accessToken}`,
+            "stripe-authorization": stripSecret,
           },
         }
       );
@@ -112,7 +114,7 @@ export class CheckoutStore {
       );
 
       setUserAccessToken(tokenResponse.data.accessToken);
-      return await this.checkout(billingData);
+      return await this.checkout(billingData, stripSecret);
     }
   };
 
@@ -129,7 +131,9 @@ export class CheckoutStore {
         {
           billingData: {
             ...billingData,
-            amount: totalAmount.current,
+            products: this.products.map((product: any) => {
+              return { code: product.code, quantity: product.amount };
+            }),
           },
         },
         {
@@ -139,6 +143,7 @@ export class CheckoutStore {
           },
         }
       );
+
       return paymentIntentResponse.data.clientSecret;
     } catch (err) {
       const tokenResponse = await axios.post(

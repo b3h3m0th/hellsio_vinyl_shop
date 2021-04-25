@@ -95,7 +95,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               setBillingErrors([]);
             }, 4000);
           } else {
-            await checkoutStore?.checkout(billingData);
+            await checkoutStore?.checkout(billingData, secret);
             checkoutStore?.setOrderPlaced(true);
             checkoutStore?.clear();
           }
