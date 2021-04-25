@@ -326,7 +326,6 @@ const Checkout: React.FC<CheckoutProps> = ({
                         iconStyle: "solid",
                       } as StripeCardElementOptions
                     }
-                    onChange={(e) => console.log(e)}
                   />
                 </div>
               </form>

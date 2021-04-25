@@ -42,8 +42,6 @@ const validateOrder: (
 
   if (!stripe || !elements) return billingErrors.push(orderErrors.paymentError);
 
-  console.log(billingErrors);
-  console.log(billingData);
   if (billingErrors && billingErrors.length >= 1) {
     setBillingErrors(billingErrors);
     setTimeout(() => {

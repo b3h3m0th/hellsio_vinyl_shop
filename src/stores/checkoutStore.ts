@@ -76,10 +76,9 @@ export class CheckoutStore {
   checkout = async (billingData: BillingData): Promise<any | string> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
-    let response;
 
     try {
-      response = await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/checkout`,
         {
           billingData: billingData,
