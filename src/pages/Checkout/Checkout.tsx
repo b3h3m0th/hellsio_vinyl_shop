@@ -96,6 +96,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           } else {
             await checkoutStore?.checkout(billingData);
             checkoutStore?.setOrderPlaced(true);
+            checkoutStore?.clear();
           }
         })();
       }

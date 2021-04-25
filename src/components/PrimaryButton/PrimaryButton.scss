@@ -38,4 +38,18 @@
     left: -10%;
     opacity: 1;
   }
+
+  &:disabled {
+    opacity: 0.4;
+
+    &:hover img {
+      right: inherit;
+      opacity: 0;
+    }
+
+    &:hover p {
+      left: inherit;
+      opacity: 1;
+    }
+  }
 }
