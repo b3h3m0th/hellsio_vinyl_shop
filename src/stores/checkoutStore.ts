@@ -111,15 +111,12 @@ export class CheckoutStore {
     }
   };
 
-  createPaymentIntent = async (
+  @action createPaymentIntent = async (
     billingData: BillingData,
-    setStripeSecret: React.Dispatch<React.SetStateAction<string | undefined>>,
     totalAmount: React.MutableRefObject<number>
-  ): Promise<any | string> => {
+  ): Promise<any> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
-
-    console.log(billingData);
 
     try {
       const paymentIntentResponse = await axios.post(
@@ -137,7 +134,7 @@ export class CheckoutStore {
           },
         }
       );
-      setStripeSecret(paymentIntentResponse.data.clientSecret);
+      return paymentIntentResponse.data.clientSecret;
     } catch (err) {
       const tokenResponse = await axios.post(
         `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
@@ -152,11 +149,7 @@ export class CheckoutStore {
       );
 
       setUserAccessToken(tokenResponse.data.accessToken);
-      return await this.createPaymentIntent(
-        billingData,
-        setStripeSecret,
-        totalAmount
-      );
+      return await this.createPaymentIntent(billingData, totalAmount);
     }
   };
 }

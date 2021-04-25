@@ -61,18 +61,10 @@ const Checkout: React.FC<CheckoutProps> = ({
       .toFixed(2)
   );
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
-  const [stripeSecret, setStripeSecret] = useState<string>();
-
-  useEffect(() => {
-    checkoutStore?.createPaymentIntent(
-      billingData,
-      setStripeSecret,
-      totalAmount
-    );
-  }, []);
 
   const createPayment: () => void = () => {
     const cardElement = elements!.getElement(CardElement)!;
+
     validateOrder(
       stripe!,
       elements!,
@@ -82,7 +74,12 @@ const Checkout: React.FC<CheckoutProps> = ({
       setBillingErrors,
       () => {
         (async () => {
-          const payload = await stripe!.confirmCardPayment(stripeSecret || "", {
+          const secret = await checkoutStore?.createPaymentIntent(
+            billingData,
+            totalAmount
+          );
+
+          const payload = await stripe!.confirmCardPayment(secret || "", {
             payment_method: {
               card: cardElement,
             },
