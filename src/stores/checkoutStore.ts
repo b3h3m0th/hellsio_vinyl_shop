@@ -73,7 +73,9 @@ export class CheckoutStore {
     this.orderPlaced = value;
   };
 
-  checkout = async (billingData: BillingData): Promise<any | string> => {
+  @action checkout = async (
+    billingData: BillingData
+  ): Promise<any | string> => {
     const accessToken = getUserAccessToken();
     const refreshToken = getUserRefreshToken();
 
@@ -81,7 +83,10 @@ export class CheckoutStore {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/checkout`,
         {
-          billingData: billingData,
+          billingData: {
+            ...billingData,
+            products: this.products,
+          },
         },
         {
           headers: {

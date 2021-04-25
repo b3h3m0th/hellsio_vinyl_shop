@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./Checkout.scss";
 import { CheckoutStore } from "../../stores/checkoutStore";
 import { inject, observer } from "mobx-react";
@@ -10,7 +10,6 @@ import { Link, Redirect } from "react-router-dom";
 import { toJS } from "mobx";
 import { userStore } from "../../stores/userStore";
 import { orderErrors } from "./validateOrder";
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
 import validateOrder from "./validateOrder";
