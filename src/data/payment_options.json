@@ -1,38 +1,8 @@
 [
   {
-    "id": "apple_pay",
-    "img": "apple_pay.png",
-    "imgSize": 13,
-    "name": "Apple pay"
-  },
-  {
-    "id": "discover",
-    "img": "discover.png",
-    "imgSize": 21,
-    "name": "Discover"
-  },
-  {
-    "id": "google_pay",
-    "img": "google_pay.png",
-    "imgSize": 13,
-    "name": "Google pay"
-  },
-  {
-    "id": "mastercard",
-    "img": "mastercard.png",
-    "imgSize": 16,
-    "name": "Mastercard"
-  },
-  {
-    "id": "paypal",
-    "img": "paypal.png",
-    "imgSize": 23,
-    "name": "PayPal"
-  },
-  {
-    "id": "visa",
-    "img": "visa.png",
-    "imgSize": 15,
-    "name": "Visa"
+    "id": "stripe",
+    "img": "stripe.png",
+    "imgSize": 20,
+    "name": "Stripe"
   }
 ]

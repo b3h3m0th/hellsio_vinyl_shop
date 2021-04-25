@@ -1,7 +1,6 @@
 import axios from "axios";
 import { observable, action, IObservableArray, makeAutoObservable } from "mobx";
-import { create } from "mobx-persist";
-import * as LocalForage from "localforage";
+// import * as LocalForage from "localforage";
 import { BillingData } from "../pages/Checkout/Checkout";
 import {
   getUserAccessToken,
@@ -9,14 +8,14 @@ import {
   setUserAccessToken,
 } from "../authorization/token";
 
-const checkoutLocalForage = LocalForage.createInstance({
-  driver: LocalForage.WEBSQL, // Force WebSQL; same as using setDriver()
-  name: "hellsio_checkout",
-  version: 1.0,
-  size: 500000000,
-  storeName: "hellsio_checkout",
-  description: "Checkout Hellsio vinyl shop localForage",
-});
+// const checkoutLocalForage = LocalForage.createInstance({
+//   driver: LocalForage.WEBSQL, // Force WebSQL; same as using setDriver()
+//   name: "hellsio_checkout",
+//   version: 1.0,
+//   size: 500000000,
+//   storeName: "hellsio_checkout",
+//   description: "Checkout Hellsio vinyl shop localForage",
+// });
 
 export type CheckoutProduct = { amount: number; [key: string]: any };
 
@@ -85,7 +84,9 @@ export class CheckoutStore {
         {
           billingData: {
             ...billingData,
-            products: this.products,
+            products: this.products.map((product: any) => {
+              return { code: product.code, quantity: product.amount };
+            }),
           },
         },
         {
@@ -158,7 +159,7 @@ export class CheckoutStore {
   };
 }
 
-const hydrate = create({ storage: checkoutLocalForage, jsonify: false });
+// const hydrate = create({ storage: checkoutLocalForage, jsonify: false });
 
 export const checkoutStore = new CheckoutStore();
 // hydrate("checkoutStore", checkoutStore);

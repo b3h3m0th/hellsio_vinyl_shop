@@ -62,6 +62,7 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                 </li>
                 <li>
                   <span className="payment-options">
+                    Instant payment with
                     {paymentOptions.map((opt: any, index: number) => {
                       const img = require(`../../assets/img/payment_options/${opt.img}`);
                       return (
