@@ -42,10 +42,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
   return (
     <div className="admin-login">
       <form className="admin-login__form">
-        <Title
-          title="Administrator Login"
-          link={`${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
-        />
+        <Title title="Administrator Login" link={`admin-login`} />
         <div className="admin-login__form__username">
           <label htmlFor="admin-login__username">Username</label>
           <input
@@ -93,14 +90,12 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
         </div>
         <PrimaryButton
           label="Sign In"
-          link={`${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
+          link={`admin-login`}
           icon={arrowRight}
           onClick={() => handleLogin()}
         />
         {adminStore?.loggedIn ? (
-          <Redirect
-            to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
-          />
+          <Redirect to={`/${languageStore?.language}/admin`} />
         ) : null}
       </form>
     </div>

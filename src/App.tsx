@@ -126,19 +126,19 @@ const App: React.FC<AppProps> = ({
 
             {/* Admin */}
             <Route
-              path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin`}
+              path={`/${languageStore?.language}/admin`}
               component={
                 adminStore?.loggedIn
                   ? pages.admin
                   : () => (
                       <Redirect
-                        to={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
+                        to={`/${languageStore?.language}/admin-login`}
                       />
                     )
               }
             ></Route>
             <Route
-              path={`/${languageStore?.language}/${process.env.REACT_APP_ADMIN_LOGIN_PATH_HASH}/admin-login`}
+              path={`/${languageStore?.language}/admin-login`}
               component={pages.adminLogin}
             ></Route>
 
