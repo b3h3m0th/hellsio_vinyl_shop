@@ -1,7 +1,7 @@
 import { observable, action, makeAutoObservable } from "mobx";
 
 export class MusicStore {
-  @observable playing: boolean = false;
+  @observable playing: boolean = true;
 
   constructor() {
     makeAutoObservable(this);

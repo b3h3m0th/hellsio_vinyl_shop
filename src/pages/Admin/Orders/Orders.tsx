@@ -11,6 +11,7 @@ const Orders: React.FC = () => {
       setOrders(await fetchData(`orders`));
     })();
   }, []);
+
   return (
     <div className="admin-orders">
       <div>
