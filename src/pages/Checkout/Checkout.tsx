@@ -13,6 +13,8 @@ import { orderErrors } from "./validateOrder";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
 import validateOrder from "./validateOrder";
+import Loader from "../../components/Loader/Loader";
+import { unstable_batchedUpdates } from "react-dom";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -63,7 +65,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   const [processing, setProcessing] = useState<boolean>(false);
 
   const createPayment: () => void = () => {
-    setProcessing(true);
+    checkoutStore?.setProcessing(true);
     const cardElement = elements!.getElement(CardElement)!;
 
     validateOrder(
@@ -98,12 +100,11 @@ const Checkout: React.FC<CheckoutProps> = ({
             await checkoutStore?.checkout(billingData, secret);
             checkoutStore?.setOrderPlaced(true);
             checkoutStore?.clear();
+            checkoutStore?.setProcessing(true);
           }
         })();
       }
     );
-
-    setProcessing(false);
   };
 
   return (
@@ -387,7 +388,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   onClick={() => {
                     createPayment();
                   }}
-                  disabled={processing}
+                  disabled={checkoutStore?.processing}
                 />
               </form>
               <div className="billing-errors">

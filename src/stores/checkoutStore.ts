@@ -26,6 +26,7 @@ export class CheckoutStore {
   );
 
   @observable orderPlaced: boolean = false;
+  @observable processing: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -161,6 +162,10 @@ export class CheckoutStore {
       setUserAccessToken(tokenResponse.data.accessToken);
       return await this.createPaymentIntent(billingData, totalAmount);
     }
+  };
+
+  @action setProcessing: (value: boolean) => void = (value: boolean) => {
+    this.processing = value;
   };
 }
 
