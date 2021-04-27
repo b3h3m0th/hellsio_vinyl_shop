@@ -41,7 +41,7 @@
 
   &:disabled {
     opacity: 0.4;
-    cursor: inherit;
+    cursor: not-allowed;
 
     &:hover img {
       right: inherit;
