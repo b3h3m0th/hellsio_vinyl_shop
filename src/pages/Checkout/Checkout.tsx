@@ -386,7 +386,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   link="checkout"
                   icon={arrowRightWhite}
                   onClick={() => {
-                    createPayment();
+                    if (!checkoutStore?.processing) createPayment();
                   }}
                   disabled={checkoutStore?.processing}
                 />
