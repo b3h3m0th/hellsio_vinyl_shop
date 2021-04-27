@@ -27,6 +27,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
+import CookieConsent from "react-cookie-consent";
 
 const pages = {
   home: Home,
@@ -64,8 +65,8 @@ const App: React.FC<AppProps> = ({
   }, [adminStore]);
 
   return (
-    <Elements stripe={stripePromise}>
-      <div className="App">
+    <div className="App">
+      <Elements stripe={stripePromise}>
         <Router>
           <Nav />
           <Switch>
@@ -154,9 +155,29 @@ const App: React.FC<AppProps> = ({
             />
           </Switch>
           <Footer />
+          <CookieConsent
+            location="bottom"
+            buttonText="Got it!"
+            cookieName="hellsioCookieConsent"
+            style={{
+              background: "var(--color-black-transparent)",
+              opacity: "",
+            }}
+            buttonStyle={{
+              color: "white",
+              fontSize: "13px",
+              background: "var(--color-red)",
+              marginRight: "100px",
+              padding: "5px 20px 5px 20px",
+            }}
+            expires={100}
+            overlay
+          >
+            Hellsio uses cookies to enhance the user experience.
+          </CookieConsent>
         </Router>
-      </div>
-    </Elements>
+      </Elements>
+    </div>
   );
 };
 

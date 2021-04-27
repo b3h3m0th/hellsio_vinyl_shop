@@ -31,6 +31,7 @@
     "mobx-react": "^7.1.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-cookie-consent": "^6.2.3",
     "react-country-region-selector": "^3.0.2",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.2.2",
