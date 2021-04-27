@@ -100,7 +100,7 @@ const Checkout: React.FC<CheckoutProps> = ({
             await checkoutStore?.checkout(billingData, secret);
             checkoutStore?.setOrderPlaced(true);
             checkoutStore?.clear();
-            checkoutStore?.setProcessing(true);
+            checkoutStore?.setProcessing(false);
           }
         })();
       }
