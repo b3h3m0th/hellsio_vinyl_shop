@@ -1,0 +1,75 @@
+.admin-order {
+  width: 100%;
+  display: flex;
+  margin-bottom: 40px;
+  height: 150px;
+
+  &:first-child {
+    margin-top: 120px;
+  }
+
+  &:last-child {
+    box-sizing: content-box;
+    padding-bottom: 120px;
+  }
+
+  &__header {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 200px;
+    margin-right: 40px;
+
+    &__id {
+      font-size: 1.5em;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--color-red);
+      margin-bottom: 10px;
+      margin-top: 0;
+      text-align: left;
+    }
+
+    &__user {
+      font-size: 1.1em;
+      margin-top: 0;
+      margin-left: 10%;
+    }
+  }
+
+  &__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+    margin-right: 40px;
+  }
+
+  &__products {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+
+    &__title {
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+
+    &__delete {
+      color: var(--color-red);
+      cursor: pointer;
+    }
+  }
+}

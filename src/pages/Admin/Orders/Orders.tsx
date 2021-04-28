@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Orders.scss";
 import fetchData from "../fetchData";
 import Loader from "../../../components/Loader/Loader";
+import Order from "./Order/Order";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<any & {}>([]);
@@ -15,15 +16,10 @@ const Orders: React.FC = () => {
 
   return (
     <div className="admin-orders">
-      <div className="">
+      <div className="admin-orders__wrapper">
         {orders ? (
           Object.keys(orders).map((key, index) => {
-            return (
-              orders[key][0].invoice_id +
-              orders[key].map((product: any) => {
-                return product.code;
-              })
-            );
+            return <Order invoiceline={orders[key]} />;
           })
         ) : (
           <Loader>Loading</Loader>
