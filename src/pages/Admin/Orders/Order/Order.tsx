@@ -25,8 +25,14 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
           return <span key={i}>{p.code}</span>;
         })}
       </div>
-      <div className="admin-product__actions">
-        <span className="admin-product__actions__delete">Delete</span>
+      <div className="admin-order__price">
+        <div className="admin-order__price__price">
+          $ {invoiceline[0].total}
+        </div>
+        <span className="admin-order__price__per-item">total</span>
+      </div>
+      <div className="admin-order__actions">
+        <span className="admin-order__actions__delete">Delete</span>
       </div>
     </div>
   );

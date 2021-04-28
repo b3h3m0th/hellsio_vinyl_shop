@@ -19,7 +19,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 200px;
+    width: 180px;
     margin-right: 40px;
 
     &__id {
@@ -46,7 +46,7 @@
     align-items: center;
     flex-direction: row;
     height: 100%;
-    margin-right: 40px;
+    margin-right: 50px;
   }
 
   &__products {
@@ -60,6 +60,23 @@
 
     &__title {
       font-weight: 600;
+    }
+  }
+
+  &__price {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+    width: 200px;
+
+    &__price {
+      font-size: 2em;
+    }
+
+    &__per-item {
+      margin-left: 10px;
     }
   }
 
