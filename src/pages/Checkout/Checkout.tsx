@@ -62,7 +62,6 @@ const Checkout: React.FC<CheckoutProps> = ({
       .toFixed(2)
   );
   const [billingErrors, setBillingErrors] = useState<Array<any>>([]);
-  const [processing, setProcessing] = useState<boolean>(false);
 
   const createPayment: () => void = () => {
     checkoutStore?.setProcessing(true);
@@ -93,6 +92,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               ...billingErrors,
               payload.error.message || orderErrors.paymentError,
             ]);
+            checkoutStore?.setProcessing(false);
             setTimeout(() => {
               setBillingErrors([]);
             }, 4000);

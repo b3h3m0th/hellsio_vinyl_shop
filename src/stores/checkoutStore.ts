@@ -115,6 +115,7 @@ export class CheckoutStore {
       );
 
       setUserAccessToken(tokenResponse.data.accessToken);
+      checkoutStore.setProcessing(false);
       return await this.checkout(billingData, stripSecret);
     }
   };
@@ -160,6 +161,7 @@ export class CheckoutStore {
       );
 
       setUserAccessToken(tokenResponse.data.accessToken);
+      checkoutStore.setProcessing(false);
       return await this.createPaymentIntent(billingData, totalAmount);
     }
   };

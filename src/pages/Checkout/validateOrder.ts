@@ -47,6 +47,7 @@ const validateOrder: (
     setTimeout(() => {
       setBillingErrors([]);
     }, 4000);
+    checkoutStore.setProcessing(false);
   } else {
     callback();
   }
