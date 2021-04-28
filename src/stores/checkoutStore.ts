@@ -100,8 +100,6 @@ export class CheckoutStore {
         }
       );
 
-      console.log(response);
-
       return response.data;
     } catch (err) {
       const tokenResponse = await axios.post(
