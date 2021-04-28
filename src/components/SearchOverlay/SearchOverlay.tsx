@@ -11,7 +11,9 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
 }: SearchOverlayProps) => {
   return (
     <div className={`search-overlay`}>
-      <div></div>
+      <div className="search-overlay__input">
+        <input type="text" className="search-overlay__input__input" />
+      </div>
     </div>
   );
 };
