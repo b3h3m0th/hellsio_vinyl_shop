@@ -21,8 +21,8 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
       </div>
       <div className="admin-order__products">
         <span className="admin-order__products__title">Products</span>
-        {invoiceline.map((p: any) => {
-          return <span>{p.code}</span>;
+        {invoiceline.map((p: any, i: number) => {
+          return <span key={i}>{p.code}</span>;
         })}
       </div>
       <div className="admin-product__actions">

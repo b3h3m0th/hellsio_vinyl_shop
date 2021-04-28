@@ -19,7 +19,7 @@ const Orders: React.FC = () => {
       <div className="admin-orders__wrapper">
         {orders ? (
           Object.keys(orders).map((key, index) => {
-            return <Order invoiceline={orders[key]} />;
+            return <Order key={index} invoiceline={orders[key]} />;
           })
         ) : (
           <Loader>Loading</Loader>

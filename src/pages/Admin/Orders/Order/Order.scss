@@ -51,10 +51,12 @@
 
   &__products {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     height: 100%;
+    margin-top: 10px;
+    width: 300px;
 
     &__title {
       font-weight: 600;
