@@ -1,11 +1,16 @@
 import React from "react";
+import { SearchStore } from "../../stores/searchStore";
 import "./SearchOverlay.scss";
 
-interface SearchOverlayProps {}
+interface SearchOverlayProps {
+  searchStore?: SearchStore;
+}
 
-const SearchOverlay: React.FC<SearchOverlayProps> = ({}: SearchOverlayProps) => {
+const SearchOverlay: React.FC<SearchOverlayProps> = ({
+  searchStore,
+}: SearchOverlayProps) => {
   return (
-    <div className="search-overlay">
+    <div className={`search-overlay`}>
       <div></div>
     </div>
   );
