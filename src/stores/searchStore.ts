@@ -4,6 +4,7 @@ export class SearchStore {
   @observable opened: boolean = false;
   @observable query: string = "";
   @observable results: Array<any> = [];
+  @observable loading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +32,10 @@ export class SearchStore {
 
   @action addResult: (item: any) => void = (item: any) => {
     this.results.push(item);
+  };
+
+  @action setLoading: (value: boolean) => void = (value: boolean) => {
+    this.loading = value;
   };
 }
 
