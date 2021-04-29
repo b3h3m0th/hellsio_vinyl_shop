@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ProductStore } from "../../stores/productStore";
 import { SearchStore } from "../../stores/searchStore";
 import { inject, observer } from "mobx-react";
@@ -43,7 +43,6 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
       }
     }
 
-    searchStore?.setLoading(false);
     searchStore?.setResults(
       results.map((r: any) => {
         return productStore?.products.find(
@@ -52,7 +51,10 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
         );
       })
     );
+    searchStore?.setLoading(false);
   };
+
+  console.log(searchStore?.loading);
 
   return (
     <div className={`search-overlay`}>
@@ -70,7 +72,6 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
           }}
         />
       </div>
-
       <div className="search-overlay__results">
         {searchStore?.loading ? (
           <Loader>Loading Products</Loader>
