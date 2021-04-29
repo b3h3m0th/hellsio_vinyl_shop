@@ -9,6 +9,7 @@
   justify-content: flex-start;
   left: 0;
   top: 0;
+  z-index: 99999;
 
   &__input {
     width: 100%;
@@ -31,10 +32,18 @@
       font-family: var(--font-primary);
     }
 
-    img {
+    &__search-icon {
       margin-right: 15px;
-      height: 60%;
+      height: 50%;
       filter: grayscale(100%) brightness(300%);
+    }
+
+    &__close-icon {
+      margin-left: 15px;
+      margin-top: 10px;
+      height: 50%;
+      filter: invert(100%) brightness(60%);
+      cursor: pointer;
     }
   }
 

@@ -8,6 +8,7 @@ import SearchResult from "./SearchResult/SearchResult";
 import Loader from "../Loader/Loader";
 
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
+const closeIcon = require("../../assets/icons/close/closeIcon.png");
 
 interface SearchOverlayProps {
   searchStore?: SearchStore;
@@ -59,7 +60,11 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
   return (
     <div className={`search-overlay`}>
       <div className="search-overlay__input">
-        <img src={searchIcon} alt="Hellsio Search Icon" />
+        <img
+          src={searchIcon}
+          alt="Hellsio Search Icon"
+          className="search-overlay__input__search-icon"
+        />
         <input
           type="text"
           className="search-overlay__input__input"
@@ -70,6 +75,12 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
             e.keyCode === 13 ? search() : void 0;
           }}
+        />
+        <img
+          src={closeIcon}
+          alt="Hellsio Close Icon"
+          className="search-overlay__input__close-icon"
+          onClick={() => searchStore?.close()}
         />
       </div>
       <div className="search-overlay__results">
