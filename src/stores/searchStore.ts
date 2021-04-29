@@ -1,6 +1,7 @@
 import { observable, action, makeAutoObservable } from "mobx";
 
 export class SearchStore {
+  @observable products: Array<any> = [];
   @observable opened: boolean = false;
   query: string = "";
   @observable results: Array<any> = [];
@@ -36,6 +37,12 @@ export class SearchStore {
 
   @action setLoading: (value: boolean) => void = (value: boolean) => {
     this.loading = value;
+  };
+
+  @action setProducts: (products: Array<any>) => void = (
+    products: Array<any>
+  ) => {
+    this.products = products;
   };
 }
 

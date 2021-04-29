@@ -6,6 +6,7 @@ import "./SearchOverlay.scss";
 import { toJS } from "mobx";
 import SearchResult from "./SearchResult/SearchResult";
 import Loader from "../Loader/Loader";
+import gsap from "gsap/all";
 
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const closeIcon = require("../../assets/icons/close/closeIcon.png");
@@ -25,8 +26,44 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
     (async () => {
       productStore?.setProducts(await productStore.fetchAll());
     })();
+
+    searchStore?.setProducts([
+      ...(toJS(productStore?.products)?.map((p: any) => {
+        return {
+          code: (p.code as string).replace(/-|_/g, " ").toUpperCase(),
+        };
+      }) || []),
+    ]);
+
+    gsap.fromTo(
+      ".search-overlay",
+      1,
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+      }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".search-result",
+      0.6,
+      {
+        opacity: 0,
+        x: 40,
+      },
+      {
+        x: 0,
+        opacity: 1,
+        stagger: 0.1,
+        ease: "power2",
+      }
+    );
+  });
 
   const search: () => void = () => {
     const products = toJS(productStore?.products)?.map((p: any) => {

@@ -5,6 +5,8 @@
   justify-content: flex-start;
   align-items: center;
   margin-top: 20px;
+  opacity: 0;
+  transform: translate(40px);
 
   &__img {
     height: 50px;
