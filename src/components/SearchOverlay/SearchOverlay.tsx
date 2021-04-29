@@ -29,7 +29,6 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
   }, []);
 
   const search: () => void = () => {
-    searchStore?.setLoading(true);
     const products = toJS(productStore?.products)?.map((p: any) => {
       return {
         code: (p.code as string).replace(/-|_/g, " ").toUpperCase(),
@@ -58,8 +57,6 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
         })
       );
     }
-
-    searchStore?.setLoading(false);
   };
 
   return (
@@ -76,6 +73,11 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
           placeholder="The fuck are you looking for?"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             searchStore?.setQuery(e.target.value);
+            searchStore?.setLoading(true);
+            search();
+            setTimeout(() => {
+              searchStore?.setLoading(false);
+            }, 100);
           }}
           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.keyCode === 13) search();
@@ -83,7 +85,7 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
           }}
         />
         <div
-          className="search-overlay__input__input__close"
+          className="search-overlay__input__close"
           onMouseUp={() => {
             searchStore?.close();
           }}
@@ -96,14 +98,18 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
         </div>
       </div>
       <div className="search-overlay__results">
-        {searchStore?.loading ? (
+        {searchStore?.loading === true ? (
           <Loader>Loading Products</Loader>
         ) : (
           searchStore?.results.map((r: any, i: number) => {
             return r === NoResultsFoundError ? (
-              <span>{r}</span>
+              <span key={i}>{r}</span>
             ) : (
-              <SearchResult key={i} album={r} />
+              <SearchResult
+                key={i}
+                album={r}
+                onClick={() => setTimeout(() => searchStore.close(), 200)}
+              />
             );
           })
         )}

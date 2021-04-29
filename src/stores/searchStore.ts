@@ -2,7 +2,7 @@ import { observable, action, makeAutoObservable } from "mobx";
 
 export class SearchStore {
   @observable opened: boolean = false;
-  @observable query: string = "";
+  query: string = "";
   @observable results: Array<any> = [];
   @observable loading: boolean = false;
 

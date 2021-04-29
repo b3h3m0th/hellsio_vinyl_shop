@@ -43,6 +43,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
 
       &__close-icon {
         box-sizing: content-box;
@@ -50,7 +51,6 @@
         margin-top: 10px;
         height: 30px;
         filter: invert(100%) brightness(60%);
-        cursor: pointer;
         padding: 0px 5px 0px 0px;
       }
     }

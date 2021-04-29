@@ -8,14 +8,19 @@ import "./SearchResult.scss";
 interface SearchResultProps {
   album: any & { code: string };
   languageStore?: LanguageStore;
+  onClick?: () => void;
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({
   album,
   languageStore,
+  onClick = () => void 0,
 }: SearchResultProps) => {
   return (
-    <Link to={`/${languageStore?.language}/products/${album.code}`}>
+    <Link
+      to={`/${languageStore?.language}/products/${album.code}`}
+      onMouseUp={() => onClick()}
+    >
       <div className="search-result">
         <img
           src={`data:image/png;base64,${toBase64(album.cover.data)}`}
