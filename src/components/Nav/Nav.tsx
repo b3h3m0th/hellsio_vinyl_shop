@@ -15,6 +15,8 @@ import validateRegistrationData, {
 } from "../../validation/registration";
 import { ProductStore } from "../../stores/productStore";
 import { checkoutStore, CheckoutStore } from "../../stores/checkoutStore";
+import { SearchStore } from "../../stores/searchStore";
+import SearchOverlay from "../SearchOverlay/SearchOverlay";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
@@ -27,6 +29,7 @@ interface NavProps {
   userStore?: UserStore;
   productStore?: ProductStore;
   checkoutStore?: CheckoutStore;
+  searchStore?: SearchStore;
 }
 
 const Nav: React.FC<NavProps> = ({
@@ -34,6 +37,7 @@ const Nav: React.FC<NavProps> = ({
   languageStore,
   userStore,
   productStore,
+  searchStore,
 }: NavProps) => {
   const [genres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
@@ -360,13 +364,18 @@ const Nav: React.FC<NavProps> = ({
             <NavItem label="NEW ARRIVALS" link="newarrivals" />
             <NavItem label="FEATURED" link="featured" />
             <NavItem label="POPULAR" link="popular" />
-            <div className="nav-icons"></div>
-            <div className="nav-icons__icon">
+            <div
+              className="nav-icons__icon"
+              onClick={() => {
+                searchStore?.open();
+              }}
+            >
               <img
                 src={searchIcon}
                 alt="Hellsio search icon"
                 id="search_icon"
               />
+              {searchStore?.opened ? <SearchOverlay /> : null}
             </div>
             <div className="nav-icons__icon">
               <Link to={`/${languageStore?.language}/shopping-bag`}>
@@ -409,5 +418,6 @@ export default inject(
   "languageStore",
   "userStore",
   "productStore",
-  "checkoutStore"
+  "checkoutStore",
+  "searchStore"
 )(observer(Nav));

@@ -1,4 +1,5 @@
 .search-overlay {
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: var(--color-black-transparent);
@@ -6,11 +7,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  left: 0;
+  top: 0;
 
   &__input {
     width: 100%;
     margin-top: 200px;
     height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &__input {
       border: none;
@@ -20,6 +26,18 @@
       outline: none;
       color: var(--color-white);
       width: 100%;
+      max-width: 500px;
+      font-size: 1.5em;
+      font-family: var(--font-primary);
+    }
+
+    img {
+      margin-right: 15px;
+      height: 60%;
+      filter: grayscale(100%) brightness(300%);
+    }
+
+    &__results {
     }
   }
 }

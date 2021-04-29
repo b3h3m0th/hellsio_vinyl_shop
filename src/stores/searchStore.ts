@@ -2,12 +2,14 @@ import { observable, action, makeAutoObservable } from "mobx";
 
 export class SearchStore {
   @observable opened: boolean = false;
+  @observable query: string = "";
+  @observable results: Array<any> = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  @action toggleBurgerMenu = () => {
+  @action toggle = () => {
     this.opened = !this.opened;
   };
 
@@ -17,6 +19,18 @@ export class SearchStore {
 
   @action close = () => {
     this.opened = false;
+  };
+
+  @action setQuery: (value: string) => void = (value: string) => {
+    this.query = value;
+  };
+
+  @action setResults: (value: Array<any>) => void = (value: Array<any>) => {
+    this.results = value;
+  };
+
+  @action addResult: (item: any) => void = (item: any) => {
+    this.results.push(item);
   };
 }
 
