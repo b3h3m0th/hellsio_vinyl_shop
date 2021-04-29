@@ -10,6 +10,8 @@ import Loader from "../Loader/Loader";
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const closeIcon = require("../../assets/icons/close/closeIcon.png");
 
+export const NoResultsFoundError = "No Results Error :(" as const;
+
 interface SearchOverlayProps {
   searchStore?: SearchStore;
   productStore?: ProductStore;
@@ -44,18 +46,21 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
       }
     }
 
-    searchStore?.setResults(
-      results.map((r: any) => {
-        return productStore?.products.find(
-          (p: any) =>
-            (p.code as string).replace(/-|_/g, " ").toUpperCase() === r.code
-        );
-      })
-    );
+    if (results.length === 0) {
+      searchStore?.setResults([NoResultsFoundError]);
+    } else {
+      searchStore?.setResults(
+        results.map((r: any) => {
+          return productStore?.products.find(
+            (p: any) =>
+              (p.code as string).replace(/-|_/g, " ").toUpperCase() === r.code
+          );
+        })
+      );
+    }
+
     searchStore?.setLoading(false);
   };
-
-  console.log(searchStore?.loading);
 
   return (
     <div className={`search-overlay`}>
@@ -73,22 +78,33 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
             searchStore?.setQuery(e.target.value);
           }}
           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            e.keyCode === 13 ? search() : void 0;
+            if (e.keyCode === 13) search();
+            else if (e.keyCode === 27) searchStore?.close();
           }}
         />
-        <img
-          src={closeIcon}
-          alt="Hellsio Close Icon"
-          className="search-overlay__input__close-icon"
-          onClick={() => searchStore?.close()}
-        />
+        <div
+          className="search-overlay__input__input__close"
+          onMouseUp={() => {
+            searchStore?.close();
+          }}
+        >
+          <img
+            src={closeIcon}
+            alt="Hellsio Close Icon"
+            className="search-overlay__input__close__close-icon"
+          />
+        </div>
       </div>
       <div className="search-overlay__results">
         {searchStore?.loading ? (
           <Loader>Loading Products</Loader>
         ) : (
           searchStore?.results.map((r: any, i: number) => {
-            return <SearchResult key={i} album={r} />;
+            return r === NoResultsFoundError ? (
+              <span>{r}</span>
+            ) : (
+              <SearchResult key={i} album={r} />
+            );
           })
         )}
       </div>

@@ -38,21 +38,29 @@
       filter: grayscale(100%) brightness(300%);
     }
 
-    &__close-icon {
-      margin-left: 15px;
-      margin-top: 10px;
-      height: 50%;
-      filter: invert(100%) brightness(60%);
-      cursor: pointer;
+    &__close {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__close-icon {
+        box-sizing: content-box;
+        margin-left: 15px;
+        margin-top: 10px;
+        height: 30px;
+        filter: invert(100%) brightness(60%);
+        cursor: pointer;
+        padding: 0px 5px 0px 0px;
+      }
     }
   }
 
   &__results {
     height: 60%;
     overflow-y: auto;
-    margin: 20px 20px 20px 60px;
+    margin: 20px 20px 20px 20px;
     width: 500px;
-
     overflow-x: hidden;
   }
 }
