@@ -4,7 +4,6 @@ import { SearchStore } from "../../stores/searchStore";
 import { inject, observer } from "mobx-react";
 import "./SearchOverlay.scss";
 import { toJS } from "mobx";
-import { checkoutStore } from "../../stores/checkoutStore";
 
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 
@@ -44,12 +43,7 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
   };
 
   return (
-    <div
-      className={`search-overlay`}
-      onKeyUp={(e: React.KeyboardEvent<HTMLElement>) =>
-        e.keyCode === 27 ? searchStore?.close() : void 0
-      }
-    >
+    <div className={`search-overlay`}>
       <div className="search-overlay__input">
         <img src={searchIcon} alt="Hellsio Search Icon" />
         <input
@@ -60,6 +54,9 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
             searchStore?.setQuery(e.target.value);
             search();
           }}
+          onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            e.keyCode === 27 ? searchStore?.close() : void 0
+          }
         />
       </div>
       <div className="search-overlay__results">
