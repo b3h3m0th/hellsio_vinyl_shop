@@ -44,7 +44,12 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({
   };
 
   return (
-    <div className={`search-overlay`}>
+    <div
+      className={`search-overlay`}
+      onKeyUp={(e: React.KeyboardEvent<HTMLElement>) =>
+        e.keyCode === 27 ? searchStore?.close() : void 0
+      }
+    >
       <div className="search-overlay__input">
         <img src={searchIcon} alt="Hellsio Search Icon" />
         <input
