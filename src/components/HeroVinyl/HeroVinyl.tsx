@@ -19,8 +19,8 @@ const HeroVinyl: React.FC<HeroVinylProps> = ({
   name,
   languageStore,
   productCode,
-  onMouseEnter = () => console.log("mjaoisdfa"),
-  onMouseLeave = () => console.log("mjaoisdfa"),
+  onMouseEnter = () => void 0,
+  onMouseLeave = () => void 0,
   className = "",
 }: HeroVinylProps) => {
   return (

@@ -13,8 +13,6 @@ const Customers: React.FC = () => {
     })();
   }, []);
 
-  console.log(customers);
-
   return (
     <div className="admin-customers">
       <div>
