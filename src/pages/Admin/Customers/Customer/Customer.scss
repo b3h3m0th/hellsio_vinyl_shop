@@ -40,7 +40,8 @@
     }
   }
 
-  &__location {
+  &__location,
+  &__contact {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -51,23 +52,6 @@
 
     &__location {
       font-weight: 600;
-    }
-  }
-
-  &__price {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: row;
-    height: 100%;
-    width: 200px;
-
-    &__price {
-      font-size: 2em;
-    }
-
-    &__per-item {
-      margin-left: 10px;
     }
   }
 

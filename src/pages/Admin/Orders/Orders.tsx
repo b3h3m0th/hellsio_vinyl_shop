@@ -18,9 +18,11 @@ const Orders: React.FC = () => {
     <div className="admin-orders">
       <div className="admin-orders__wrapper">
         {orders ? (
-          Object.keys(orders).map((key, index) => {
-            return <Order key={index} invoiceline={orders[key]} />;
-          })
+          Object.keys(orders)
+            .reverse()
+            .map((key, index) => {
+              return <Order key={index} invoiceline={orders[key]} />;
+            })
         ) : (
           <Loader>Loading</Loader>
         )}

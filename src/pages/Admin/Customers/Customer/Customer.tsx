@@ -1,7 +1,7 @@
 import React from "react";
 import "./Customer.scss";
 
-export const customerAttributeUnsetWarning = "Unset" as const;
+export const customerAttributeUnsetWarning = "--" as const;
 const unset = customerAttributeUnsetWarning;
 
 interface CustomerProps {
@@ -26,9 +26,13 @@ const Customer: React.FC<CustomerProps> = ({ customer }: CustomerProps) => {
         } ${customer.city || unset}, ${customer.country_name || unset}`}</span>
         {`${customer.street || unset} ${customer.street_number || unset}`}
       </div>
-      <div className="admin-customer__price">
-        <div className="admin-order__price__price"></div>
-        <span className="admin-__price__per-item">total</span>
+      <div className="admin-customer__contact">
+        <span className="admin-customer__contact__email">{`${
+          customer.email || unset
+        }`}</span>
+        <span className="admin-customer__contact__phone">{`${
+          customer.phone || unset
+        }`}</span>
       </div>
       <div className="admin-customer__actions">
         <span className="admin-customer__actions__delete">Delete</span>
