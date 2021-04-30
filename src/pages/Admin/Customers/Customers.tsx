@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loader from "../../../components/Loader/Loader";
 import fetchData from "../fetchData";
+import Customer from "./Customer/Customer";
 import "./Customers.scss";
 
 const Customers: React.FC = () => {
@@ -12,16 +13,14 @@ const Customers: React.FC = () => {
     })();
   }, []);
 
+  console.log(customers);
+
   return (
     <div className="admin-customers">
       <div>
         {customers ? (
           customers.map((customer: any, i: number) => {
-            return (
-              <div className="admin-customers__customer" key={i}>
-                {customer.email}
-              </div>
-            );
+            return <Customer key={i} customer={customer} />;
           })
         ) : (
           <Loader>Loading</Loader>
