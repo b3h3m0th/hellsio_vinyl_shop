@@ -61,11 +61,14 @@
     align-items: center;
     margin-left: 60px;
 
-    &__delete {
+    &__edit,
+    &__save {
       color: var(--color-red);
       cursor: pointer;
     }
+
+    &__save {
+      margin-left: 20px;
+    }
   }
-}
-.admin-customer {
 }

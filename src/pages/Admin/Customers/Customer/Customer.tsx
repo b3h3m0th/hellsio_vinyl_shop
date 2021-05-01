@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Customer.scss";
 
 export const customerAttributeUnsetWarning = "--" as const;
@@ -9,6 +9,8 @@ interface CustomerProps {
 }
 
 const Customer: React.FC<CustomerProps> = ({ customer }: CustomerProps) => {
+  const [editable, setEditable] = useState<boolean>(false);
+
   return (
     <div className="admin-customer">
       <div className="admin-customer__header">
@@ -19,7 +21,6 @@ const Customer: React.FC<CustomerProps> = ({ customer }: CustomerProps) => {
           {`${customer.username || unset}`}
         </div>
       </div>
-
       <div className="admin-customer__location">
         <span className="admin-customer__location__location">{`${
           customer.postal_code || unset
@@ -35,7 +36,20 @@ const Customer: React.FC<CustomerProps> = ({ customer }: CustomerProps) => {
         }`}</span>
       </div>
       <div className="admin-customer__actions">
-        <span className="admin-customer__actions__delete">Delete</span>
+        <span
+          className="admin-customer__actions__edit"
+          onClick={() => setEditable((prev: boolean) => !prev)}
+        >
+          {editable ? "Cancel" : "Edit"}
+        </span>
+        {editable && (
+          <span
+            className="admin-customer__actions__save"
+            onClick={() => setEditable(true)}
+          >
+            Save
+          </span>
+        )}
       </div>
     </div>
   );

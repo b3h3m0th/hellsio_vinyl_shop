@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Product.scss";
 
 interface ProductProps {
@@ -14,6 +14,9 @@ const Product: React.FC<ProductProps> = ({
   image,
   price,
 }: ProductProps) => {
+  const [editable, setEditable] = useState<boolean>(false);
+
+  const save = () => {};
   return (
     <div className="admin-product">
       <img
@@ -26,11 +29,23 @@ const Product: React.FC<ProductProps> = ({
         <div className="admin-product__header__artist">{artist}</div>
       </div>
       <div className="admin-product__price">
-        <div className="admin-product__price__price">$ {price}</div>
+        <div className="admin-product__price__price">
+          $<span contentEditable={editable}>{price}</span>
+        </div>
         <span className="admin-product__price__per-item">per item</span>
       </div>
       <div className="admin-product__actions">
-        <span className="admin-product__actions__delete">Delete</span>
+        <span
+          className="admin-product__actions__edit"
+          onClick={() => setEditable((prev: boolean) => !prev)}
+        >
+          {editable ? "Cancel" : "Edit"}
+        </span>
+        {editable && (
+          <span className="admin-product__actions__save" onClick={() => save()}>
+            Save
+          </span>
+        )}
       </div>
     </div>
   );
