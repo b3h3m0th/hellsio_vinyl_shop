@@ -2,6 +2,10 @@ import React from "react";
 import "./Order.scss";
 
 export type Invoiceline = Array<any>;
+export enum DeliveryStats {
+  shipped = "shipped",
+  notShippedYet = "not shipped yet",
+}
 
 interface OrderProps {
   invoiceline: Invoiceline;
@@ -33,27 +37,29 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
       </div>
       <div className="admin-order__actions">
         {/* eslint-disable-next-line */}
-        <a
-          href=""
+        <span
           title="Mark as not shipped yet"
-          className="admin-order__actions__not-shipped-yet"
+          className={`admin-order__actions__not-shipped-yet ${
+            invoiceline[0].status === DeliveryStats.shipped ? "" : "marked"
+          }`}
         >
           <img
             src="https://img.icons8.com/material-rounded/344/ffffff/important-time.png"
             alt="Hellsio shipped icon"
           />
-        </a>
+        </span>
         {/* eslint-disable-next-line */}
-        <a
-          href=""
+        <span
           title="Mark as shipped"
-          className="admin-order__actions__shipped"
+          className={`admin-order__actions__shipped ${
+            invoiceline[0].status === DeliveryStats.shipped ? "marked" : ""
+          }`}
         >
           <img
             src="https://img.icons8.com/material-rounded/344/ffffff/shipped.png"
             alt="Hellsio shipped icon"
           />
-        </a>
+        </span>
       </div>
     </div>
   );

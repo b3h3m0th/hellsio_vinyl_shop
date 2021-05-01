@@ -87,6 +87,7 @@
 
     &__not-shipped-yet,
     &__shipped {
+      cursor: pointer;
       height: 50px;
       width: 50px;
       border-radius: 50%;
@@ -95,16 +96,21 @@
       justify-content: center;
       align-items: center;
       background-color: var(--color-red);
-      transition: 0.2s ease;
+      transition: 0.1s ease;
+      opacity: 0.3;
 
       &:hover {
-        filter: brightness(70%);
+        filter: brightness(80%);
       }
 
       img {
         height: 50%;
         aspect-ratio: 1/1;
       }
+    }
+
+    .marked {
+      opacity: 1;
     }
 
     &__not-shipped-yet {
