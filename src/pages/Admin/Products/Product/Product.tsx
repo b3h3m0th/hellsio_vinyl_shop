@@ -32,6 +32,7 @@ const Product: React.FC<ProductProps> = ({
   const save = () => {
     setEditable(false);
   };
+
   return (
     <div className="admin-product">
       <img

@@ -51,11 +51,10 @@
 
   &__products {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     height: 100%;
-    margin-top: 10px;
     width: 300px;
 
     &__title {
@@ -86,9 +85,30 @@
     align-items: center;
     margin-left: 60px;
 
-    &__delete {
-      color: var(--color-red);
-      cursor: pointer;
+    &__not-shipped-yet,
+    &__shipped {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-red);
+      transition: 0.2s ease;
+
+      &:hover {
+        filter: brightness(70%);
+      }
+
+      img {
+        height: 50%;
+        aspect-ratio: 1/1;
+      }
+    }
+
+    &__not-shipped-yet {
+      margin-right: 20px;
     }
   }
 }

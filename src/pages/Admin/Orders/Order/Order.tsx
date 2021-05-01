@@ -32,7 +32,28 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
         <span className="admin-order__price__per-item">total</span>
       </div>
       <div className="admin-order__actions">
-        <span className="admin-order__actions__delete">Delete</span>
+        {/* eslint-disable-next-line */}
+        <a
+          href=""
+          title="Mark as not shipped yet"
+          className="admin-order__actions__not-shipped-yet"
+        >
+          <img
+            src="https://img.icons8.com/material-rounded/344/ffffff/important-time.png"
+            alt="Hellsio shipped icon"
+          />
+        </a>
+        {/* eslint-disable-next-line */}
+        <a
+          href=""
+          title="Mark as shipped"
+          className="admin-order__actions__shipped"
+        >
+          <img
+            src="https://img.icons8.com/material-rounded/344/ffffff/shipped.png"
+            alt="Hellsio shipped icon"
+          />
+        </a>
       </div>
     </div>
   );
