@@ -174,6 +174,7 @@ const Nav: React.FC<NavProps> = ({
                       type="email"
                       id="sign-in__email"
                       name="email"
+                      value={signInDataChange.email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSignInDataChange({
                           email: e.target.value,
@@ -187,6 +188,7 @@ const Nav: React.FC<NavProps> = ({
                     <input
                       type="password"
                       id="sign-in__password"
+                      value={signInDataChange.password}
                       name="password"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSignInDataChange({
@@ -243,6 +245,7 @@ const Nav: React.FC<NavProps> = ({
                       type="text"
                       id="register__username"
                       name="username"
+                      value={registrationDataChange.username}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
                           username: e.target.value,
@@ -262,6 +265,7 @@ const Nav: React.FC<NavProps> = ({
                       type="email"
                       id="register__email"
                       name="email"
+                      value={registrationDataChange.email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
                           username: registrationDataChange.username,
@@ -281,6 +285,7 @@ const Nav: React.FC<NavProps> = ({
                       type="password"
                       id="register__password"
                       name="password"
+                      value={registrationDataChange.password}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
                           username: registrationDataChange.username,
@@ -302,6 +307,7 @@ const Nav: React.FC<NavProps> = ({
                       type="password"
                       id="register__password2"
                       name="password2"
+                      value={registrationDataChange.password2}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const pwData = {
                           username: registrationDataChange.username,
@@ -335,8 +341,8 @@ const Nav: React.FC<NavProps> = ({
                     onClick={() => {
                       handleRegister();
                       setSignInDataChange({
-                        email: signInDataChange.email,
-                        password: "",
+                        email: registrationDataChange.email,
+                        password: registrationDataChange.password,
                       });
                     }}
                   />
