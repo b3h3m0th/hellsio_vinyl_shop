@@ -41,6 +41,7 @@
     "react-scripts": "3.4.3",
     "react-vis": "^1.11.7",
     "typescript": "~3.7.2",
+    "values.js": "^2.0.0",
     "victory": "^35.5.1"
   },
   "scripts": {

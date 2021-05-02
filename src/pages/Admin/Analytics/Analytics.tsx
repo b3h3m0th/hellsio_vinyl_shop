@@ -7,6 +7,7 @@ import {
   fetchTopSellingCountries,
 } from "./fetchData";
 import Title from "../../../components/Title/Title";
+import { colorShade } from "../../../util/color";
 
 const Analytics: React.FC = () => {
   const [analyticsData, setAnalyticsData] = useState<{
@@ -29,14 +30,14 @@ const Analytics: React.FC = () => {
     })();
   }, []);
 
-  console.log(analyticsData);
-
   return (
     <div className="admin-analytics">
       <div className="admin-analytics__wrapper">
         <Title link={`admin/analytics`} title="Anayltics" />
         <div className="admin-analytics__wrapper__chart">
-          <div>Top Customers by Orders</div>
+          <div className="admin-analytics__wrapper__chart__title">
+            Top Customers by Orders
+          </div>
           <div>
             <VictoryChart
               theme={VictoryTheme.material}
@@ -58,7 +59,9 @@ const Analytics: React.FC = () => {
           </div>
         </div>
         <div className="admin-analytics__wrapper__chart">
-          <div>Top selling Albums</div>
+          <div className="admin-analytics__wrapper__chart__title">
+            Top selling Albums
+          </div>
           <div>
             <VictoryChart
               theme={VictoryTheme.material}
@@ -78,7 +81,9 @@ const Analytics: React.FC = () => {
           </div>
         </div>
         <div className="admin-analytics__wrapper__chart">
-          <div>Top countries</div>
+          <div className="admin-analytics__wrapper__chart__title">
+            Top countries
+          </div>
           <div>
             <VictoryPie
               data={[...(analyticsData?.topSellingCountries || [])].map(
@@ -87,6 +92,9 @@ const Analytics: React.FC = () => {
                   return { x: c.country_name, y: c.sold_count };
                 }
               )}
+              colorScale={[...new Array(6)].map((c: any, i: number) => {
+                return colorShade("#ae0b00", 50 * i);
+              })}
               innerRadius={100}
               style={{ labels: { color: "fff" } }}
               animate={{
