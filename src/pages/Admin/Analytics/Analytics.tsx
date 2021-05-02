@@ -87,6 +87,7 @@ const Analytics: React.FC = () => {
                   return { x: c.country_name, y: c.sold_count };
                 }
               )}
+              innerRadius={100}
               style={{ labels: { color: "fff" } }}
               animate={{
                 duration: 2000,
