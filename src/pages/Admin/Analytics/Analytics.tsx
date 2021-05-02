@@ -15,11 +15,17 @@ const Analytics: React.FC = () => {
     topSellingAlbums: Array<any>;
     topSellingCountries: Array<any>;
   }>();
+  const [topCustomerAmount, setTopCustomersAmount] = useState<number>(5);
+  const [topSellingAlbumsAmount, setTopSellingAlbumsAmount] = useState<number>(
+    5
+  );
 
   useEffect(() => {
     (async () => {
-      const topCustomers = await fetchTopCustomers(5);
-      const topSellingAlbums = await fetchTopSellingAlbums(5);
+      const topCustomers = await fetchTopCustomers(topCustomerAmount);
+      const topSellingAlbums = await fetchTopSellingAlbums(
+        topSellingAlbumsAmount
+      );
       const topSellingCountries = await fetchTopSellingCountries(5);
 
       setAnalyticsData({
@@ -28,7 +34,7 @@ const Analytics: React.FC = () => {
         topSellingCountries: topSellingCountries as any,
       });
     })();
-  }, []);
+  }, [topCustomerAmount, topSellingAlbumsAmount]);
 
   return (
     <div className="admin-analytics">
@@ -36,8 +42,17 @@ const Analytics: React.FC = () => {
         <Title link={`admin/analytics`} title="Anayltics" />
         <div className="admin-analytics__wrapper__chart">
           <div className="admin-analytics__wrapper__chart__title">
-            Top Customers by Orders
+            Top Customers by Orders{" "}
           </div>
+          Amount:{" "}
+          <input
+            type="number"
+            className="admin-analytics__wrapper__chart__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setTopCustomersAmount(+e.target.value);
+            }}
+            value={topCustomerAmount}
+          />
           <div>
             <VictoryChart
               theme={VictoryTheme.material}
@@ -62,6 +77,15 @@ const Analytics: React.FC = () => {
           <div className="admin-analytics__wrapper__chart__title">
             Top selling Albums
           </div>
+          Amount:{" "}
+          <input
+            type="number"
+            className="admin-analytics__wrapper__chart__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setTopSellingAlbumsAmount(+e.target.value);
+            }}
+            value={topSellingAlbumsAmount}
+          />
           <div>
             <VictoryChart
               theme={VictoryTheme.material}
