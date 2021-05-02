@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: auto;
   overflow-x: hidden;
 
@@ -17,5 +17,14 @@
     position: relative;
     top: 0;
     max-height: 100vh;
+    padding-top: 100px;
+
+    &__chart {
+      margin-bottom: 20px;
+
+      &:last-child {
+        padding-bottom: 100px;
+      }
+    }
   }
 }

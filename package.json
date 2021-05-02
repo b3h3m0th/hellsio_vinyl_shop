@@ -39,7 +39,9 @@
     "react-howler": "^3.7.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "typescript": "~3.7.2"
+    "react-vis": "^1.11.7",
+    "typescript": "~3.7.2",
+    "victory": "^35.5.1"
   },
   "scripts": {
     "start": "(set PORT=666 || export PORT=666) && react-scripts start",
