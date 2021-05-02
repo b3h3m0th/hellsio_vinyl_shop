@@ -15,7 +15,7 @@ const Customers: React.FC = () => {
 
   return (
     <div className="admin-customers">
-      <div>
+      <div className="admin-customers__wrapper">
         {customers ? (
           customers.map((customer: any, i: number) => {
             return <Customer key={i} customer={customer} />;
