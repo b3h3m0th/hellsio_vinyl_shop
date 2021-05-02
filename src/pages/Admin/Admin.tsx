@@ -11,12 +11,14 @@ import Title from "../../components/Title/Title";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import Analytics from "./Analytics/Analytics";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 const adminPages = {
   orders: Orders,
   products: Products,
   customers: Customers,
+  analytics: Analytics,
 } as const;
 
 interface AdminProps {
@@ -66,6 +68,12 @@ const Admin: React.FC<AdminProps> = ({
             Customers
           </Link>
           <Link
+            to={`${path}/analytics`}
+            className={`admin__sidenav__nav__link`}
+          >
+            Analytics
+          </Link>
+          <Link
             to={`${languageStore?.language}/admin`}
             className="admin__sidenav__nav__logout"
             onClick={() => handleLogout()}
@@ -98,6 +106,11 @@ const Admin: React.FC<AdminProps> = ({
             exact
             path={`${path}/products`}
             component={adminPages.products}
+          ></Route>
+          <Route
+            exact
+            path={`${path}/analytics`}
+            component={adminPages.analytics}
           ></Route>
           <Route
             path={`${path}`}
