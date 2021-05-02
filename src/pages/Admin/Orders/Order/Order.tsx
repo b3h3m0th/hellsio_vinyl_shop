@@ -1,8 +1,14 @@
+import axios from "axios";
 import React from "react";
+import {
+  getAdminAccessToken,
+  getAdminRefreshToken,
+  setAdminAccessToken,
+} from "../../../../authorization/token";
 import "./Order.scss";
 
 export type Invoiceline = Array<any>;
-export enum DeliveryStats {
+export enum DeliveryStatus {
   shipped = "shipped",
   notShippedYet = "not shipped yet",
 }
@@ -11,7 +17,59 @@ interface OrderProps {
   invoiceline: Invoiceline;
 }
 
+const updateInvoiceStatus = async (
+  status_text: DeliveryStatus,
+  invoice_id: number
+): Promise<void> => {
+  const accessToken = getAdminAccessToken();
+  const refreshToken = getAdminRefreshToken();
+  try {
+    await axios.post(
+      `${process.env.REACT_APP_BASE_API_URL}/admin/order/update_delivery_status`,
+      {
+        status_text: status_text,
+        invoice_id: invoice_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  } catch (err) {
+    const tokenResponse = await axios.post(
+      `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+      {
+        token: refreshToken,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setAdminAccessToken(tokenResponse.data.accessToken);
+    return await updateInvoiceStatus(status_text, invoice_id);
+  }
+};
+
 const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
+  const markAsShipped = () =>
+    (async () =>
+      await updateInvoiceStatus(
+        DeliveryStatus.shipped,
+        invoiceline[0].invoice_id
+      ))();
+
+  const markAsNotShippedYet = () =>
+    (async () =>
+      await updateInvoiceStatus(
+        DeliveryStatus.notShippedYet,
+        invoiceline[0].invoice_id
+      ))();
+
   return (
     <div className="admin-order">
       <div className="admin-order__header">
@@ -37,29 +95,33 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
       </div>
       <div className="admin-order__actions">
         {/* eslint-disable-next-line */}
-        <span
+        <a
+          href=""
           title="Mark as not shipped yet"
           className={`admin-order__actions__not-shipped-yet ${
-            invoiceline[0].status === DeliveryStats.shipped ? "" : "marked"
+            invoiceline[0].status === DeliveryStatus.shipped ? "" : "marked"
           }`}
+          onClick={() => markAsNotShippedYet()}
         >
           <img
             src="https://img.icons8.com/material-rounded/344/ffffff/important-time.png"
             alt="Hellsio shipped icon"
           />
-        </span>
+        </a>
         {/* eslint-disable-next-line */}
-        <span
+        <a
+          href=""
           title="Mark as shipped"
           className={`admin-order__actions__shipped ${
-            invoiceline[0].status === DeliveryStats.shipped ? "marked" : ""
+            invoiceline[0].status === DeliveryStatus.shipped ? "marked" : ""
           }`}
+          onClick={() => markAsShipped()}
         >
           <img
             src="https://img.icons8.com/material-rounded/344/ffffff/shipped.png"
             alt="Hellsio shipped icon"
           />
-        </span>
+        </a>
       </div>
     </div>
   );
