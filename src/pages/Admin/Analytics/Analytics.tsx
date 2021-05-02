@@ -96,7 +96,6 @@ const Analytics: React.FC = () => {
                 return colorShade("#ae0b00", 50 * i);
               })}
               innerRadius={100}
-              style={{ labels: { color: "fff" } }}
               animate={{
                 duration: 2000,
               }}
