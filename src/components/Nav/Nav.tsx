@@ -332,7 +332,13 @@ const Nav: React.FC<NavProps> = ({
                     label="Register"
                     link=""
                     icon={arrowRight}
-                    onClick={() => handleRegister()}
+                    onClick={() => {
+                      handleRegister();
+                      setSignInDataChange({
+                        email: signInDataChange.email,
+                        password: "",
+                      });
+                    }}
                   />
                   <p
                     className="toggle-to-sign-in"
