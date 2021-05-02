@@ -6,6 +6,7 @@ import {
   VictoryTheme,
   VictoryScatter,
   VictoryCursorContainer,
+  VictoryBoxPlot,
 } from "victory";
 import { fetchTopCustomers, fetchTopSellingAlbums } from "./fetchData";
 import Title from "../../../components/Title/Title";
@@ -53,7 +54,7 @@ const Analytics: React.FC = () => {
                 )}
                 animate={{ onLoad: { duration: 0 } }}
               />
-              <VictoryScatter
+              {/* <VictoryScatter
                 containerComponent={
                   <VictoryCursorContainer
                     cursorLabel={({ x, y }) =>
@@ -61,6 +62,15 @@ const Analytics: React.FC = () => {
                     }
                   />
                 }
+              /> */}
+              <VictoryBoxPlot
+                boxWidth={20}
+                data={[
+                  { x: 1, y: [1, 2, 3, 5] },
+                  { x: 2, y: [3, 2, 8, 10] },
+                  { x: 3, y: [2, 8, 6, 5] },
+                  { x: 4, y: [1, 3, 2, 9] },
+                ]}
               />
             </VictoryChart>
           </div>
