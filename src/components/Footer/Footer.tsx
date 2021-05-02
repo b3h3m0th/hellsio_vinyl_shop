@@ -36,7 +36,10 @@ const Footer: React.FC<FooterProps> = ({ musicStore }: FooterProps) => {
             Now Playing: {currentSong?.title} by {currentSong?.artist.name}
           </div>
           <div className="audio-wrapper__content__credits">
-            <a href="http://www.laut.fm/wacken" target="tab">
+            <a
+              href="http://www.laut.fm/wacken"
+              target="_blank noopener noreferrer"
+            >
               laut.fm - Wacken Radio
             </a>
           </div>

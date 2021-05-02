@@ -5,7 +5,9 @@ import {
   getAdminRefreshToken,
   setAdminAccessToken,
 } from "../../../../authorization/token";
+import { inject, observer } from "mobx-react";
 import "./Order.scss";
+import { LanguageStore } from "../../../../stores/languageStore";
 
 export type Invoiceline = Array<any>;
 export enum DeliveryStatus {
@@ -15,6 +17,7 @@ export enum DeliveryStatus {
 
 interface OrderProps {
   invoiceline: Invoiceline;
+  languageStore?: LanguageStore;
 }
 
 const updateInvoiceStatus = async (
@@ -55,7 +58,10 @@ const updateInvoiceStatus = async (
   }
 };
 
-const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
+const Order: React.FC<OrderProps> = ({
+  invoiceline,
+  languageStore,
+}: OrderProps) => {
   const markAsShipped = () =>
     (async () =>
       await updateInvoiceStatus(
@@ -84,7 +90,15 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
       <div className="admin-order__products">
         <span className="admin-order__products__title">Products</span>
         {invoiceline.map((p: any, i: number) => {
-          return <span key={i}>{p.code}</span>;
+          return (
+            <a
+              href={`/${languageStore?.language}/products/${p.code}`}
+              target="_blank noopener noreferrrer"
+              key={i}
+            >
+              {p.code}
+            </a>
+          );
         })}
       </div>
       <div className="admin-order__price">
@@ -127,4 +141,4 @@ const Order: React.FC<OrderProps> = ({ invoiceline }: OrderProps) => {
   );
 };
 
-export default Order;
+export default inject("languageStore")(observer(Order));
