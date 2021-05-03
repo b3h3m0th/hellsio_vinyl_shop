@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.scss";
-import { VictoryChart, VictoryBar, VictoryTheme, VictoryPie } from "victory";
+import {
+  VictoryChart,
+  VictoryBar,
+  VictoryTheme,
+  VictoryPie,
+  VictoryLabel,
+} from "victory";
 import {
   fetchTopCustomers,
   fetchTopSellingAlbums,
@@ -67,7 +73,7 @@ const Analytics: React.FC = () => {
                 }}
                 data={[...(analyticsData?.topCustomers || [])]?.map(
                   (c: any) => {
-                    return { x: c.email, y: 0, y0: c.invoice_count };
+                    return { x: c.email, y: 0, y0: c.total };
                   }
                 )}
                 animate={{ onLoad: { duration: 0 } }}
