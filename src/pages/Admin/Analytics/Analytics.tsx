@@ -6,6 +6,7 @@ import {
   VictoryTheme,
   VictoryPie,
   VictoryLabel,
+  VictoryTooltip,
 } from "victory";
 import {
   fetchTopCustomers,
@@ -69,13 +70,20 @@ const Analytics: React.FC = () => {
               <VictoryBar
                 style={{
                   data: { fill: "var(--color-red)", width: 50 },
-                  labels: { fill: "var(--color-white)" },
                 }}
                 data={[...(analyticsData?.topCustomers || [])]?.map(
                   (c: any) => {
-                    return { x: c.email, y: 0, y0: c.total };
+                    return {
+                      x: c.email,
+                      y: 0,
+                      y0: c.total,
+                      label: `$ ${c.total}`,
+                    };
                   }
                 )}
+                // labelComponent={
+                //   <VictoryLabel dy={({ datum }) => -datum.y0 / 3} />
+                // }
                 animate={{ onLoad: { duration: 0 } }}
               />
             </VictoryChart>
