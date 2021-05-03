@@ -51,7 +51,7 @@ const Analytics: React.FC = () => {
   return (
     <div className="admin-analytics">
       <div className="admin-analytics__wrapper">
-        <Title link={`admin/analytics`} title="Anayltics" />
+        <Title link={`admin/analytics`} title="Analytics" />
         <div className="admin-analytics__wrapper__chart">
           <div className="admin-analytics__wrapper__chart__title">
             Revenue per day
