@@ -6,6 +6,9 @@ import {
   VictoryTheme,
   VictoryPie,
   VictoryLine,
+  VictoryZoomContainer,
+  VictoryBrushContainer,
+  VictoryAxis,
 } from "victory";
 import {
   fetchOrderTimeline,
@@ -27,6 +30,9 @@ const Analytics: React.FC = () => {
   const [topSellingAlbumsAmount, setTopSellingAlbumsAmount] = useState<number>(
     5
   );
+
+  const [selectedDomain, setSelectedDomain] = useState<any>();
+  const [zoomDomain, setZoomDomain] = useState<any>();
 
   useEffect(() => {
     (async () => {
@@ -50,9 +56,90 @@ const Analytics: React.FC = () => {
     <div className="admin-analytics">
       <div className="admin-analytics__wrapper">
         <Title link={`admin/analytics`} title="Analytics" />
+
         <div className="admin-analytics__wrapper__chart">
           <div className="admin-analytics__wrapper__chart__title">
-            Revenue per day
+            Revenue per Day
+          </div>
+          <div>
+            <VictoryChart
+              width={550}
+              height={300}
+              scale={{ x: "time" }}
+              containerComponent={
+                <VictoryZoomContainer
+                  responsive={false}
+                  zoomDimension="x"
+                  zoomDomain={zoomDomain}
+                  onZoomDomainChange={(domain) => setZoomDomain(domain)}
+                />
+              }
+            >
+              <VictoryLine
+                style={{
+                  data: { stroke: "tomato" },
+                }}
+                data={[
+                  { x: new Date(1982, 1, 1), y: 125 },
+                  { x: new Date(1987, 1, 1), y: 257 },
+                  { x: new Date(1993, 1, 1), y: 345 },
+                  { x: new Date(1997, 1, 1), y: 515 },
+                  { x: new Date(2001, 1, 1), y: 132 },
+                  { x: new Date(2005, 1, 1), y: 305 },
+                  { x: new Date(2011, 1, 1), y: 270 },
+                  { x: new Date(2015, 1, 1), y: 470 },
+                ]}
+              />
+            </VictoryChart>
+
+            <VictoryChart
+              width={550}
+              height={90}
+              scale={{ x: "time" }}
+              padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
+              containerComponent={
+                <VictoryBrushContainer
+                  responsive={false}
+                  brushDimension="x"
+                  brushDomain={selectedDomain}
+                  onBrushDomainChange={(domain) => setSelectedDomain(domain)}
+                />
+              }
+            >
+              <VictoryAxis
+                tickValues={[
+                  new Date(1985, 1, 1),
+                  new Date(1990, 1, 1),
+                  new Date(1995, 1, 1),
+                  new Date(2000, 1, 1),
+                  new Date(2005, 1, 1),
+                  new Date(2010, 1, 1),
+                  new Date(2015, 1, 1),
+                ]}
+                tickFormat={(x) => new Date(x).getFullYear()}
+              />
+              <VictoryLine
+                style={{
+                  data: { stroke: "tomato" },
+                }}
+                data={[
+                  { x: new Date(1982, 1, 1), y: 125 },
+                  { x: new Date(1987, 1, 1), y: 257 },
+                  { x: new Date(1993, 1, 1), y: 345 },
+                  { x: new Date(1997, 1, 1), y: 515 },
+                  { x: new Date(2001, 1, 1), y: 132 },
+                  { x: new Date(2005, 1, 1), y: 305 },
+                  { x: new Date(2011, 1, 1), y: 270 },
+                  { x: new Date(2015, 1, 1), y: 470 },
+                ]}
+              />
+            </VictoryChart>
+          </div>
+        </div>
+
+        <div className="admin-analytics__wrapper__chart">
+          <div className="admin-analytics__wrapper__chart__title">
+            Revenue per Day
           </div>
           <div>
             <VictoryChart
@@ -85,7 +172,7 @@ const Analytics: React.FC = () => {
         </div>
         <div className="admin-analytics__wrapper__chart">
           <div className="admin-analytics__wrapper__chart__title">
-            Top Customers by Orders{" "}
+            Top Customers by Total Order Value{" "}
           </div>
           Amount:{" "}
           <input
@@ -123,7 +210,7 @@ const Analytics: React.FC = () => {
         </div>
         <div className="admin-analytics__wrapper__chart">
           <div className="admin-analytics__wrapper__chart__title">
-            Top selling Albums
+            Top Selling Albums
           </div>
           Amount:{" "}
           <input
@@ -168,7 +255,6 @@ const Analytics: React.FC = () => {
             <VictoryPie
               data={[...(analyticsData?.topSellingCountries || [])].map(
                 (c: any) => {
-                  console.log(c);
                   return { x: c.country_name, y: c.sold_count };
                 }
               )}

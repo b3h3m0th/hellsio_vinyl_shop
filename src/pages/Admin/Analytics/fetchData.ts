@@ -88,7 +88,7 @@ export const fetchTopSellingCountries = async (
   }
 };
 
-export const fetchOrderTimeline = async (): Promise<void> => {
+export const fetchOrderTimeline = async (): Promise<void | Array<any>> => {
   const accessToken = getAdminAccessToken();
   const refreshToken = getAdminRefreshToken();
   try {
@@ -96,7 +96,7 @@ export const fetchOrderTimeline = async (): Promise<void> => {
       `${process.env.REACT_APP_BASE_API_URL}/admin/orders/timeline`,
       { headers: { authorization: `Bearer ${accessToken}` } }
     );
-    return response.data;
+    return (response.data as Array<any>).reverse();
   } catch (err) {
     const tokenResponse = await axios.post(
       `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
