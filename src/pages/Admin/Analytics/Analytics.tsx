@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.scss";
-import { VictoryChart, VictoryBar, VictoryTheme, VictoryPie } from "victory";
+import {
+  VictoryChart,
+  VictoryBar,
+  VictoryTheme,
+  VictoryPie,
+  VictoryLabel,
+} from "victory";
 import {
   fetchTopCustomers,
   fetchTopSellingAlbums,
@@ -62,6 +68,7 @@ const Analytics: React.FC = () => {
               <VictoryBar
                 style={{
                   data: { fill: "var(--color-red)", width: 50 },
+                  labels: { fill: "var(--color-white)" },
                 }}
                 data={[...(analyticsData?.topCustomers || [])]?.map(
                   (c: any) => {
@@ -93,7 +100,13 @@ const Analytics: React.FC = () => {
               domainPadding={50}
             >
               <VictoryBar
-                style={{ data: { fill: "var(--color-red)", width: 50 } }}
+                style={{
+                  labels: { fill: "var(--color-white)" },
+                  data: {
+                    fill: "var(--color-red)",
+                    width: 50,
+                  },
+                }}
                 data={[...(analyticsData?.topSellingAlbums || [])]?.map(
                   (p: any) => {
                     return { x: p.code, y: 0, y0: p.sold_count };
@@ -123,6 +136,7 @@ const Analytics: React.FC = () => {
               animate={{
                 duration: 2000,
               }}
+              style={{ labels: { fill: "var(--color-white)" } }}
             />
           </div>
         </div>
