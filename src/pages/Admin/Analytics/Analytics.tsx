@@ -8,6 +8,7 @@ import {
   VictoryLabel,
   VictoryTooltip,
   VictoryLine,
+  VictoryCursorContainer,
 } from "victory";
 import {
   fetchOrderTimeline,
@@ -76,6 +77,7 @@ const Analytics: React.FC = () => {
                       };
                     }
                   )}
+                  interpolation="natural"
                   animate={{
                     duration: 2000,
                   }}
