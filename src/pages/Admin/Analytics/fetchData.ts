@@ -87,3 +87,30 @@ export const fetchTopSellingCountries = async (
     return await fetchTopSellingCountries(count);
   }
 };
+
+export const fetchOrderTimeline = async (): Promise<void> => {
+  const accessToken = getAdminAccessToken();
+  const refreshToken = getAdminRefreshToken();
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_API_URL}/admin/orders/timeline`,
+      { headers: { authorization: `Bearer ${accessToken}` } }
+    );
+    return response.data;
+  } catch (err) {
+    const tokenResponse = await axios.post(
+      `${`${process.env.REACT_APP_BASE_API_URL}/admin/token` || ""}`,
+      {
+        token: refreshToken,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setAdminAccessToken(tokenResponse.data.accessToken);
+    return await fetchOrderTimeline();
+  }
+};
