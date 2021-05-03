@@ -6,12 +6,10 @@ import {
   VictoryLine,
   VictoryZoomContainer,
 } from "victory";
-import Title from "../../../../components/Title/Title";
 import { fetchOrderTimeline } from "../fetchData";
 
 const RevenueChart = () => {
   const [timeline, setTimeline] = useState<Array<any>>();
-  const [selectedDomain, setSelectedDomain] = useState<any>();
   const [zoomDomain, setZoomDomain] = useState<any>();
 
   useEffect(() => {
@@ -58,7 +56,7 @@ const RevenueChart = () => {
             <VictoryBrushContainer
               responsive={false}
               brushDimension="x"
-              brushDomain={selectedDomain}
+              brushDomain={zoomDomain}
               onBrushDomainChange={(domain) => setZoomDomain(domain)}
             />
           }
