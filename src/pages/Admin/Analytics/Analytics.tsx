@@ -5,10 +5,7 @@ import {
   VictoryBar,
   VictoryTheme,
   VictoryPie,
-  VictoryLabel,
-  VictoryTooltip,
   VictoryLine,
-  VictoryCursorContainer,
 } from "victory";
 import {
   fetchOrderTimeline,
