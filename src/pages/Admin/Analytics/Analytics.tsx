@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.scss";
+import { VictoryChart, VictoryBar, VictoryTheme, VictoryPie } from "victory";
 import {
-  VictoryChart,
-  VictoryBar,
-  VictoryTheme,
-  VictoryPie,
-  VictoryLine,
-  VictoryZoomContainer,
-  VictoryBrushContainer,
-  VictoryAxis,
-} from "victory";
-import {
-  fetchOrderTimeline,
   fetchTopCustomers,
   fetchTopSellingAlbums,
   fetchTopSellingCountries,
