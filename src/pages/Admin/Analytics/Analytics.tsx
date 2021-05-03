@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.scss";
-import {
-  VictoryChart,
-  VictoryBar,
-  VictoryTheme,
-  VictoryPie,
-  VictoryLabel,
-} from "victory";
+import { VictoryChart, VictoryBar, VictoryTheme, VictoryPie } from "victory";
 import {
   fetchTopCustomers,
   fetchTopSellingAlbums,
@@ -53,9 +47,10 @@ const Analytics: React.FC = () => {
           Amount:{" "}
           <input
             type="number"
+            min={1}
             className="admin-analytics__wrapper__chart__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setTopCustomersAmount(+e.target.value);
+              if (+e.target.value !== 0) setTopCustomersAmount(+e.target.value);
             }}
             value={topCustomerAmount}
           />
@@ -87,9 +82,11 @@ const Analytics: React.FC = () => {
           Amount:{" "}
           <input
             type="number"
+            min={1}
             className="admin-analytics__wrapper__chart__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setTopSellingAlbumsAmount(+e.target.value);
+              if (+e.target.value !== 0)
+                setTopSellingAlbumsAmount(+e.target.value);
             }}
             value={topSellingAlbumsAmount}
           />
