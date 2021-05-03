@@ -43,6 +43,10 @@
         width: 100%;
         max-width: 100px;
       }
+
+      tspan {
+        fill: var(--color-white) !important;
+      }
     }
   }
 }
