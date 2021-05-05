@@ -96,7 +96,7 @@ const Order: React.FC<OrderProps> = ({
               target="_blank noopener noreferrrer"
               key={i}
             >
-              {p.code}
+              {p.quantity}x {p.code}
             </a>
           );
         })}
