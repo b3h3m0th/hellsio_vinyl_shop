@@ -17,5 +17,25 @@
     position: relative;
     top: 0;
     max-height: 100vh;
+
+    &__pagination {
+      width: 100%;
+      min-height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 20px;
+      width: 1100px;
+
+      &__page-link {
+        cursor: pointer;
+        height: 100%;
+        padding: 10px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }
