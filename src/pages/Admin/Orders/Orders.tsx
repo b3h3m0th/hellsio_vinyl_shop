@@ -34,7 +34,7 @@ const Orders: React.FC = () => {
                     ...new Array(
                       Math.ceil(Object.keys(orders).length / itemsPerPage)
                     ),
-                  ].map((x: any, i: number) => {
+                  ].map((_, i: number) => {
                     return (
                       <span
                         className="admin-orders__wrapper__pagination__page-link"
