@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import gsap from "gsap";
 import Title from "../Title/Title";
 import axios from "axios";
+import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
 
 // const genres = require("../../data/genres.json");
 
@@ -19,39 +20,42 @@ const GenreList: React.FC<GenresListProps> = ({
   languageStore,
   link,
 }: GenresListProps) => {
-  const [genres, setGenres] = useState<Array<any>>([]);
+  const [genres, setGenres] = useState<Array<any>>();
+
   useEffect(() => {
     (async () => {
-      const genresResponse = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}`
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/genre`
       );
-      setGenres(genresResponse.data);
+      setGenres(response.data);
     })();
-  }, []);
 
-  useEffect(() => {
-    gsap.from(".genres-list__title", 1, {
-      x: -50,
-      opacity: 0,
-      ease: "power4",
-    });
-  });
-
-  useEffect(() => {
     gsap.from(".genre-checkbox__container", 1, {
       x: -50,
       opacity: 0,
       ease: "power4",
       stagger: 0.05,
     });
-  });
+
+    gsap.from(".genres-list__title", 1, {
+      x: -50,
+      opacity: 0,
+      ease: "power4",
+    });
+  }, []);
 
   return (
     <div className="genres-list">
       <Title title={title} link={link} />
       <div className="genres-list__genres-container">
-        {genres.map((genre: any, index: number) => {
-          return null;
+        {genres?.map((genre: any, index: number) => {
+          return (
+            <GenreCheckBox
+              label={genre.name}
+              checked={true}
+              onChange={() => true}
+            />
+          );
         })}
       </div>
     </div>
