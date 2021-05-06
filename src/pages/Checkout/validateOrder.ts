@@ -8,6 +8,7 @@ export enum orderErrors {
   notLoggedIn = "Please Login before checkout.",
   unfilledFields = "Please fill out all required fields.",
   paymentError = "An error occured during your payment.",
+  emailUnverified = "Please verify your email adress before checkout.",
 }
 
 const validateOrder: (

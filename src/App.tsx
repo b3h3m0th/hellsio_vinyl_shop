@@ -28,6 +28,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
 import CookieConsent from "react-cookie-consent";
+import EmailVerified from "./pages/EmailVerified/EmailVerified";
 
 const pages = {
   home: Home,
@@ -40,6 +41,7 @@ const pages = {
   adminLogin: AdminLogin,
   checkout: Checkout,
   orderPlaced: OrderPlaced,
+  emailVerified: EmailVerified,
 };
 
 interface AppProps {
@@ -104,6 +106,12 @@ const App: React.FC<AppProps> = ({
               component={pages.orderPlaced}
             ></Route>
 
+            <Route
+              exact
+              path={`/${languageStore?.language}/email-verified`}
+              component={pages.emailVerified}
+            ></Route>
+
             {/* products page */}
             <Route
               exact
@@ -155,6 +163,7 @@ const App: React.FC<AppProps> = ({
             />
           </Switch>
           <Footer />
+
           <CookieConsent
             location="bottom"
             buttonText="Got it!"

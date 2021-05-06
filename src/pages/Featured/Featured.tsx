@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Featured.scss";
-import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import { inject, observer } from "mobx-react";
 import { ProductStore } from "../../stores/productStore";
@@ -40,7 +39,7 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        <GenreList title="Featured" link="featured"></GenreList>
+        {/* <GenreList title="Featured" link="featured"></GenreList> */}
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

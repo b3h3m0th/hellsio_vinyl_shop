@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./NewArrivals.scss";
-import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import toBase64 from "../../util/toBase64";
@@ -42,7 +41,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        <GenreList title="New Arrivals" link="newarrivals"></GenreList>
+        {/* <GenreList title="New Arrivals" link="newarrivals"></GenreList> */}
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

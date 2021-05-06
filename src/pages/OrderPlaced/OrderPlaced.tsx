@@ -23,7 +23,7 @@ const OrderPlaced: React.FC<OrderPlaceProps> = ({
           <div className="order-placed__wrapper">
             <div className="order-placed__wrapper__header">
               <span className="order-placed__wrapper__header__thank-you">
-                Thank You!
+                Thank You
               </span>
               <span className="order-placed__wrapper__header__content">
                 very much for your order! An Email including all shipping

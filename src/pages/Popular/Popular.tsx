@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Popular.scss";
-import GenreList from "../../components/GenreList/GenreList";
 import gsap from "gsap";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import Loader from "../../components/Loader/Loader";
@@ -40,7 +39,7 @@ const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        <GenreList title="Popular" link="popular"></GenreList>
+        {/* <GenreList title="Popular" link="popular"></GenreList> */}
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

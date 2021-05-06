@@ -82,6 +82,9 @@ const Checkout: React.FC<CheckoutProps> = ({
           if (secret === false) {
             setBillingErrors([...billingErrors, orderErrors.emailUnverified]);
             checkoutStore?.setProcessing(false);
+            setTimeout(() => {
+              setBillingErrors([]);
+            }, 4000);
             return;
           }
 

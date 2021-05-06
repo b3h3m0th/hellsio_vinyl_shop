@@ -146,6 +146,8 @@ export class CheckoutStore {
         }
       );
 
+      if (paymentIntentResponse.status === 208) return false;
+
       return paymentIntentResponse.data.clientSecret;
     } catch (err) {
       const tokenResponse = await axios.post(

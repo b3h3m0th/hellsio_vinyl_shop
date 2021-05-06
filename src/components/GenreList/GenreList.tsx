@@ -48,9 +48,10 @@ const GenreList: React.FC<GenresListProps> = ({
     <div className="genres-list">
       <Title title={title} link={link} />
       <div className="genres-list__genres-container">
-        {genres?.map((genre: any, index: number) => {
+        {genres?.map((genre: any, i: number) => {
           return (
             <GenreCheckBox
+              key={i}
               label={genre.name}
               checked={true}
               onChange={() => true}
