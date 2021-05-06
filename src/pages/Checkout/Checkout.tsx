@@ -79,6 +79,12 @@ const Checkout: React.FC<CheckoutProps> = ({
             totalAmount
           );
 
+          if (secret === false) {
+            setBillingErrors([...billingErrors, orderErrors.emailUnverified]);
+            checkoutStore?.setProcessing(false);
+            return;
+          }
+
           const payload = await stripe!.confirmCardPayment(secret || "", {
             payment_method: {
               card: cardElement,
