@@ -165,6 +165,14 @@
             color: var(--color-red);
           }
         }
+
+        .resend-email-verification {
+          color: var(--color-red);
+          text-decoration: underline;
+          cursor: pointer;
+          display: block;
+          text-align: center;
+        }
       }
     }
   }

@@ -27,6 +27,7 @@ export class CheckoutStore {
 
   @observable orderPlaced: boolean = false;
   @observable processing: boolean = false;
+  @observable isAllowdToResendEmailVerification: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -170,6 +171,44 @@ export class CheckoutStore {
 
   @action setProcessing: (value: boolean) => void = (value: boolean) => {
     this.processing = value;
+  };
+
+  @action setIsAllowdToResendEmailVerification: (value: boolean) => void = (
+    value: boolean
+  ) => {
+    this.isAllowdToResendEmailVerification = value;
+  };
+
+  @action resendEmailVerification: () => void = () => {
+    const accessToken = getUserAccessToken();
+    const refreshToken = getUserRefreshToken();
+
+    (async () => {
+      await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/user/resend-email-verification`,
+        {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      try {
+      } catch (err) {
+        const tokenResponse = await axios.post(
+          `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
+          {
+            token: refreshToken,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setUserAccessToken(tokenResponse.data.accessToken);
+      }
+    })();
   };
 }
 

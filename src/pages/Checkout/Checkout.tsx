@@ -81,10 +81,12 @@ const Checkout: React.FC<CheckoutProps> = ({
 
           if (secret === false) {
             setBillingErrors([...billingErrors, orderErrors.emailUnverified]);
+            checkoutStore?.setIsAllowdToResendEmailVerification(true);
             checkoutStore?.setProcessing(false);
             setTimeout(() => {
               setBillingErrors([]);
-            }, 4000);
+              checkoutStore?.setIsAllowdToResendEmailVerification(false);
+            }, 7000);
             return;
           }
 
@@ -410,6 +412,19 @@ const Checkout: React.FC<CheckoutProps> = ({
                       </li>
                     );
                   })}
+                  {checkoutStore?.isAllowdToResendEmailVerification ? (
+                    <span
+                      className="resend-email-verification"
+                      onClick={() => {
+                        checkoutStore.resendEmailVerification();
+                        checkoutStore.setIsAllowdToResendEmailVerification(
+                          false
+                        );
+                      }}
+                    >
+                      Resend Email verification?
+                    </span>
+                  ) : null}
                 </ul>
               </div>
             </div>
