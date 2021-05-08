@@ -17,6 +17,7 @@ import { ProductStore } from "../../stores/productStore";
 import { checkoutStore, CheckoutStore } from "../../stores/checkoutStore";
 import { SearchStore } from "../../stores/searchStore";
 import SearchOverlay from "../SearchOverlay/SearchOverlay";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const logo = require("../../assets/icons/logo/full/hellsio_full_logo_web_red.png");
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
@@ -56,6 +57,7 @@ const Nav: React.FC<NavProps> = ({
     password: "",
     password2: "",
   });
+  const [reCAPTCHAOK, setReCAPTCHAOK] = useState<string>();
   const [registrationErrors, setRegistrationErrors]: any[] = useState<
     Array<any>
   >([]);
@@ -71,7 +73,8 @@ const Nav: React.FC<NavProps> = ({
       registrationDataChange.password2,
       setRegistrationErrors,
       registrationErrors,
-      setSignInOrRegistration
+      setSignInOrRegistration,
+      reCAPTCHAOK
     );
   };
 
@@ -320,6 +323,11 @@ const Nav: React.FC<NavProps> = ({
                       }}
                     />
                   </div>
+                  <ReCAPTCHA
+                    size="normal"
+                    sitekey={process.env.REACT_APP_GOOEL_RECAPTCHA_KEY || ""}
+                    onChange={(token: any) => setReCAPTCHAOK(token)}
+                  />
                   <div className="register-errors">
                     <ul className="register-errors__errors">
                       {registrationErrors.map((err: any, index: number) => {

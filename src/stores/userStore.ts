@@ -67,9 +67,21 @@ export class UserStore {
     password2: string,
     setErrorList: React.Dispatch<React.SetStateAction<Array<any>>>,
     errorList: any[],
-    setSignInOrRegistration: React.Dispatch<React.SetStateAction<boolean>>
+    setSignInOrRegistration: React.Dispatch<React.SetStateAction<boolean>>,
+    reCAPTCHAOK: string | undefined
   ) {
     if (errorList.length === 0) {
+      if (!reCAPTCHAOK || reCAPTCHAOK.length <= 0) {
+        setErrorList((prev: any) => [
+          "Please verify that you are human",
+          ...prev,
+        ]);
+        setTimeout(() => {
+          setErrorList([]);
+        }, 4000);
+        return;
+      }
+
       (async () => {
         try {
           await axios.post(
