@@ -1,0 +1,47 @@
+.admin-website-content {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  overflow-x: hidden;
+
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    max-height: 100vh;
+
+    &__setting {
+      width: 100%;
+      margin-bottom: 20px;
+
+      &__input {
+        border: 0;
+        padding: 5px;
+        border-bottom: 1px solid white;
+        border: none;
+        border-bottom: 2px solid rgba($color: #fff, $alpha: 0.5);
+        background-color: transparent;
+        padding: 10px 5px;
+        outline: none;
+        color: var(--color-white);
+        width: 100%;
+        max-width: 240px;
+        margin-bottom: 20px;
+      }
+
+      &__save {
+        margin-left: 20px;
+        color: var(--color-red);
+        cursor: pointer;
+      }
+    }
+  }
+}

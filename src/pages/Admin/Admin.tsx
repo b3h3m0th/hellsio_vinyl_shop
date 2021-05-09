@@ -3,15 +3,18 @@ import "./Admin.scss";
 import { Switch, Route, useRouteMatch, Redirect, Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
-//admin pages
-import Orders from "./Orders/Orders";
-import Customers from "./Customers/Customers";
-import Products from "./Products/Products";
 import Title from "../../components/Title/Title";
 import { AdminStore } from "../../stores/adminStore";
 import { LanguageStore } from "../../stores/languageStore";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+
+//admin pages
+import Orders from "./Orders/Orders";
+import Customers from "./Customers/Customers";
+import Products from "./Products/Products";
 import Analytics from "./Analytics/Analytics";
+import WebsiteContent from "./WebsiteContent/WebsiteContent";
+
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 const adminPages = {
@@ -19,6 +22,7 @@ const adminPages = {
   products: Products,
   customers: Customers,
   analytics: Analytics,
+  websiteContent: WebsiteContent,
 } as const;
 
 interface AdminProps {
@@ -74,6 +78,12 @@ const Admin: React.FC<AdminProps> = ({
             Analytics
           </Link>
           <Link
+            to={`${path}/website-content`}
+            className={`admin__sidenav__nav__link`}
+          >
+            Website Content
+          </Link>
+          <Link
             to={`${languageStore?.language}/admin`}
             className="admin__sidenav__nav__logout"
             onClick={() => handleLogout()}
@@ -111,6 +121,11 @@ const Admin: React.FC<AdminProps> = ({
             exact
             path={`${path}/analytics`}
             component={adminPages.analytics}
+          ></Route>
+          <Route
+            exact
+            path={`${path}/website-content`}
+            component={adminPages.websiteContent}
           ></Route>
           <Route
             path={`${path}`}

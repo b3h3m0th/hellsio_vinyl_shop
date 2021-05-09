@@ -39,13 +39,13 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
             min={1}
             className="admin-website-content__wrapper__setting__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setTitle(e.target.value);
+              setData(e.target.value);
             }}
-            value={title}
+            value={data.title}
           />
           <span
             className="admin-website-content__wrapper__setting__save"
-            onClick={() => handleSave(title)}
+            onClick={() => handleSave(data.title)}
           >
             Save
           </span>
