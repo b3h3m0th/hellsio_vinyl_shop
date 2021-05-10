@@ -8,10 +8,12 @@ import { LanguageStore } from "../../stores/languageStore";
 import HeroVinyl from "../../components/HeroVinyl/HeroVinyl";
 import toBase64 from "../../util/toBase64";
 import { productStore, ProductStore } from "../../stores/productStore";
+import { redisStore, RedisStore } from "../../stores/redisStore";
 
 interface HomeProps {
   languageStore?: LanguageStore;
   productstore?: ProductStore;
+  redisStore?: RedisStore;
 }
 
 const Home: React.FC<HomeProps> = ({
@@ -19,9 +21,11 @@ const Home: React.FC<HomeProps> = ({
   productstore,
 }: HomeProps) => {
   const [heroAlbums, setHeroAlbums] = useState<Array<any>>([]);
+  const [heroTitle, setHeroTitle] = useState<string>("This is Hell");
 
   useEffect(() => {
     (async () => {
+      setHeroTitle(await redisStore.getValue("hero-title"));
       setHeroAlbums(
         [...(await productStore.fetchFew(7))]
           .sort(() => Math.random() - Math.random())
@@ -175,7 +179,7 @@ const Home: React.FC<HomeProps> = ({
       <div className="home__hero-banner">
         <div className="hero-banner">
           <h1 className="hero-banner__title" id="hero-banner-title">
-            This is hell
+            {heroTitle}
           </h1>
           <p className="hero-banner__subtitle" id="hero-banner-subtitle">
             The newest <br /> metal albums on <br /> every available format
@@ -264,4 +268,8 @@ const Home: React.FC<HomeProps> = ({
   );
 };
 
-export default inject("languageStore", "productStore")(observer(Home));
+export default inject(
+  "languageStore",
+  "productStore",
+  "redisStore"
+)(observer(Home));

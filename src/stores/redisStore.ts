@@ -1,5 +1,5 @@
 import axios from "axios";
-import { action, makeAutoObservable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import {
   getAdminAccessToken,
   getAdminRefreshToken,
@@ -9,9 +9,15 @@ import {
 export const redisHellsioPrefix = "hellsio-" as const;
 
 export class RedisStore {
+  @observable handover: any;
+
   constructor() {
     makeAutoObservable(this);
   }
+
+  @action setHandover: (value: any) => void = (value) => {
+    this.handover = value;
+  };
 
   @action setValue = async (key: string, value: string): Promise<any> => {
     const accessToken = getAdminAccessToken();
