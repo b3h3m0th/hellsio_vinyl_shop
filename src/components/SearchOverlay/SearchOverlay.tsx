@@ -11,7 +11,7 @@ import gsap from "gsap/all";
 const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const closeIcon = require("../../assets/icons/close/closeIcon.png");
 
-export const NoResultsFoundError = "No Results Error :(" as const;
+export const NoResultsFoundError = "No Results found :(" as const;
 
 interface SearchOverlayProps {
   searchStore?: SearchStore;
