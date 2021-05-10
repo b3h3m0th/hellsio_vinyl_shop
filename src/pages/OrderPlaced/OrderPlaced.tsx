@@ -25,6 +25,7 @@ const OrderPlaced: React.FC<OrderPlaceProps> = ({
               <span className="order-placed__wrapper__header__thank-you">
                 Thank You
               </span>
+              adminStorea
               <span className="order-placed__wrapper__header__content">
                 very much for your order! An Email including all shipping
                 details is on its way...
@@ -32,7 +33,7 @@ const OrderPlaced: React.FC<OrderPlaceProps> = ({
             </div>
             <Link
               to="/"
-              className="order-placed__wrapper__back-button"
+              className="order-placed__wrappera__back-button"
               onClick={() => {
                 checkoutStore.setOrderPlaced(false);
               }}
