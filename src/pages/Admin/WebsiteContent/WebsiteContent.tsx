@@ -13,19 +13,20 @@ interface WebsiteContentProps {
 const WebsiteContent: React.FC<WebsiteContentProps> = ({
   redisStore,
 }: WebsiteContentProps) => {
-  const [data, setData] = useState<any>({ title: "" });
+  const [data, setData] = useState<any>({ title: "", subtitle: "" });
 
   useEffect(() => {
     (async () => {
       const title = await redisStore?.getValue("hero-title");
-      setData({ title: title });
+      const subtitle = await redisStore?.getValue("hero-subtitle");
+      setData({ title: title, subtitle: subtitle });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSave = (value: string | undefined) => {
+  const handleSave = (key: string, value: string | undefined) => {
     (async () => {
-      await redisStore?.setValue("hero-title", value || "");
+      await redisStore?.setValue(key, value || "");
     })();
   };
 
@@ -34,7 +35,9 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
       <div className="admin-website-content__wrapper">
         <Title link={`admin/website-content`} title="Website Content" />
         <div className="admin-website-content__wrapper__setting">
-          Hero Title:{" "}
+          <span className="admin-website-content__wrapper__setting__header">
+            Hero Title:{" "}
+          </span>
           <input
             type="text"
             placeholder={data.title}
@@ -46,7 +49,28 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           />
           <span
             className="admin-website-content__wrapper__setting__save"
-            onClick={() => handleSave(data.title)}
+            onClick={() => handleSave("hero-title", data.title)}
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            {" "}
+            Hero Subtitle
+          </span>
+          <input
+            type="text"
+            placeholder={data.subtitle}
+            className="admin-website-content__wrapper__setting__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setData({ ...data, subtitle: e.target.value });
+            }}
+            value={data.subtitle}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() => handleSave("hero-subtitle", data.subtitle)}
           >
             Save
           </span>

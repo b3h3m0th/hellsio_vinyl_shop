@@ -22,10 +22,14 @@ const Home: React.FC<HomeProps> = ({
 }: HomeProps) => {
   const [heroAlbums, setHeroAlbums] = useState<Array<any>>([]);
   const [heroTitle, setHeroTitle] = useState<string>("This is Hell");
+  const [heroSubtitle, setHerosubtitle] = useState<string>(
+    "The newest metal albums on every available format"
+  );
 
   useEffect(() => {
     (async () => {
       setHeroTitle(await redisStore.getValue("hero-title"));
+      setHerosubtitle(await redisStore.getValue("hero-subtitle"));
       setHeroAlbums(
         [...(await productStore.fetchFew(7))]
           .sort(() => Math.random() - Math.random())
@@ -182,7 +186,7 @@ const Home: React.FC<HomeProps> = ({
             {heroTitle}
           </h1>
           <p className="hero-banner__subtitle" id="hero-banner-subtitle">
-            The newest <br /> metal albums on <br /> every available format
+            {heroSubtitle}
           </p>
           <Link
             to={`/${languageStore?.language}/newarrivals`}
