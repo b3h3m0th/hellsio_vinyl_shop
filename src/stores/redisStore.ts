@@ -19,7 +19,7 @@ export class RedisStore {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_BASE_API_URL}/`,
+        `${process.env.REACT_APP_BASE_API_URL}/admin/site-content/edit`,
         {
           key: key,
           value: value,
@@ -48,12 +48,9 @@ export class RedisStore {
     const refreshToken = getAdminRefreshToken();
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_API_URL}/`,
-        {
-          key: key,
-        },
-        { headers: { authorization: `Bearer ${accessToken}` } }
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/admin/site-content/value`,
+        { headers: { authorization: `Bearer ${accessToken}`, key: key } }
       );
 
       return response.data;

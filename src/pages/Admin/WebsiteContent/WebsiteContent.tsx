@@ -13,13 +13,14 @@ interface WebsiteContentProps {
 const WebsiteContent: React.FC<WebsiteContentProps> = ({
   redisStore,
 }: WebsiteContentProps) => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>({ title: "" });
 
   useEffect(() => {
     (async () => {
-      await redisStore?.getValue("hero-title");
-      setData(null);
+      const title = await redisStore?.getValue("hero-title");
+      setData({ title: title });
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = (value: string | undefined) => {
@@ -36,10 +37,10 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           Hero Title:{" "}
           <input
             type="text"
-            min={1}
+            placeholder={data.title}
             className="admin-website-content__wrapper__setting__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setData(e.target.value);
+              setData({ ...data, title: e.target.value });
             }}
             value={data.title}
           />
