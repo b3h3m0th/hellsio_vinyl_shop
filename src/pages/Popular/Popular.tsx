@@ -7,7 +7,6 @@ import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import { inject, observer } from "mobx-react";
 import Title from "../../components/Title/Title";
-import { languageStore } from "../../stores/languageStore";
 
 interface PopularProps {
   productStore?: ProductStore;

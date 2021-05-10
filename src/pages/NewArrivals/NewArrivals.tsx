@@ -43,7 +43,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
         {/* <GenreList title="New Arrivals" link="newarrivals"></GenreList> */}
-        <Title title="Popular" link="popular"></Title>
+        <Title title="New Arrivals" link="newarrivals"></Title>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

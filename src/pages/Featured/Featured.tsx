@@ -41,7 +41,7 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
         {/* <GenreList title="Featured" link="featured"></GenreList> */}
-        <Title title="Popular" link="popular"></Title>
+        <Title title="Featured" link="feature"></Title>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
