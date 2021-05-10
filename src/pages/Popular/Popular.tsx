@@ -6,6 +6,8 @@ import Loader from "../../components/Loader/Loader";
 import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import { inject, observer } from "mobx-react";
+import Title from "../../components/Title/Title";
+import { languageStore } from "../../stores/languageStore";
 
 interface PopularProps {
   productStore?: ProductStore;
@@ -40,6 +42,7 @@ const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
         {/* <GenreList title="Popular" link="popular"></GenreList> */}
+        <Title title="Popular" link="popular"></Title>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

@@ -6,6 +6,7 @@ import { ProductStore } from "../../stores/productStore";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import Loader from "../../components/Loader/Loader";
 import toBase64 from "../../util/toBase64";
+import Title from "../../components/Title/Title";
 
 interface FeaturedProps {
   productStore?: ProductStore;
@@ -40,6 +41,7 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
         {/* <GenreList title="Featured" link="featured"></GenreList> */}
+        <Title title="Popular" link="popular"></Title>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
