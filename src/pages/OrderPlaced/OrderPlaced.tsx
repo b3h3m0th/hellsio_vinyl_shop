@@ -32,7 +32,7 @@ const OrderPlaced: React.FC<OrderPlaceProps> = ({
             </div>
             <Link
               to="/"
-              className="order-placed__wrappera__back-button"
+              className="order-placed__wrapper__back-button"
               onClick={() => {
                 checkoutStore.setOrderPlaced(false);
               }}
