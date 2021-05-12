@@ -112,6 +112,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           </span>
           <input
             type="number"
+            min={1}
             placeholder={data.maxProductAddToCartAmount.toString()}
             className="admin-website-content__wrapper__setting__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,6 +138,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           </span>
           <input
             type="number"
+            min={1}
             placeholder={data.maxProductTotalOrderAmount.toString()}
             className="admin-website-content__wrapper__setting__input"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
