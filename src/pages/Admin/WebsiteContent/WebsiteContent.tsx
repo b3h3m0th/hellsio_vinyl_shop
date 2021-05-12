@@ -20,12 +20,14 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
     maxProductAddToCartAmount: number;
     maxProductTotalOrderAmount: number;
     radioMusicEnabled: boolean;
+    accentColor: string;
   }>({
     title: "",
     subtitle: "",
     maxProductAddToCartAmount: 0,
     maxProductTotalOrderAmount: 0,
     radioMusicEnabled: true,
+    accentColor: "AE0B00",
   });
 
   useEffect(() => {
@@ -41,12 +43,14 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
       const radioMusicEnabled = await redisStore?.getValue(
         "radio-music-enabled"
       );
+      const accentColor = await redisStore?.getValue("accent-color");
       setData({
         title,
         subtitle,
         maxProductAddToCartAmount,
         maxProductTotalOrderAmount,
         radioMusicEnabled: radioMusicEnabled as boolean,
+        accentColor,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,6 +176,30 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
                 data.radioMusicEnabled.toString()
               )
             }
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            Accent Color
+          </span>
+          <input
+            type="color"
+            placeholder={data.accentColor}
+            className="admin-website-content__wrapper__setting__input__color"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              console.log(e.target.value);
+              setData({
+                ...data,
+                accentColor: (e.target.value as string).slice(1),
+              });
+            }}
+            value={`#${data.accentColor}`}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() => handleSave("accent-color", data.accentColor)}
           >
             Save
           </span>

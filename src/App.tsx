@@ -29,6 +29,7 @@ import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
 import CookieConsent from "react-cookie-consent";
 import EmailVerified from "./pages/EmailVerified/EmailVerified";
+import { RedisStore } from "./stores/redisStore";
 
 const pages = {
   home: Home,
@@ -48,6 +49,7 @@ interface AppProps {
   languageStore?: LanguageStore;
   adminStore?: AdminStore;
   userStore?: UserStore;
+  redisStore?: RedisStore;
 }
 
 const stripePromise = loadStripe(
@@ -59,10 +61,15 @@ const App: React.FC<AppProps> = ({
   languageStore,
   adminStore,
   userStore,
+  redisStore,
 }: AppProps) => {
   useEffect(() => {
     (async (): Promise<void> => {
       await adminStore?.isLoggedIn();
+      document.documentElement.style.setProperty(
+        "--color-red",
+        `#${await redisStore?.getValue("accent-color")}`
+      );
     })();
   }, [adminStore]);
 
@@ -193,5 +200,6 @@ const App: React.FC<AppProps> = ({
 export default inject(
   "languageStore",
   "adminStore",
-  "userStore"
+  "userStore",
+  "redisStore"
 )(observer(App));

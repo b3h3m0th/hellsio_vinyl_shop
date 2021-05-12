@@ -8,7 +8,6 @@ export class MusicStore {
   constructor() {
     makeAutoObservable(this);
     (async () => {
-      console.log(await redisStore.getValue("radio-music-enabled"));
       this.setEnabled(await redisStore.getValue("radio-music-enabled"));
     })();
   }

@@ -40,6 +40,10 @@
         width: 100%;
         max-width: 240px;
         margin-bottom: 20px;
+
+        &__color {
+          width: 240px;
+        }
       }
 
       &__save {
