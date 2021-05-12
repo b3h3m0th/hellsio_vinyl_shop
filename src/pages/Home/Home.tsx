@@ -205,7 +205,10 @@ const Home: React.FC<HomeProps> = ({
       <div className="home__background-container">
         <div
           className="home__background-container__img"
-          style={{ backgroundImage: `url("${heroBackgroundImage}")` }}
+          style={{
+            backgroundImage: `url("${heroBackgroundImage}")`,
+            transform: "scale(1, 1)",
+          }}
         ></div>
         <div
           className="home__background-container__vinyls"
