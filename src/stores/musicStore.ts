@@ -2,7 +2,7 @@ import { observable, action, makeAutoObservable } from "mobx";
 import { redisStore } from "./redisStore";
 
 export class MusicStore {
-  @observable playing: boolean = true;
+  @observable playing: boolean = false;
   @observable enabled: boolean = false;
 
   constructor() {
