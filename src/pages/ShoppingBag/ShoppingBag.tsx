@@ -32,8 +32,6 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   redisStore,
 }: ShoppingBagProps) => {
   const [formats, setFormats] = useState<Array<any>>([]);
-  const [maxProductTotalOrderAmount, setMaxProductTotalOrderAmount] =
-    useState<number>(20);
 
   useEffect(() => {
     (async (): Promise<void> => {
@@ -43,7 +41,7 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
 
   useEffect(() => {
     (async () => {
-      setMaxProductTotalOrderAmount(
+      checkoutStore?.setMaxProductTotalOrderAmount(
         await redisStore?.getValue("max-product-total-order-amount")
       );
       setFormats((await checkoutStore?.fetchFormates()) || []);
@@ -124,7 +122,9 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                     <div className="checkout__products__wrapper__product__quantity">
                       <QuantityPicker
                         label="Quantity"
-                        maxValue={maxProductTotalOrderAmount}
+                        maxValue={
+                          checkoutStore?.maxProductTotalOrderAmount || 20
+                        }
                         value={p.amount}
                         setValue={(value: number) =>
                           (checkoutStore!.products[index].amount = value)

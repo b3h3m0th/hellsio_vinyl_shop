@@ -40,8 +40,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
-  const [maxProductAddToCartAmount, setMaxProductAddToCartAmount] =
-    useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -77,7 +75,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         }
       );
 
-      setMaxProductAddToCartAmount(
+      checkoutStore?.setMaxProductAddToCartAmount(
         await redisStore?.getValue("max-product-add-to-cart-amount")
       );
 
@@ -235,7 +233,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       </p>
                       <QuantityPicker
                         label="Quantity"
-                        maxValue={maxProductAddToCartAmount}
+                        maxValue={checkoutStore?.maxProductAddToCartAmount || 5}
                         value={quantity}
                         setValue={setQuantity}
                       />

@@ -28,6 +28,8 @@ export class CheckoutStore {
   @observable orderPlaced: boolean = false;
   @observable processing: boolean = false;
   @observable isAllowdToResendEmailVerification: boolean = false;
+  @observable maxProductAddToCartAmount: number = 5;
+  @observable maxProductTotalOrderAmount: number = 20;
 
   constructor() {
     makeAutoObservable(this);
@@ -43,9 +45,21 @@ export class CheckoutStore {
     product: CheckoutProduct
   ) => {
     if (this.products.some((p: any) => p.code === product.code)) {
-      this.products[
-        this.products.findIndex((p: any) => p.code === product.code)
-      ].amount += product.amount;
+      if (
+        this.products[
+          this.products.findIndex((p: any) => p.code === product.code)
+        ].amount +
+          product.amount >=
+        this.maxProductTotalOrderAmount
+      ) {
+        this.products[
+          this.products.findIndex((p: any) => p.code === product.code)
+        ].amount = this.maxProductTotalOrderAmount;
+      } else {
+        this.products[
+          this.products.findIndex((p: any) => p.code === product.code)
+        ].amount += product.amount;
+      }
     } else {
       this.products.push(product);
     }
@@ -209,6 +223,14 @@ export class CheckoutStore {
         setUserAccessToken(tokenResponse.data.accessToken);
       }
     })();
+  };
+
+  @action setMaxProductAddToCartAmount: (value: number) => void = (value) => {
+    this.maxProductAddToCartAmount = value;
+  };
+
+  @action setMaxProductTotalOrderAmount: (value: number) => void = (value) => {
+    this.maxProductTotalOrderAmount = value;
   };
 }
 
