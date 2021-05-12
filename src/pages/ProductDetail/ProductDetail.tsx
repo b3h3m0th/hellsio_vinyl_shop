@@ -12,6 +12,7 @@ import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import { LanguageStore } from "../../stores/languageStore";
 import Display404 from "../../components/Display404/Display404";
+import { RedisStore } from "../../stores/redisStore";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -26,6 +27,7 @@ interface ProductDetailProps {
   checkoutStore?: CheckoutStore;
   productStore?: ProductStore;
   languageStore?: LanguageStore;
+  redisStore?: RedisStore;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
@@ -33,10 +35,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   checkoutStore,
   productStore,
   languageStore,
+  redisStore,
 }: ProductDetailProps) => {
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
+  const [maxProductAddToCartAmount, setMaxProductAddToCartAmount] =
+    useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -70,6 +75,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
             optionValue: format.inches,
           };
         }
+      );
+
+      setMaxProductAddToCartAmount(
+        await redisStore?.getValue("max-product-add-to-cart-amount")
       );
 
       setAlbumData({
@@ -226,7 +235,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       </p>
                       <QuantityPicker
                         label="Quantity"
-                        maxValue={5}
+                        maxValue={maxProductAddToCartAmount}
                         value={quantity}
                         setValue={setQuantity}
                       />
@@ -267,5 +276,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 export default inject(
   "languageStore",
   "checkoutStore",
-  "productStore"
+  "productStore",
+  "redisStore"
 )(observer(ProductDetail));

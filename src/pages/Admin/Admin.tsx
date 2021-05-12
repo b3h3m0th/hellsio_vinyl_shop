@@ -81,7 +81,7 @@ const Admin: React.FC<AdminProps> = ({
             to={`${path}/website-content`}
             className={`admin__sidenav__nav__link`}
           >
-            Website Content
+            Website Settings
           </Link>
           <Link
             to={`${languageStore?.language}/admin`}

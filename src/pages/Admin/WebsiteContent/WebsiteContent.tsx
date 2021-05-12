@@ -13,13 +13,34 @@ interface WebsiteContentProps {
 const WebsiteContent: React.FC<WebsiteContentProps> = ({
   redisStore,
 }: WebsiteContentProps) => {
-  const [data, setData] = useState<any>({ title: "", subtitle: "" });
+  const [data, setData] = useState<{
+    title: string;
+    subtitle: string;
+    maxProductAddToCartAmount: number;
+    maxProductTotalOrderAmount: number;
+  }>({
+    title: "",
+    subtitle: "",
+    maxProductAddToCartAmount: 0,
+    maxProductTotalOrderAmount: 0,
+  });
 
   useEffect(() => {
     (async () => {
       const title = await redisStore?.getValue("hero-title");
       const subtitle = await redisStore?.getValue("hero-subtitle");
-      setData({ title: title, subtitle: subtitle });
+      const maxProductAddToCartAmount = await redisStore?.getValue(
+        "max-product-add-to-cart-amount"
+      );
+      const maxProductTotalOrderAmount = await redisStore?.getValue(
+        "max-product-total-order-amount"
+      );
+      setData({
+        title,
+        subtitle,
+        maxProductAddToCartAmount,
+        maxProductTotalOrderAmount,
+      });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -33,7 +54,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
   return (
     <div className="admin-website-content">
       <div className="admin-website-content__wrapper">
-        <Title link={`admin/website-content`} title="Website Content" />
+        <Title link={`admin/website-content`} title="Website Settings" />
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
             Hero Title:{" "}
@@ -71,6 +92,58 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           <span
             className="admin-website-content__wrapper__setting__save"
             onClick={() => handleSave("hero-subtitle", data.subtitle)}
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            {" "}
+            Max. Product add to cart Amount
+          </span>
+          <input
+            type="number"
+            placeholder={data.maxProductAddToCartAmount.toString()}
+            className="admin-website-content__wrapper__setting__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setData({ ...data, maxProductAddToCartAmount: +e.target.value });
+            }}
+            value={data.maxProductAddToCartAmount}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() =>
+              handleSave(
+                "max-product-add-to-cart-amount",
+                data.maxProductAddToCartAmount.toString()
+              )
+            }
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            {" "}
+            Max. Product Total Order Amount
+          </span>
+          <input
+            type="number"
+            placeholder={data.maxProductTotalOrderAmount.toString()}
+            className="admin-website-content__wrapper__setting__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setData({ ...data, maxProductTotalOrderAmount: +e.target.value });
+            }}
+            value={data.maxProductTotalOrderAmount}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() =>
+              handleSave(
+                "max-product-total-order-amount",
+                data.maxProductTotalOrderAmount.toString()
+              )
+            }
           >
             Save
           </span>

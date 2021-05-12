@@ -11,6 +11,7 @@ import DropDownPicker from "../../components/DropDownPicker/DropDownPicker";
 import toBase64 from "../../util/toBase64";
 import { UserStore } from "../../stores/userStore";
 import { BurgerMenuStore } from "../../stores/burgerMenuStore";
+import { RedisStore } from "../../stores/redisStore";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const paymentOptions = require("../../data/payment_options.json");
@@ -20,6 +21,7 @@ interface ShoppingBagProps {
   checkoutStore?: CheckoutStore;
   userStore?: UserStore;
   burgerMenuStore?: BurgerMenuStore;
+  redisStore?: RedisStore;
 }
 
 const ShoppingBag: React.FC<ShoppingBagProps> = ({
@@ -27,8 +29,11 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
   checkoutStore,
   userStore,
   burgerMenuStore,
+  redisStore,
 }: ShoppingBagProps) => {
   const [formats, setFormats] = useState<Array<any>>([]);
+  const [maxProductTotalOrderAmount, setMaxProductTotalOrderAmount] =
+    useState<number>(20);
 
   useEffect(() => {
     (async (): Promise<void> => {
@@ -38,6 +43,9 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
 
   useEffect(() => {
     (async () => {
+      setMaxProductTotalOrderAmount(
+        await redisStore?.getValue("max-product-total-order-amount")
+      );
       setFormats((await checkoutStore?.fetchFormates()) || []);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,9 +124,11 @@ const ShoppingBag: React.FC<ShoppingBagProps> = ({
                     <div className="checkout__products__wrapper__product__quantity">
                       <QuantityPicker
                         label="Quantity"
-                        maxValue={10}
+                        maxValue={maxProductTotalOrderAmount}
                         value={p.amount}
-                        setValue={() => 0}
+                        setValue={(value: number) =>
+                          (checkoutStore!.products[index].amount = value)
+                        }
                       />
                     </div>
                     <div className="checkout__products__wrapper__product__format">
@@ -163,5 +173,6 @@ export default inject(
   "languageStore",
   "checkoutStore",
   "userStore",
-  "burgerMenuStore"
+  "burgerMenuStore",
+  "redisStore"
 )(observer(ShoppingBag));
