@@ -21,6 +21,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
     maxProductTotalOrderAmount: number;
     radioMusicEnabled: boolean;
     accentColor: string;
+    backgroundImage: string;
   }>({
     title: "",
     subtitle: "",
@@ -28,6 +29,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
     maxProductTotalOrderAmount: 0,
     radioMusicEnabled: true,
     accentColor: "AE0B00",
+    backgroundImage: "https://f4.bcbits.com/img/a2924891603_10.jpg",
   });
 
   useEffect(() => {
@@ -44,6 +46,9 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         "radio-music-enabled"
       );
       const accentColor = await redisStore?.getValue("accent-color");
+      const backgroundImage = await redisStore?.getValue(
+        "hero-background-image"
+      );
       setData({
         title,
         subtitle,
@@ -51,6 +56,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         maxProductTotalOrderAmount,
         radioMusicEnabled: radioMusicEnabled as boolean,
         accentColor,
+        backgroundImage,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,14 +190,13 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         </div>
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
-            Accent Color
+            Accent Color:
           </span>
           <input
             type="color"
             placeholder={data.accentColor}
             className="admin-website-content__wrapper__setting__input__color"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              console.log(e.target.value);
               setData({
                 ...data,
                 accentColor: (e.target.value as string).slice(1),
@@ -202,6 +207,31 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
           <span
             className="admin-website-content__wrapper__setting__save"
             onClick={() => handleSave("accent-color", data.accentColor)}
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            Hero Background Image:
+          </span>
+          <input
+            type="text"
+            placeholder={data.backgroundImage}
+            className="admin-website-content__wrapper__setting__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setData({
+                ...data,
+                backgroundImage: e.target.value,
+              });
+            }}
+            value={data.backgroundImage}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() =>
+              handleSave("hero-background-image", data.backgroundImage)
+            }
           >
             Save
           </span>

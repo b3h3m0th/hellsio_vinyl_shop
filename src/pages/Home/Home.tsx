@@ -25,11 +25,17 @@ const Home: React.FC<HomeProps> = ({
   const [heroSubtitle, setHerosubtitle] = useState<string>(
     "The newest metal albums on every available format"
   );
+  const [heroBackgroundImage, setHeroBackgroundImage] = useState<string>(
+    "https://f4.bcbits.com/img/a2924891603_10.jpg"
+  );
 
   useEffect(() => {
     (async () => {
       setHeroTitle(await redisStore.getValue("hero-title"));
       setHerosubtitle(await redisStore.getValue("hero-subtitle"));
+      setHeroBackgroundImage(
+        await redisStore.getValue("hero-background-image")
+      );
       setHeroAlbums(
         [...(await productStore.fetchFew(7))]
           .sort(() => Math.random() - Math.random())
@@ -197,7 +203,10 @@ const Home: React.FC<HomeProps> = ({
         </div>
       </div>
       <div className="home__background-container">
-        <div className="home__background-container__img"></div>
+        <div
+          className="home__background-container__img"
+          style={{ backgroundImage: `url("${heroBackgroundImage}")` }}
+        ></div>
         <div
           className="home__background-container__vinyls"
           id="home-vinyl-container"
