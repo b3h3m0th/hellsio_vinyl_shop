@@ -84,7 +84,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         </div>
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
-            Hero Subtitle
+            Hero Subtitle:
           </span>
           <input
             type="text"
@@ -104,7 +104,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         </div>
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
-            Max. Product add to cart Amount
+            Max. Product add to cart Amount:
           </span>
           <input
             type="number"
@@ -129,7 +129,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         </div>
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
-            Max. Product Total Order Amount
+            Max. Product Total Order Amount:
           </span>
           <input
             type="number"
@@ -154,7 +154,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         </div>
         <div className="admin-website-content__wrapper__setting">
           <span className="admin-website-content__wrapper__setting__header">
-            Radio Music Enabled
+            Radio Music Enabled:
           </span>
           <GenreCheckBox
             checked={data.radioMusicEnabled}
