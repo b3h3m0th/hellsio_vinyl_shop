@@ -162,7 +162,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setData({ ...data, radioMusicEnabled: e.target.checked });
             }}
-            style={{ display: "inline-flex" }}
+            style={{ display: "inline-flex", width: 240 }}
           />
           <span
             className="admin-website-content__wrapper__setting__save"

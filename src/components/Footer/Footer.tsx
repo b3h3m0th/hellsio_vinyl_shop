@@ -30,20 +30,24 @@ const Footer: React.FC<FooterProps> = ({ musicStore }: FooterProps) => {
   return (
     <div className="footer">
       <div className="audio-wrapper">
-        <AudioVisualizer />
-        <div className="audio-wrapper__content">
-          <div className="audio-wrapper__content__song">
-            Now Playing: {currentSong?.title} by {currentSong?.artist.name}
-          </div>
-          <div className="audio-wrapper__content__credits">
-            <a
-              href="http://www.laut.fm/wacken"
-              target="_blank noopener noreferrer"
-            >
-              laut.fm - Wacken Radio
-            </a>
-          </div>
-        </div>
+        {musicStore?.enabled ? (
+          <>
+            <AudioVisualizer />
+            <div className="audio-wrapper__content">
+              <div className="audio-wrapper__content__song">
+                Now Playing: {currentSong?.title} by {currentSong?.artist.name}
+              </div>
+              <div className="audio-wrapper__content__credits">
+                <a
+                  href="http://www.laut.fm/wacken"
+                  target="_blank noopener noreferrer"
+                >
+                  laut.fm - Wacken Radio
+                </a>
+              </div>
+            </div>
+          </>
+        ) : null}
       </div>
       <LanguageSwitch />
     </div>
