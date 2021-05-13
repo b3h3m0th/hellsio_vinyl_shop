@@ -83,6 +83,13 @@ const Admin: React.FC<AdminProps> = ({
           >
             Website Settings
           </Link>
+          <a
+            href={`https://dashboard.stripe.com/test/dashboard`}
+            target="_tab"
+            className={`admin__sidenav__nav__link`}
+          >
+            Stripe Dashboard
+          </a>
           <Link
             to={`${languageStore?.language}/admin`}
             className="admin__sidenav__nav__logout"
