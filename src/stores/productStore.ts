@@ -61,6 +61,19 @@ export class ProductStore {
       return -1;
     }
   };
+
+  @action fetchSome = async (codes: Array<any>): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/some`,
+        { params: [...codes] }
+      );
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+      return -1;
+    }
+  };
 }
 
 export const productStore = new ProductStore();
