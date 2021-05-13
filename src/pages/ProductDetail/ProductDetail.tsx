@@ -13,6 +13,7 @@ import { ProductStore } from "../../stores/productStore";
 import { LanguageStore } from "../../stores/languageStore";
 import Display404 from "../../components/Display404/Display404";
 import { RedisStore } from "../../stores/redisStore";
+import { WishlistStore } from "../../stores/wishlistStore";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -28,6 +29,7 @@ interface ProductDetailProps {
   productStore?: ProductStore;
   languageStore?: LanguageStore;
   redisStore?: RedisStore;
+  wishlistStore?: WishlistStore;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
@@ -36,6 +38,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   productStore,
   languageStore,
   redisStore,
+  wishlistStore,
 }: ProductDetailProps) => {
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
@@ -241,6 +244,40 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     <div className="album-detail__price__content__right">
                       <p className="album-detail__price__content__right__per-item">
                         per item
+                        {wishlistStore?.products.includes(
+                          albumData?.currentAlbum.code
+                        ) ? (
+                          <img
+                            src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNS44LDI1LjgpIHNjYWxlKDAuNywwLjcpIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNhZTBiMDAiPjxwYXRoIGQ9Ik0xMTYuNTAxMzMsMjEuNTM1ODNjLTE5LjY0MzgzLDAuODAyNjcgLTMwLjUwMTMzLDE0Ljk0MjUgLTMwLjUwMTMzLDE0Ljk0MjVjMCwwIC0xMC44NTc1LC0xNC4xMzk4MyAtMzAuNTAxMzMsLTE0Ljk0MjVjLTEzLjE3MjMzLC0wLjUzNzUgLTI1LjI0ODE3LDYuMDIgLTMzLjIwMzE3LDE2LjUzMzVjLTI3LjY3NzY3LDM2LjU3ODY3IDI0LjcyNSw3OS4zNzA4MyAzNy4wNTE2Nyw5MC44NTljNy4zNzQ1LDYuODcyODMgMTYuNDc2MTcsMTUuMDM1NjcgMjEuOTA4NSwxOS44NzMxN2MyLjcxNjE3LDIuNDIyMzMgNi43NjUzMywyLjQyMjMzIDkuNDgxNSwwYzUuNDMyMzMsLTQuODM3NSAxNC41MzQsLTEzLjAwMDMzIDIxLjkwODUsLTE5Ljg3MzE3YzEyLjMyNjY3LC0xMS40ODgxNyA2NC43MzY1LC01NC4yODAzMyAzNy4wNTE2NywtOTAuODU5Yy03Ljk0NzgzLC0xMC41MTM1IC0yMC4wMjM2NywtMTcuMDcxIC0zMy4xOTYsLTE2LjUzMzV6Ij48L3BhdGg+PC9nPjwvZz48L2c+PC9zdmc+"
+                            alt="Hellsio wishlist icon"
+                            width="40"
+                            height="40"
+                            style={{ marginLeft: "21px" }}
+                            title="Remove from wishlist"
+                            onClick={() => {
+                              wishlistStore?.removeProduct(
+                                wishlistStore.products.findIndex(
+                                  (p: string) =>
+                                    p === albumData?.currentAlbum.code
+                                )
+                              );
+                            }}
+                          ></img>
+                        ) : (
+                          <img
+                            src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNhZTBiMDAiPjxwYXRoIGQ9Ik0xMTguMjUsMjEuNWMtMjAuNzQ3NSwwIC0zMi4yNSwxNC45NzgzMyAtMzIuMjUsMTQuOTc4MzNjMCwwIC0xMS41MDI1LC0xNC45NzgzMyAtMzIuMjUsLTE0Ljk3ODMzYy0yMS43NzIzMywwIC0zOS40MTY2NywxNy42NDQzMyAtMzkuNDE2NjcsMzkuNDE2NjdjMCwyOS44OTIxNyAzNS4yMDI2Nyw1OC44NTk4MyA0NS4wMTM4Myw2OC4wMTE2N2MxMS4zMDE4MywxMC41MzUgMjYuNjUyODMsMjQuMDggMjYuNjUyODMsMjQuMDhjMCwwIDE1LjM1MSwtMTMuNTQ1IDI2LjY1MjgzLC0yNC4wOGM5LjgxMTE3LC05LjE1MTgzIDQ1LjAxMzgzLC0zOC4xMTk1IDQ1LjAxMzgzLC02OC4wMTE2N2MwLC0yMS43NzIzMyAtMTcuNjQ0MzMsLTM5LjQxNjY3IC0zOS40MTY2NywtMzkuNDE2Njd6TTEwNi4xNDU1LDExNS40NTVjLTEuMjY4NSwxLjE0NjY3IC0yLjM3MjE3LDIuMTQyODMgLTMuMjY4LDIuOTgxMzNjLTUuMzgyMTcsNS4wMTY2NyAtMTEuNzQ2MTcsMTAuNzcxNSAtMTYuODc3NSwxNS4zNzI1Yy01LjEzMTMzLC00LjYwMSAtMTEuNTAyNSwtMTAuMzYzIC0xNi44Nzc1LC0xNS4zNzI1Yy0wLjkwMywtMC44Mzg1IC0yLjAwNjY3LC0xLjg0MTgzIC0zLjI2OCwtMi45ODEzM2MtMTAuMTc2NjcsLTkuMTk0ODMgLTM3LjE4NzgzLC0zMy42MTg4MyAtMzcuMTg3ODMsLTU0LjUzODMzYzAsLTEzLjgzMTY3IDExLjI1MTY3LC0yNS4wODMzMyAyNS4wODMzMywtMjUuMDgzMzNjMTMuMDkzNSwwIDIwLjY4Myw5LjEzNzUgMjAuODgzNjcsOS4zNzRsMTEuMzY2MzMsMTIuMTI2bDExLjM2NjMzLC0xMi4xMjZjMC4wNzE2NywtMC4wOTMxNyA3Ljc5MDE3LC05LjM3NCAyMC44ODM2NywtOS4zNzRjMTMuODMxNjcsMCAyNS4wODMzMywxMS4yNTE2NyAyNS4wODMzMywyNS4wODMzM2MwLDIwLjkxOTUgLTI3LjAxMTE3LDQ1LjM0MzUgLTM3LjE4NzgzLDU0LjUzODMzeiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"
+                            alt="Hellsio wishlist icon"
+                            style={{ marginLeft: "27px" }}
+                            width="28"
+                            height="28"
+                            title="Add to wishlist"
+                            onClick={() =>
+                              wishlistStore?.addProduct(
+                                albumData?.currentAlbum.code
+                              )
+                            }
+                          ></img>
+                        )}
                       </p>
                       <DropDownPicker
                         label="Format"
@@ -275,5 +312,6 @@ export default inject(
   "languageStore",
   "checkoutStore",
   "productStore",
-  "redisStore"
+  "redisStore",
+  "wishlistStore"
 )(observer(ProductDetail));

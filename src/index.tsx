@@ -15,6 +15,7 @@ import { productStore } from "./stores/productStore";
 import { cacheStore } from "./stores/cacheStore";
 import { searchStore } from "./stores/searchStore";
 import { redisStore } from "./stores/redisStore";
+import { wishlistStore } from "./stores/wishlistStore";
 
 require("dotenv").config({ path: "../" });
 
@@ -29,6 +30,7 @@ const stores = {
   cacheStore,
   searchStore,
   redisStore,
+  wishlistStore,
 };
 
 ReactDOM.render(
