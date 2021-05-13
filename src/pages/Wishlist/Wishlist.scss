@@ -18,5 +18,136 @@
 
   &__wrapper {
     flex: 4;
+    display: flex;
+    justify-content: flex-start;
+
+    &__products {
+      height: 100%;
+      flex: 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      overflow-x: hidden;
+
+      ::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      &__wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        position: relative;
+        top: 0;
+        max-height: 100vh;
+        margin-top: 11vh;
+
+        &__empty {
+          opacity: 0.2;
+          display: inline;
+        }
+
+        &__product {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding-right: 80px;
+          margin: 20px 0;
+          opacity: 1;
+
+          &:first-child {
+            margin-top: 120px;
+          }
+
+          &:last-child {
+            box-sizing: content-box;
+            padding-bottom: 120px;
+          }
+
+          &__album-cover {
+            max-width: 150px;
+            box-shadow: 0px 0px 50px 0px #000;
+            margin-right: 40px;
+          }
+
+          &__name {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 240px;
+            margin-top: 20px;
+
+            &__title {
+              font-size: 1.5em;
+              text-transform: uppercase;
+              font-weight: 600;
+              letter-spacing: 1px;
+              color: var(--color-red);
+              margin-bottom: 10px;
+              margin-top: 0;
+              text-align: left;
+            }
+
+            &__artist {
+              font-size: 1.1em;
+              margin-top: 0;
+              margin-left: 10%;
+            }
+          }
+
+          &__quantity {
+            margin-left: 40px;
+            display: block;
+            width: 150px;
+            text-align: left;
+          }
+
+          &__format {
+            margin-left: 40px;
+            display: block;
+            width: 150px;
+            text-align: left;
+          }
+
+          &__price {
+            margin-left: 40px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: row;
+            height: 100%;
+            width: 180px;
+
+            &__price {
+              font-size: 2em;
+            }
+
+            &__per-item {
+              margin-left: 10px;
+            }
+          }
+
+          &__remove,
+          &__add {
+            height: 100%;
+            margin-left: 40px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            &__text {
+              color: var(--color-red);
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
   }
 }
