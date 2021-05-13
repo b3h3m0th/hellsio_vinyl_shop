@@ -41,22 +41,19 @@ const Nav: React.FC<NavProps> = ({
   searchStore,
 }: NavProps) => {
   const [genres] = useState<any[]>([]);
-  const [signInOrRegistration, setSignInOrRegistration] = useState<boolean>(
-    true
-  );
+  const [signInOrRegistration, setSignInOrRegistration] =
+    useState<boolean>(true);
   const [signInDataChange, setSignInDataChange] = useState({
     email: "",
     password: "",
   });
-  const [
-    registrationDataChange,
-    setRegistrationDataChange,
-  ] = useState<RegistrationData>({
-    username: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
+  const [registrationDataChange, setRegistrationDataChange] =
+    useState<RegistrationData>({
+      username: "",
+      email: "",
+      password: "",
+      password2: "",
+    });
   const [reCAPTCHAOK, setReCAPTCHAOK] = useState<string>();
   const [registrationErrors, setRegistrationErrors]: any[] = useState<
     Array<any>
@@ -396,6 +393,17 @@ const Nav: React.FC<NavProps> = ({
                 id="search_icon"
               />
               {searchStore?.opened ? <SearchOverlay /> : null}
+            </div>
+            <div className="nav-icons__icon">
+              <Link to={`/${languageStore?.language}/wishlist`}>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNS44LDI1LjgpIHNjYWxlKDAuNywwLjcpIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNhZTBiMDAiPjxwYXRoIGQ9Ik0xMTYuNTAxMzMsMjEuNTM1ODNjLTE5LjY0MzgzLDAuODAyNjcgLTMwLjUwMTMzLDE0Ljk0MjUgLTMwLjUwMTMzLDE0Ljk0MjVjMCwwIC0xMC44NTc1LC0xNC4xMzk4MyAtMzAuNTAxMzMsLTE0Ljk0MjVjLTEzLjE3MjMzLC0wLjUzNzUgLTI1LjI0ODE3LDYuMDIgLTMzLjIwMzE3LDE2LjUzMzVjLTI3LjY3NzY3LDM2LjU3ODY3IDI0LjcyNSw3OS4zNzA4MyAzNy4wNTE2Nyw5MC44NTljNy4zNzQ1LDYuODcyODMgMTYuNDc2MTcsMTUuMDM1NjcgMjEuOTA4NSwxOS44NzMxN2MyLjcxNjE3LDIuNDIyMzMgNi43NjUzMywyLjQyMjMzIDkuNDgxNSwwYzUuNDMyMzMsLTQuODM3NSAxNC41MzQsLTEzLjAwMDMzIDIxLjkwODUsLTE5Ljg3MzE3YzEyLjMyNjY3LC0xMS40ODgxNyA2NC43MzY1LC01NC4yODAzMyAzNy4wNTE2NywtOTAuODU5Yy03Ljk0NzgzLC0xMC41MTM1IC0yMC4wMjM2NywtMTcuMDcxIC0zMy4xOTYsLTE2LjUzMzV6Ij48L3BhdGg+PC9nPjwvZz48L2c+PC9zdmc+"
+                  alt="Hellsio wishlist icon"
+                  height="35px"
+                  width="35px"
+                  style={{ marginTop: "12px", cursor: "pointer" }}
+                />
+              </Link>
             </div>
             <div className="nav-icons__icon">
               <Link to={`/${languageStore?.language}/shopping-bag`}>

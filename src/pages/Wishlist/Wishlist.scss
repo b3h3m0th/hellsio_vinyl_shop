@@ -1,0 +1,22 @@
+.wishlist {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__nav {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
+      min-width: 260px;
+    }
+  }
+
+  &__wrapper {
+    flex: 4;
+  }
+}

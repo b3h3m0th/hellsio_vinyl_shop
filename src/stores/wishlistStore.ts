@@ -12,7 +12,8 @@ const wishlistForage = LocalForage.createInstance({
 });
 
 export class WishlistStore {
-  @persist("list") products: IObservableArray<string> = observable.array([]);
+  @persist("list") products: IObservableArray<string> =
+    observable.array<string>([]);
 
   constructor() {
     makeAutoObservable(this);

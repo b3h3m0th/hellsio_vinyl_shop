@@ -9,10 +9,13 @@ import {
 import { inject, observer } from "mobx-react";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 
 import { LanguageStore } from "./stores/languageStore";
 import { AdminStore } from "./stores/adminStore";
 import { UserStore } from "./stores/userStore";
+import { RedisStore } from "./stores/redisStore";
 
 //pages
 import Home from "./pages/Home/Home";
@@ -24,12 +27,10 @@ import ShoppingBag from "./pages/ShoppingBag/ShoppingBag";
 import Admin from "./pages/Admin/Admin";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Checkout from "./pages/Checkout/Checkout";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe, StripeConstructorOptions } from "@stripe/stripe-js";
 import OrderPlaced from "./pages/OrderPlaced/OrderPlaced";
 import CookieConsent from "react-cookie-consent";
 import EmailVerified from "./pages/EmailVerified/EmailVerified";
-import { RedisStore } from "./stores/redisStore";
+import Wishlist from "./pages/Wishlist/Wishlist";
 
 const pages = {
   home: Home,
@@ -38,6 +39,7 @@ const pages = {
   popular: Popular,
   productDetail: ProductDetail,
   shoppingBag: ShoppingBag,
+  wishlist: Wishlist,
   admin: Admin,
   adminLogin: AdminLogin,
   checkout: Checkout,
@@ -95,6 +97,11 @@ const App: React.FC<AppProps> = ({
               exact
               path={`/${languageStore?.language}/popular`}
               component={pages.popular}
+            />
+            <Route
+              exact
+              path={`/${languageStore?.language}/wishlist`}
+              component={pages.wishlist}
             />
             <Route
               exact
