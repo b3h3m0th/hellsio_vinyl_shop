@@ -71,6 +71,7 @@ const App: React.FC<AppProps> = ({
         `#${await redisStore?.getValue("accent-color")}`
       );
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adminStore]);
 
   return (
