@@ -19,7 +19,11 @@
   &__wrapper {
     flex: 4;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &__products {
       height: 100%;

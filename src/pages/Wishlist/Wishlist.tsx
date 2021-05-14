@@ -31,6 +31,9 @@ const Wishlist: React.FC<WishlistProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wishlistStore?.products]);
 
+  console.log(toJS(wishlistStore?.products));
+  console.log(products);
+
   return (
     <div className="wishlist">
       <div className="wishlist__nav">
@@ -77,12 +80,12 @@ const Wishlist: React.FC<WishlistProps> = ({
                     <span
                       className="wishlist__wrapper__products__wrapper__product__remove__text"
                       onClick={() => {
-                        products.splice(index, 1);
                         wishlistStore?.removeProduct(
                           wishlistStore.products.findIndex(
                             (pr: string) => pr === p.code
                           )
                         );
+                        products.splice(index, 1);
                       }}
                     >
                       <img
@@ -102,9 +105,7 @@ const Wishlist: React.FC<WishlistProps> = ({
                             (pr: string) => pr === p.code
                           )
                         );
-                        products.splice(
-                          products.findIndex((pr) => pr.code === p.code)
-                        );
+                        products.splice(index, 1);
                         checkoutStore?.addProduct({
                           ...p,
                           amount: 1,
