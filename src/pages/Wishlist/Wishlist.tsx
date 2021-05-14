@@ -7,7 +7,6 @@ import { useState } from "react";
 import { ProductStore } from "../../stores/productStore";
 import toBase64 from "../../util/toBase64";
 import { CheckoutProduct, CheckoutStore } from "../../stores/checkoutStore";
-import { toJS } from "mobx";
 import { useForceRerender } from "../../hooks/useForceRerender";
 
 interface WishlistProps {
@@ -32,6 +31,7 @@ const Wishlist: React.FC<WishlistProps> = ({
         ]);
       })();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wishlistStore?.products]);
 
   return (
