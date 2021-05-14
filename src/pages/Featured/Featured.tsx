@@ -22,7 +22,7 @@ const Featured: React.FC<FeaturedProps> = ({
 
   useEffect((): void => {
     (async (): Promise<void> => {
-      setAlbums([...(await productStore?.fetchNewArrivals())]);
+      setAlbums([...(await productStore?.fetchAll())]);
     })();
   }, [productStore]);
 

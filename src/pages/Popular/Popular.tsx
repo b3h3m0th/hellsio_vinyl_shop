@@ -22,7 +22,7 @@ const Popular: React.FC<PopularProps> = ({
 
   useEffect((): void => {
     (async (): Promise<void> => {
-      setAlbums([...(await productStore?.fetchAll())]);
+      setAlbums([...(await productStore?.fetchPopular())]);
     })();
   }, [productStore]);
 
