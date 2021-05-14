@@ -12,7 +12,7 @@ export class GenreListStore {
   @action setGenres: (value: Array<any & { checked: boolean }>) => void = (
     value
   ) => {
-    this.genres = value.map((v: any) => ({ ...v, checked: false }));
+    this.genres = value;
   };
 
   @action fetchGenres = async (): Promise<Array<string> | undefined> => {

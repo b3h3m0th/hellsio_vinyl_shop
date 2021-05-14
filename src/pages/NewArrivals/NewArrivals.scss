@@ -41,6 +41,10 @@
         display: grid;
         grid-template-columns: auto auto auto;
         margin-top: 11vh;
+
+        &__no-results {
+          opacity: 0.5;
+        }
       }
     }
   }

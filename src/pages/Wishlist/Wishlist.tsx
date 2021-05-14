@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ProductStore } from "../../stores/productStore";
 import toBase64 from "../../util/toBase64";
 import { CheckoutProduct, CheckoutStore } from "../../stores/checkoutStore";
+import { useForceRerender } from "../../hooks/useForceRerender";
 
 interface WishlistProps {
   wishlistStore?: WishlistStore;
@@ -20,15 +21,18 @@ const Wishlist: React.FC<WishlistProps> = ({
   checkoutStore,
 }: WishlistProps) => {
   const [products, setProducts] = useState<Array<any>>([]);
+  const _reRender = useForceRerender();
 
   useEffect(() => {
     (async () => {
-      setProducts([
-        ...(await productStore?.fetchSome(wishlistStore?.products || [])),
-      ]);
+      if (wishlistStore?.products && wishlistStore.products.length > 0) {
+        setProducts([
+          ...(await productStore?.fetchSome(wishlistStore?.products)),
+        ]);
+      }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wishlistStore?.products]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wishlistStore]);
 
   return (
     <div className="wishlist">
@@ -76,12 +80,13 @@ const Wishlist: React.FC<WishlistProps> = ({
                     <span
                       className="wishlist__wrapper__products__wrapper__product__remove__text"
                       onClick={() => {
+                        products.splice(index, 1);
                         wishlistStore?.removeProduct(
                           wishlistStore.products.findIndex(
                             (pr: string) => pr === p.code
                           )
                         );
-                        products.splice(index, 1);
+                        _reRender();
                       }}
                     >
                       <img
@@ -96,16 +101,17 @@ const Wishlist: React.FC<WishlistProps> = ({
                     <span
                       className="wishlist__wrapper__products__wrapper__product__add__text"
                       onClick={() => {
+                        products.splice(index, 1);
                         wishlistStore?.removeProduct(
                           wishlistStore.products.findIndex(
                             (pr: string) => pr === p.code
                           )
                         );
-                        products.splice(index, 1);
                         checkoutStore?.addProduct({
                           ...p,
                           amount: 1,
                         } as CheckoutProduct);
+                        _reRender();
                       }}
                     >
                       Add to Cart

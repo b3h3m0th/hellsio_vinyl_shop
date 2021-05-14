@@ -6,15 +6,17 @@ import toBase64 from "../../util/toBase64";
 import Loader from "../../components/Loader/Loader";
 import { ProductStore } from "../../stores/productStore";
 import { inject, observer } from "mobx-react";
-import Title from "../../components/Title/Title";
 import GenreList from "../../components/GenreList/GenreList";
+import { GenreListStore } from "../../stores/genreListStore";
 
 interface NewArrivalsProps {
   productStore?: ProductStore;
+  genreListStore?: GenreListStore;
 }
 
 const NewArrivals: React.FC<NewArrivalsProps> = ({
   productStore,
+  genreListStore,
 }: NewArrivalsProps) => {
   const [albums, setAlbums] = useState<Array<any> | undefined>();
 
@@ -34,7 +36,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
       },
       {
         y: 0,
-        stagger: 0.1,
+        stagger: 0.05,
         opacity: 1,
       }
     );
@@ -43,24 +45,43 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        {/* <Title title="New Arrivals" link="newarrivals"></Title> */}
         <GenreList title="New Arrivals" link="newarrivals"></GenreList>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
             {albums ? (
-              albums.map((album: any, i: number) => {
-                return (
-                  <Vinyl
-                    image={`data:image/png;base64,${toBase64(
-                      album.cover.data
-                    )}`}
-                    id={album.code}
-                    key={i}
-                  ></Vinyl>
-                );
-              })
+              [
+                ...albums.filter((a: any) =>
+                  genreListStore?.genres
+                    .filter((g: any) => g.checked)
+                    .map((g: any) => g.name)
+                    .includes(a.genre)
+                ),
+              ].length > 0 ? (
+                [
+                  ...albums.filter((a: any) =>
+                    genreListStore?.genres
+                      .filter((g: any) => g.checked)
+                      .map((g: any) => g.name)
+                      .includes(a.genre)
+                  ),
+                ].map((album: any, i: number) => {
+                  return (
+                    <Vinyl
+                      image={`data:image/png;base64,${toBase64(
+                        album.cover.data
+                      )}`}
+                      id={album.code}
+                      key={i}
+                    ></Vinyl>
+                  );
+                })
+              ) : (
+                <div className="new-arrivals__albums__wrapper__grid__no-results">
+                  No Results :/
+                </div>
+              )
             ) : (
               <Loader>Loading Products</Loader>
             )}
@@ -71,4 +92,4 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
   );
 };
 
-export default inject("productStore")(observer(NewArrivals));
+export default inject("productStore", "genreListStore")(observer(NewArrivals));

@@ -30,6 +30,10 @@ export class WishlistStore {
   @action clear: () => void = () => {
     this.products.clear();
   };
+
+  @action setProducts: (value: any) => void = (value) => {
+    this.products = value;
+  };
 }
 
 const hydrate = create({ storage: wishlistForage, jsonify: false });

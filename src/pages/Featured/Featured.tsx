@@ -6,18 +6,23 @@ import { ProductStore } from "../../stores/productStore";
 import Vinyl from "../../components/Vinyl/Vinyl";
 import Loader from "../../components/Loader/Loader";
 import toBase64 from "../../util/toBase64";
-import Title from "../../components/Title/Title";
+import GenreList from "../../components/GenreList/GenreList";
+import { GenreListStore } from "../../stores/genreListStore";
 
 interface FeaturedProps {
   productStore?: ProductStore;
+  genreListStore?: GenreListStore;
 }
 
-const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
+const Featured: React.FC<FeaturedProps> = ({
+  productStore,
+  genreListStore,
+}: FeaturedProps) => {
   const [albums, setAlbums] = useState<Array<any> | undefined>();
 
   useEffect((): void => {
     (async (): Promise<void> => {
-      setAlbums(await productStore?.fetchAll());
+      setAlbums([...(await productStore?.fetchNewArrivals())]);
     })();
   }, [productStore]);
 
@@ -31,7 +36,7 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
       },
       {
         y: 0,
-        stagger: 0.1,
+        stagger: 0.05,
         opacity: 1,
       }
     );
@@ -40,24 +45,43 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        {/* <GenreList title="Featured" link="featured"></GenreList> */}
-        <Title title="Featured" link="feature"></Title>
+        <GenreList title="Featured" link="featured"></GenreList>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
             {albums ? (
-              albums.map((album: any, i: number) => {
-                return (
-                  <Vinyl
-                    image={`data:image/png;base64,${toBase64(
-                      album.cover.data
-                    )}`}
-                    id={album.code}
-                    key={i}
-                  ></Vinyl>
-                );
-              })
+              [
+                ...albums.filter((a: any) =>
+                  genreListStore?.genres
+                    .filter((g: any) => g.checked)
+                    .map((g: any) => g.name)
+                    .includes(a.genre)
+                ),
+              ].length > 0 ? (
+                [
+                  ...albums.filter((a: any) =>
+                    genreListStore?.genres
+                      .filter((g: any) => g.checked)
+                      .map((g: any) => g.name)
+                      .includes(a.genre)
+                  ),
+                ].map((album: any, i: number) => {
+                  return (
+                    <Vinyl
+                      image={`data:image/png;base64,${toBase64(
+                        album.cover.data
+                      )}`}
+                      id={album.code}
+                      key={i}
+                    ></Vinyl>
+                  );
+                })
+              ) : (
+                <div className="new-arrivals__albums__wrapper__grid__no-results">
+                  No Results :/
+                </div>
+              )
             ) : (
               <Loader>Loading Products</Loader>
             )}
@@ -68,4 +92,4 @@ const Featured: React.FC<FeaturedProps> = ({ productStore }: FeaturedProps) => {
   );
 };
 
-export default inject("productStore")(observer(Featured));
+export default inject("productStore", "genreListStore")(observer(Featured));

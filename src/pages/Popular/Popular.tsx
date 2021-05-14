@@ -6,13 +6,18 @@ import Loader from "../../components/Loader/Loader";
 import toBase64 from "../../util/toBase64";
 import { ProductStore } from "../../stores/productStore";
 import { inject, observer } from "mobx-react";
-import Title from "../../components/Title/Title";
+import { GenreListStore } from "../../stores/genreListStore";
+import GenreList from "../../components/GenreList/GenreList";
 
 interface PopularProps {
   productStore?: ProductStore;
+  genreListStore?: GenreListStore;
 }
 
-const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
+const Popular: React.FC<PopularProps> = ({
+  productStore,
+  genreListStore,
+}: PopularProps) => {
   const [albums, setAlbums] = useState<Array<any> | undefined>();
 
   useEffect((): void => {
@@ -31,7 +36,7 @@ const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
       },
       {
         y: 0,
-        stagger: 0.1,
+        stagger: 0.05,
         opacity: 1,
       }
     );
@@ -40,24 +45,43 @@ const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        {/* <GenreList title="Popular" link="popular"></GenreList> */}
-        <Title title="Popular" link="popular"></Title>
+        <GenreList title="Popular" link="popular"></GenreList>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">
           <div className="new-arrivals__albums__wrapper__grid">
             {albums ? (
-              albums.map((album: any, i: number) => {
-                return (
-                  <Vinyl
-                    image={`data:image/png;base64,${toBase64(
-                      album.cover.data
-                    )}`}
-                    id={album.code}
-                    key={i}
-                  ></Vinyl>
-                );
-              })
+              [
+                ...albums.filter((a: any) =>
+                  genreListStore?.genres
+                    .filter((g: any) => g.checked)
+                    .map((g: any) => g.name)
+                    .includes(a.genre)
+                ),
+              ].length > 0 ? (
+                [
+                  ...albums.filter((a: any) =>
+                    genreListStore?.genres
+                      .filter((g: any) => g.checked)
+                      .map((g: any) => g.name)
+                      .includes(a.genre)
+                  ),
+                ].map((album: any, i: number) => {
+                  return (
+                    <Vinyl
+                      image={`data:image/png;base64,${toBase64(
+                        album.cover.data
+                      )}`}
+                      id={album.code}
+                      key={i}
+                    ></Vinyl>
+                  );
+                })
+              ) : (
+                <div className="new-arrivals__albums__wrapper__grid__no-results">
+                  No Results :/
+                </div>
+              )
             ) : (
               <Loader>Loading Products</Loader>
             )}
@@ -68,4 +92,4 @@ const Popular: React.FC<PopularProps> = ({ productStore }: PopularProps) => {
   );
 };
 
-export default inject("productStore")(observer(Popular));
+export default inject("productStore", "genreListStore")(observer(Popular));

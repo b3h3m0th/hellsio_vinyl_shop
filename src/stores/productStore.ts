@@ -79,7 +79,6 @@ export class ProductStore {
       return albumsResponse.data;
     } catch (err) {
       console.log(err);
-      return [];
     }
   };
 }

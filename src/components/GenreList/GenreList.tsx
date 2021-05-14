@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./GenreList.scss";
 import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
-import gsap from "gsap";
 import Title from "../Title/Title";
 import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
 import { GenreListStore } from "../../stores/genreListStore";
@@ -22,59 +21,48 @@ const GenreList: React.FC<GenresListProps> = ({
   languageStore,
   genreListStore,
 }: GenresListProps) => {
-  const [genres, setGenres] = useState<Array<any & { checked: boolean }>>();
-
   useEffect(() => {
     (async () => {
-      setGenres(
+      genreListStore?.setGenres(
         [...((await genreListStore?.fetchGenres()) || [])].map((g: any) => ({
           ...g,
-          checked: false,
+          checked: true,
         }))
       );
     })();
-
-    gsap.from(".genre-checkbox__container", 1, {
-      x: -50,
-      opacity: 0,
-      ease: "power4",
-      stagger: 0.05,
-    });
-
-    gsap.from(".genres-list__title", 1, {
-      x: -50,
-      opacity: 0,
-      ease: "power4",
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(genres);
 
   return (
     <div className="genres-list">
       <Title title={title} link={link} />
       <div className="genres-list__genres-container">
-        {genres?.map((genre: any, i: number) => {
+        {genreListStore?.genres?.map((genre: any, i: number) => {
           return (
             <GenreCheckBox
               key={i}
               label={genre.name}
               checked={genre.checked}
               onChange={(e) => {
-                setGenres([
-                  ...genres.splice(
+                genreListStore?.setGenres([
+                  ...genreListStore.genres.splice(
                     0,
-                    genres.findIndex((g: any) => g.name === genre.name)
+                    genreListStore.genres.findIndex(
+                      (g: any) => g.name === genre.name
+                    )
                   ),
                   {
-                    ...genres[
-                      genres.findIndex((g: any) => g.name === genre.name)
+                    ...genreListStore.genres[
+                      genreListStore.genres.findIndex(
+                        (g: any) => g.name === genre.name
+                      )
                     ],
                     checked: e.target.checked,
                   },
-                  ...genres.splice(
-                    genres.findIndex((g: any) => g.name === genre.name) + 1
+                  ...genreListStore.genres.splice(
+                    genreListStore.genres.findIndex(
+                      (g: any) => g.name === genre.name
+                    ) + 1
                   ),
                 ]);
               }}
