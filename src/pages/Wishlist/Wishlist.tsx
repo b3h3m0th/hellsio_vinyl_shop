@@ -22,16 +22,11 @@ const Wishlist: React.FC<WishlistProps> = ({
 }: WishlistProps) => {
   const [products, setProducts] = useState<Array<any>>([]);
 
-  console.log(toJS(wishlistStore?.products));
-  console.log(products);
-
   useEffect(() => {
     (async () => {
-      const response = await productStore?.fetchSome(
-        wishlistStore?.products || []
-      );
-      console.log(response);
-      setProducts([...response]);
+      setProducts([
+        ...(await productStore?.fetchSome(wishlistStore?.products || [])),
+      ]);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wishlistStore?.products]);
