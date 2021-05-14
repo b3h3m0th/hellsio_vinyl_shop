@@ -7,6 +7,7 @@ import Loader from "../../components/Loader/Loader";
 import { ProductStore } from "../../stores/productStore";
 import { inject, observer } from "mobx-react";
 import Title from "../../components/Title/Title";
+import GenreList from "../../components/GenreList/GenreList";
 
 interface NewArrivalsProps {
   productStore?: ProductStore;
@@ -42,8 +43,8 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({
   return (
     <div className="new-arrivals">
       <div className="new-arrivals__genres">
-        {/* <GenreList title="New Arrivals" link="newarrivals"></GenreList> */}
-        <Title title="New Arrivals" link="newarrivals"></Title>
+        {/* <Title title="New Arrivals" link="newarrivals"></Title> */}
+        <GenreList title="New Arrivals" link="newarrivals"></GenreList>
       </div>
       <div className="new-arrivals__albums">
         <div className="new-arrivals__albums__wrapper">

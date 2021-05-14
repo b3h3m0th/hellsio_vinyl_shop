@@ -4,30 +4,34 @@ import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 import gsap from "gsap";
 import Title from "../Title/Title";
-import axios from "axios";
 import GenreCheckBox from "./GenreCheckBox/GenreCheckBox";
+import { GenreListStore } from "../../stores/genreListStore";
 
 // const genres = require("../../data/genres.json");
 
 interface GenresListProps {
   title: string;
-  languageStore?: LanguageStore;
   link: string;
+  languageStore?: LanguageStore;
+  genreListStore?: GenreListStore;
 }
 
 const GenreList: React.FC<GenresListProps> = ({
   title,
-  languageStore,
   link,
+  languageStore,
+  genreListStore,
 }: GenresListProps) => {
-  const [genres, setGenres] = useState<Array<any>>();
+  const [genres, setGenres] = useState<Array<any & { checked: boolean }>>();
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/genre`
+      setGenres(
+        [...((await genreListStore?.fetchGenres()) || [])].map((g: any) => ({
+          ...g,
+          checked: false,
+        }))
       );
-      setGenres(response.data);
     })();
 
     gsap.from(".genre-checkbox__container", 1, {
@@ -42,7 +46,10 @@ const GenreList: React.FC<GenresListProps> = ({
       opacity: 0,
       ease: "power4",
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(genres);
 
   return (
     <div className="genres-list">
@@ -53,8 +60,24 @@ const GenreList: React.FC<GenresListProps> = ({
             <GenreCheckBox
               key={i}
               label={genre.name}
-              checked={true}
-              onChange={() => true}
+              checked={genre.checked}
+              onChange={(e) => {
+                setGenres([
+                  ...genres.splice(
+                    0,
+                    genres.findIndex((g: any) => g.name === genre.name)
+                  ),
+                  {
+                    ...genres[
+                      genres.findIndex((g: any) => g.name === genre.name)
+                    ],
+                    checked: e.target.checked,
+                  },
+                  ...genres.splice(
+                    genres.findIndex((g: any) => g.name === genre.name) + 1
+                  ),
+                ]);
+              }}
             />
           );
         })}
@@ -63,4 +86,4 @@ const GenreList: React.FC<GenresListProps> = ({
   );
 };
 
-export default inject("languageStore")(observer(GenreList));
+export default inject("languageStore", "genreListStore")(observer(GenreList));

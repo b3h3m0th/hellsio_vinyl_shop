@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import "./Wishlist.scss";
 import { WishlistStore } from "../../stores/wishlistStore";
 import Title from "../../components/Title/Title";
-import { toJS } from "mobx";
 import { useState } from "react";
 import { ProductStore } from "../../stores/productStore";
 import toBase64 from "../../util/toBase64";
@@ -30,9 +29,6 @@ const Wishlist: React.FC<WishlistProps> = ({
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wishlistStore?.products]);
-
-  console.log(toJS(wishlistStore?.products));
-  console.log(products);
 
   return (
     <div className="wishlist">

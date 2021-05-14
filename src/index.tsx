@@ -12,6 +12,7 @@ import { userStore } from "./stores/userStore";
 import { checkoutStore } from "./stores/checkoutStore";
 import { adminStore } from "./stores/adminStore";
 import { productStore } from "./stores/productStore";
+import { genreListStore } from "./stores/genreListStore";
 import { cacheStore } from "./stores/cacheStore";
 import { searchStore } from "./stores/searchStore";
 import { redisStore } from "./stores/redisStore";
@@ -27,6 +28,7 @@ const stores = {
   checkoutStore,
   adminStore,
   productStore,
+  genreListStore,
   cacheStore,
   searchStore,
   redisStore,
