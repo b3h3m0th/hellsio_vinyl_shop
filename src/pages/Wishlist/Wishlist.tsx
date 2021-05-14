@@ -8,6 +8,7 @@ import { ProductStore } from "../../stores/productStore";
 import toBase64 from "../../util/toBase64";
 import { CheckoutProduct, CheckoutStore } from "../../stores/checkoutStore";
 import { toJS } from "mobx";
+import { useForceRerender } from "../../hooks/useForceRerender";
 
 interface WishlistProps {
   wishlistStore?: WishlistStore;
@@ -20,6 +21,7 @@ const Wishlist: React.FC<WishlistProps> = ({
   productStore,
   checkoutStore,
 }: WishlistProps) => {
+  const _forceRerender = useForceRerender();
   const [products, setProducts] = useState<Array<any>>([]);
 
   useEffect(() => {
@@ -30,9 +32,7 @@ const Wishlist: React.FC<WishlistProps> = ({
         ]);
       })();
     }
-  }, [wishlistStore]);
-
-  console.log(products);
+  }, [wishlistStore?.products]);
 
   return (
     <div className="wishlist">
@@ -80,11 +80,13 @@ const Wishlist: React.FC<WishlistProps> = ({
                     <span
                       className="wishlist__wrapper__products__wrapper__product__remove__text"
                       onClick={() => {
+                        products.splice(index, 1);
                         wishlistStore?.removeProduct(
                           wishlistStore.products.findIndex(
                             (pr: string) => pr === p.code
                           )
                         );
+                        _forceRerender();
                       }}
                     >
                       <img
@@ -99,6 +101,7 @@ const Wishlist: React.FC<WishlistProps> = ({
                     <span
                       className="wishlist__wrapper__products__wrapper__product__add__text"
                       onClick={() => {
+                        products.splice(index, 1);
                         wishlistStore?.removeProduct(
                           wishlistStore.products.findIndex(
                             (pr: string) => pr === p.code
@@ -108,6 +111,7 @@ const Wishlist: React.FC<WishlistProps> = ({
                           ...p,
                           amount: 1,
                         } as CheckoutProduct);
+                        _forceRerender();
                       }}
                     >
                       Add to Cart
