@@ -1,5 +1,6 @@
 import axios from "axios";
 import { observable, action, makeAutoObservable } from "mobx";
+import * as qs from "qs";
 
 export class ProductStore {
   @observable products: Array<any> = [];
@@ -66,12 +67,19 @@ export class ProductStore {
     try {
       const albumsResponse = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/product/some`,
-        { params: [...codes] }
+        {
+          params: {
+            albums: [...codes],
+          },
+          paramsSerializer: (params: any) => {
+            return qs.stringify(params);
+          },
+        }
       );
       return albumsResponse.data;
     } catch (err) {
       console.log(err);
-      return -1;
+      return [];
     }
   };
 }
