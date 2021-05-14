@@ -39,6 +39,18 @@ export class ProductStore {
     }
   };
 
+  @action fetchPopular = async (): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/popular`
+      );
+      this.setProducts(albumsResponse.data);
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   @action fetch = async (albumCode: string): Promise<any> => {
     try {
       const albumsResponse = await axios.get(
