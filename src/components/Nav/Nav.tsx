@@ -24,6 +24,8 @@ const searchIcon = require("../../assets/icons/search/search_web_red.png");
 const shoppingBagIcon = require("../../assets/icons/shopping_bag/shopping_bag_web_red.png");
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
+export const navAlbumsCount = 7 as const;
+
 interface NavProps {
   burgerMenuStore?: BurgerMenuStore;
   languageStore?: LanguageStore;
@@ -40,7 +42,6 @@ const Nav: React.FC<NavProps> = ({
   productStore,
   searchStore,
 }: NavProps) => {
-  const [genres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] =
     useState<boolean>(true);
   const [signInDataChange, setSignInDataChange] = useState<{
@@ -62,8 +63,11 @@ const Nav: React.FC<NavProps> = ({
     Array<any>
   >([]);
   const [loginErrors, setLoginErrors]: any[] = useState<Array<any>>([]);
-  const navAlbumsCount = 7;
-  const [navAlbums, setNavAlbums] = useState<Array<any>>();
+  const [navAlbums, setNavAlbums] = useState<{
+    newArrivals: Array<any>;
+    featured: Array<any>;
+    popular: Array<any>;
+  }>({ newArrivals: [], featured: [], popular: [] });
 
   const handleRegister = () => {
     userStore?.register(
@@ -95,7 +99,11 @@ const Nav: React.FC<NavProps> = ({
 
   useEffect(() => {
     (async () => {
-      setNavAlbums(await productStore?.fetchFew(navAlbumsCount));
+      setNavAlbums({
+        newArrivals: await productStore?.fetchNavNewArrivals(),
+        featured: await productStore?.fetchNavFeatured(),
+        popular: await productStore?.fetchNavPopular(),
+      });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,7 +117,7 @@ const Nav: React.FC<NavProps> = ({
       >
         <div className="nav-modal__column">
           <Title title="New Arrivals" link="newarrivals" />
-          {navAlbums?.map((album: any, index: number) => {
+          {navAlbums.newArrivals.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
                 <Link to={`/${languageStore?.language}/products/${album.code}`}>
@@ -120,12 +128,15 @@ const Nav: React.FC<NavProps> = ({
           })}
         </div>
         <div className="nav-modal__column">
-          <Title title="Genres" link="newarrivals" />
-          {genres.map((genre: any, index: number) => {
+          <Title title="Featured" link="featured" />
+          {navAlbums.featured.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
-                <Link to={`/${languageStore?.language}/newarrivals`}>
-                  {genre.genre}
+                <Link
+                  key={index}
+                  to={`/${languageStore?.language}/products/${album.code}`}
+                >
+                  {album.name} - {album.artist}
                 </Link>
               </p>
             );
@@ -133,7 +144,7 @@ const Nav: React.FC<NavProps> = ({
         </div>
         <div className="nav-modal__column">
           <Title title="Popular" link="popular" />
-          {navAlbums?.map((album: any, index: number) => {
+          {navAlbums.popular.map((album: any, index: number) => {
             return (
               <p className="p" key={index}>
                 <Link

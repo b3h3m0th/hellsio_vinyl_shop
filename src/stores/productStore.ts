@@ -1,6 +1,7 @@
 import axios from "axios";
 import { observable, action, makeAutoObservable } from "mobx";
 import * as qs from "qs";
+import { navAlbumsCount } from "../components/Nav/Nav";
 
 export class ProductStore {
   @observable products: Array<any> = [];
@@ -87,6 +88,48 @@ export class ProductStore {
             return qs.stringify(params);
           },
         }
+      );
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  @action fetchNavNewArrivals = async (
+    limit: number = navAlbumsCount
+  ): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/nav/new-arrivals`,
+        { params: { limit } }
+      );
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  @action fetchNavFeatured = async (
+    limit: number = navAlbumsCount
+  ): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/nav/featured`,
+        { params: { limit } }
+      );
+      return albumsResponse.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  @action fetchNavPopular = async (
+    limit: number = navAlbumsCount
+  ): Promise<any> => {
+    try {
+      const albumsResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/product/nav/popular`,
+        { params: { limit } }
       );
       return albumsResponse.data;
     } catch (err) {
