@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useScript = (url: string, name: any) => {
-  const [lib, setLib] = useState({});
+  const [lib, setLib] = useState<any>({});
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -15,6 +15,7 @@ const useScript = (url: string, name: any) => {
     return () => {
       document.body.removeChild(script);
     };
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return lib;

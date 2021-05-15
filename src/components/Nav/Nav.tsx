@@ -43,7 +43,10 @@ const Nav: React.FC<NavProps> = ({
   const [genres] = useState<any[]>([]);
   const [signInOrRegistration, setSignInOrRegistration] =
     useState<boolean>(true);
-  const [signInDataChange, setSignInDataChange] = useState({
+  const [signInDataChange, setSignInDataChange] = useState<{
+    email: string;
+    password: string;
+  }>({
     email: "",
     password: "",
   });
