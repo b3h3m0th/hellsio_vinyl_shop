@@ -27,13 +27,17 @@ export const fetchAlbums = async (): Promise<any> => {
   }
 };
 
-export const addRate = async (value: number): Promise<any> => {
+export const addRate = async (
+  value: number,
+  album_code: string
+): Promise<any> => {
   const accessToken = getUserAccessToken();
   const refreshToken = getUserRefreshToken();
+
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_BASE_API_URL}/rating/rate`,
-      { value },
+      { value: value, album_code: album_code },
       { headers: { authorization: `Bearer ${accessToken}` } }
     );
 
@@ -52,6 +56,6 @@ export const addRate = async (value: number): Promise<any> => {
     );
 
     setUserAccessToken(tokenResponse.data.accessToken);
-    return await addRate(value);
+    return await addRate(value, album_code);
   }
 };

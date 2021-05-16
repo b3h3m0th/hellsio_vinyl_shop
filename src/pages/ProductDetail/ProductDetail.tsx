@@ -143,9 +143,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   }, []);
 
   const handleRate: (value: number) => void = (value) => {
-    (async () => {
-      await addRate(value);
-    })();
+    if (albumData?.currentAlbum.code) {
+      (async () => {
+        await addRate(value, albumData.currentAlbum.code);
+      })();
+    }
   };
 
   return (
