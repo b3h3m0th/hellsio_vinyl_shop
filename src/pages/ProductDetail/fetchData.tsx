@@ -40,7 +40,7 @@ export const addRate = async (value: number): Promise<any> => {
     return response.data;
   } catch (err) {
     const tokenResponse = await axios.post(
-      `${`${process.env.REACT_APP_BASE_API_URL}/user/token` || ""}`,
+      `${`${process.env.REACT_APP_BASE_API_URL}/user/token`}`,
       {
         token: refreshToken,
       },
