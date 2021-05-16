@@ -224,6 +224,12 @@
               margin: 0;
             }
           }
+
+          &__rating {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 280px;
+          }
         }
       }
     }

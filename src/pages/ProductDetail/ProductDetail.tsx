@@ -14,6 +14,7 @@ import { LanguageStore } from "../../stores/languageStore";
 import Display404 from "../../components/Display404/Display404";
 import { RedisStore } from "../../stores/redisStore";
 import { WishlistStore } from "../../stores/wishlistStore";
+import Rating from "../../components/Rating/Rating";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -298,6 +299,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       });
                     }}
                   />
+                  <div className="album-detail__price__rating">
+                    <Rating
+                      value={2}
+                      length={5}
+                      label={"Product Rating"}
+                      onRate={(value) => console.log(value)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
