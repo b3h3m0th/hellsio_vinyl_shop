@@ -229,6 +229,11 @@
             margin-top: 20px;
             width: 100%;
             max-width: 280px;
+
+            .rating-feedback {
+              color: var(--color-red);
+              opacity: 0;
+            }
           }
         }
       }

@@ -47,6 +47,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
   const [albumRating, setAlbumRating] = useState<number>(0);
+  const [displayRatingAlert, setDisplayRatingAlert] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -142,6 +143,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       y: 100,
       ease: "power4",
     });
+    setTimeout(() => {
+      gsap.fromTo(
+        ".rating-feedback",
+        0,
+        {
+          opacity: 0,
+        },
+        { opacity: 1 }
+      );
+    }, 2000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -328,9 +339,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     <Rating
                       value={albumRating}
                       length={5}
-                      label={"Product Rating"}
-                      onRate={(value) => handleRate(value)}
+                      label={`Product Rating:`}
+                      onRate={(value) => {
+                        handleRate(value);
+                        setDisplayRatingAlert(true);
+                        setTimeout(() => {
+                          setDisplayRatingAlert(false);
+                        }, 2000);
+                      }}
                     />
+                    <span className="rating-feedback">
+                      {displayRatingAlert && `Thanks for you Feedback!`}
+                    </span>
                   </div>
                 </div>
               </div>
