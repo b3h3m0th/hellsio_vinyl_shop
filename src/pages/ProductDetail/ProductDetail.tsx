@@ -15,6 +15,7 @@ import Display404 from "../../components/Display404/Display404";
 import { RedisStore } from "../../stores/redisStore";
 import { WishlistStore } from "../../stores/wishlistStore";
 import Rating from "../../components/Rating/Rating";
+import { addRate } from "./fetchData";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -140,6 +141,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       ease: "power4",
     });
   }, []);
+
+  const handleRate: (value: number) => void = (value) => {
+    (async () => {
+      await addRate(value);
+    })();
+  };
 
   return (
     <div className="product-detail">
@@ -304,7 +311,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       value={2}
                       length={5}
                       label={"Product Rating"}
-                      onRate={(value) => console.log(value)}
+                      onRate={(value) => handleRate(value)}
                     />
                   </div>
                 </div>
