@@ -28,19 +28,20 @@ const Rating: React.FC<RatingProps> = ({
   return (
     <div className="rating" style={style && style}>
       <span className="rating__label">{label}</span>
-      {[...Array(value)].map((_: any, index: number) => {
-        return (
-          <img
-            key={`filled-${index}`}
-            className="rating__selected"
-            src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAyMjYgMjI2Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwyMjZ2LTIyNmgyMjZ2MjI2eiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNhZTBiMDAiPjxwYXRoIGQ9Ik0xMTMsOS40MTY2N2wtMjYuMDc5NzUsNzMuNDIwNTdsLTc3Ljg3MTQyLDIuMTE1MDdsNjEuNzQxNyw0Ny40ODc5NWwtMjIuMDMzNTMsNzQuNzI2NGw2NC4yNDMsLTQ0LjA2NzA2bDY0LjI0Myw0NC4wNjcwNmwtMjIuMDMzNTMsLTc0LjcyNjRsNjEuNzQxNjksLTQ3LjQ4Nzk1bC03Ny44NzE0MiwtMi4xMTUwN3oiPjwvcGF0aD48L2c+PC9nPjwvc3ZnPg=="
-            alt="Hellsio Rating Star"
-            onClick={(): void => {
-              setRating(index + 1);
-            }}
-          />
-        );
-      })}
+      {value > 0 &&
+        [...Array(value)].map((_: any, index: number) => {
+          return (
+            <img
+              key={`filled-${index}`}
+              className="rating__selected"
+              src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAyMjYgMjI2Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwyMjZ2LTIyNmgyMjZ2MjI2eiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNhZTBiMDAiPjxwYXRoIGQ9Ik0xMTMsOS40MTY2N2wtMjYuMDc5NzUsNzMuNDIwNTdsLTc3Ljg3MTQyLDIuMTE1MDdsNjEuNzQxNyw0Ny40ODc5NWwtMjIuMDMzNTMsNzQuNzI2NGw2NC4yNDMsLTQ0LjA2NzA2bDY0LjI0Myw0NC4wNjcwNmwtMjIuMDMzNTMsLTc0LjcyNjRsNjEuNzQxNjksLTQ3LjQ4Nzk1bC03Ny44NzE0MiwtMi4xMTUwN3oiPjwvcGF0aD48L2c+PC9nPjwvc3ZnPg=="
+              alt="Hellsio Rating Star"
+              onClick={(): void => {
+                setRating(index + 1);
+              }}
+            />
+          );
+        })}
       {[...Array(length - value)].map((_: any, index: number) => {
         return (
           <img

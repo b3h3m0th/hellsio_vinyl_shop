@@ -16,6 +16,7 @@ import { RedisStore } from "../../stores/redisStore";
 import { WishlistStore } from "../../stores/wishlistStore";
 import Rating from "../../components/Rating/Rating";
 import { addRate } from "./fetchData";
+import axios from "axios";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -45,6 +46,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
+  const [albumRating, setAlbumRating] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -140,7 +142,21 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       y: 100,
       ease: "power4",
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (albumData?.currentAlbum.code !== undefined) {
+      (async () => {
+        const ratingResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_API_URL}/rating/${albumData?.currentAlbum.code}`
+        );
+        setAlbumRating(ratingResponse.data.average);
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [albumRating, albumData?.currentAlbum]);
 
   const handleRate: (value: number) => void = (value) => {
     if (albumData?.currentAlbum.code) {
@@ -310,7 +326,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                   />
                   <div className="album-detail__price__rating">
                     <Rating
-                      value={2}
+                      value={albumRating}
                       length={5}
                       label={"Product Rating"}
                       onRate={(value) => handleRate(value)}
