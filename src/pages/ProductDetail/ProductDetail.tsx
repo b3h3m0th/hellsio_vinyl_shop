@@ -49,7 +49,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
-  const [albumRating, setAlbumRating] = useState<number>(0);
+  const [albumRating, setAlbumRating] = useState<{
+    average: number;
+    ratings_count: number;
+  }>({ average: 0, ratings_count: 0 });
   const [ratingAlert, setRatingAlert] = useState<string>();
 
   useEffect(() => {
@@ -166,11 +169,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         const ratingResponse = await axios.get(
           `${process.env.REACT_APP_BASE_API_URL}/rating/${albumData?.currentAlbum.code}`
         );
-        setAlbumRating(Math.round(ratingResponse.data.average));
+        setAlbumRating({
+          average: Math.round(ratingResponse.data.average),
+          ratings_count: ratingResponse.data.ratings_count,
+        });
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [albumRating, albumData?.currentAlbum]);
+  }, [albumData?.currentAlbum, albumRating.average]);
 
   const handleRate: (value: number) => void = (value) => {
     if (!userStore?.loggedIn)
@@ -180,7 +186,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       (async () => {
         await addRate(value, albumData.currentAlbum.code);
         const ratingRollback = albumRating;
-        setAlbumRating(value);
+        setAlbumRating({
+          average: value,
+          ratings_count: albumRating.ratings_count + 1,
+        });
         setTimeout(() => {
           setAlbumRating(ratingRollback);
         }, 100);
@@ -349,9 +358,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                   />
                   <div className="album-detail__price__rating">
                     <Rating
-                      value={albumRating}
+                      value={albumRating.average}
                       length={5}
-                      label={`Product Rating:`}
+                      label={`Product Rating (${albumRating.ratings_count} ratings): `}
                       onRate={(value) => {
                         handleRate(value);
                         setTimeout(() => {
