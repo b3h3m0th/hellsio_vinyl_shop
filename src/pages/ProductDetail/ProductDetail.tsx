@@ -179,6 +179,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     if (albumData?.currentAlbum.code) {
       (async () => {
         await addRate(value, albumData.currentAlbum.code);
+        const ratingRollback = albumRating;
+        setAlbumRating(value);
+        setTimeout(() => {
+          setAlbumRating(ratingRollback);
+        }, 100);
         return setRatingAlert("Thanks for your Feedback");
       })();
     }
