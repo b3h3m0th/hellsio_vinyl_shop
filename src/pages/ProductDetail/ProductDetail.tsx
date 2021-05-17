@@ -313,7 +313,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     <Rating
                       value={albumRating.average}
                       length={5}
-                      label={`Product Rating (${albumRating.ratings_count} ratings): `}
+                      label={`Product Rating (${
+                        albumRating.ratings_count
+                      } rating${
+                        albumRating.ratings_count > 1 ||
+                        albumRating.ratings_count < 1
+                          ? `s`
+                          : ``
+                      }): `}
                       onRate={(value) => {
                         handleRate(value);
                         setTimeout(() => {
