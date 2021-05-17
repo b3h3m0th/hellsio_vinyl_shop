@@ -158,7 +158,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         },
         { opacity: 1 }
       );
-    }, 2000);
+    }, 1000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -188,7 +188,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         const ratingRollback = albumRating;
         setAlbumRating({
           average: value,
-          ratings_count: albumRating.ratings_count + 1,
+          ratings_count: albumRating.ratings_count,
         });
         setTimeout(() => {
           setAlbumRating(ratingRollback);
