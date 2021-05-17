@@ -17,6 +17,7 @@ import { WishlistStore } from "../../stores/wishlistStore";
 import Rating from "../../components/Rating/Rating";
 import { addRate } from "./fetchData";
 import axios from "axios";
+import { UserStore } from "../../stores/userStore";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -33,6 +34,7 @@ interface ProductDetailProps {
   languageStore?: LanguageStore;
   redisStore?: RedisStore;
   wishlistStore?: WishlistStore;
+  userStore?: UserStore;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
@@ -42,12 +44,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   languageStore,
   redisStore,
   wishlistStore,
+  userStore,
 }: ProductDetailProps) => {
   const [albumData, setAlbumData] = useState<AlbumData>();
   const [is404, setIs404] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
   const [albumRating, setAlbumRating] = useState<number>(0);
-  const [displayRatingAlert, setDisplayRatingAlert] = useState<boolean>(false);
+  const [ratingAlert, setRatingAlert] = useState<string>();
 
   useEffect(() => {
     (async () => {
@@ -163,16 +166,20 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         const ratingResponse = await axios.get(
           `${process.env.REACT_APP_BASE_API_URL}/rating/${albumData?.currentAlbum.code}`
         );
-        setAlbumRating(ratingResponse.data.average);
+        setAlbumRating(Math.round(ratingResponse.data.average));
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [albumRating, albumData?.currentAlbum]);
 
   const handleRate: (value: number) => void = (value) => {
+    if (!userStore?.loggedIn)
+      return setRatingAlert("Please login before rating a product!");
+
     if (albumData?.currentAlbum.code) {
       (async () => {
         await addRate(value, albumData.currentAlbum.code);
+        return setRatingAlert("Thanks for your Feedback");
       })();
     }
   };
@@ -342,14 +349,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                       label={`Product Rating:`}
                       onRate={(value) => {
                         handleRate(value);
-                        setDisplayRatingAlert(true);
                         setTimeout(() => {
-                          setDisplayRatingAlert(false);
+                          setRatingAlert(undefined);
                         }, 2000);
                       }}
                     />
                     <span className="rating-feedback">
-                      {displayRatingAlert && `Thanks for you Feedback!`}
+                      {ratingAlert ? ratingAlert : ""}
                     </span>
                   </div>
                 </div>
@@ -367,5 +373,6 @@ export default inject(
   "checkoutStore",
   "productStore",
   "redisStore",
-  "wishlistStore"
+  "wishlistStore",
+  "userStore"
 )(observer(ProductDetail));
