@@ -149,16 +149,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       y: 100,
       ease: "power4",
     });
-    setTimeout(() => {
-      gsap.fromTo(
-        ".rating-feedback",
-        0,
-        {
-          opacity: 0,
-        },
-        { opacity: 1 }
-      );
-    }, 1000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
