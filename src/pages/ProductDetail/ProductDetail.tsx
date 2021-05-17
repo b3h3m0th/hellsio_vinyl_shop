@@ -18,6 +18,7 @@ import Rating from "../../components/Rating/Rating";
 import { addRate } from "./fetchData";
 import axios from "axios";
 import { UserStore } from "../../stores/userStore";
+import { useMemo } from "react";
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 const arrowRightSmall = require("../../assets/icons/arrowRightSmall/arrowRightSmall.svg");
 
@@ -117,41 +118,41 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     albums![linkPreviousAlbumIndex]?.code
   }`;
 
-  useEffect(() => {
-    gsap.from(".product-detail__background-container", 0.5, {
-      opacity: 0,
-      ease: "power2",
-    });
-    gsap.from(".product-detail__album-title__title", 0.5, {
-      x: -100,
-      ease: "power4",
-      opacity: 0,
-    });
-    gsap.from(".product-detail__album-title__subtitle", 0.5, {
-      delay: 0.2,
-      x: -100,
-      ease: "power4",
-      opacity: 0,
-    });
-    gsap.from("h4", 0.5, {
-      opacity: 0,
-      ease: "power4",
-      x: 100,
-    });
-    gsap.from(".tracks_track", 0.5, {
-      delay: 0.2,
-      opacity: 0,
-      ease: "power4",
-      stagger: 0.02,
-      x: "20px",
-    });
-    gsap.from(".product-detail__nav__current-album", 1.8, {
-      y: 100,
-      ease: "power4",
-    });
+  // useEffect(() => {
+  //   gsap.from(".product-detail__background-container", 0.5, {
+  //     opacity: 0,
+  //     ease: "power2",
+  //   });
+  //   gsap.from(".product-detail__album-title__title", 0.5, {
+  //     x: -100,
+  //     ease: "power4",
+  //     opacity: 0,
+  //   });
+  //   gsap.from(".product-detail__album-title__subtitle", 0.5, {
+  //     delay: 0.2,
+  //     x: -100,
+  //     ease: "power4",
+  //     opacity: 0,
+  //   });
+  //   gsap.from("h4", 0.5, {
+  //     opacity: 0,
+  //     ease: "power4",
+  //     x: 100,
+  //   });
+  //   gsap.from(".tracks_track", 0.5, {
+  //     delay: 0.2,
+  //     opacity: 0,
+  //     ease: "power4",
+  //     stagger: 0.02,
+  //     x: "20px",
+  //   });
+  //   gsap.from(".product-detail__nav__current-album", 1.8, {
+  //     y: 100,
+  //     ease: "power4",
+  //   });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     if (albumData?.currentAlbum.code !== undefined) {
