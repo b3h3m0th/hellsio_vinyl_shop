@@ -12,11 +12,28 @@ const RevenueChart = () => {
   const [timeline, setTimeline] = useState<Array<any>>();
   const [zoomDomain, setZoomDomain] = useState<any>();
 
+  const getDaysArray = (s: Date, e: Date) => {
+    for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+      a.push(new Date(d));
+    }
+    return a;
+  };
+
+  const fillMissingDaysInDateArray = (data: { invoice_day: Date }[]) => {
+    data.forEach(
+      (d: { invoice_day: Date }, i: number, a: { invoice_day: Date }[]) => {
+        console.log(console.log(a[i + 1]));
+      }
+    );
+  };
+
   useEffect(() => {
     (async () => {
       setTimeline((await fetchOrderTimeline()) as any);
     })();
   }, []);
+
+  timeline && fillMissingDaysInDateArray(timeline as { invoice_day: Date }[]);
 
   return (
     <div className="admin-analytics__wrapper__chart">
