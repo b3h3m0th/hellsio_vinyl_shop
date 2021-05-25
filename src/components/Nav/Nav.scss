@@ -165,7 +165,8 @@
           }
         }
 
-        .toggle-to-register {
+        .toggle-to-register,
+        .forgot-password {
           color: var(--color-red);
           text-align: center;
           cursor: pointer;
