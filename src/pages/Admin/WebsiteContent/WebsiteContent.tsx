@@ -22,6 +22,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
     radioMusicEnabled: boolean;
     accentColor: string;
     backgroundImage: string;
+    tos: string;
   }>({
     title: "",
     subtitle: "",
@@ -30,6 +31,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
     radioMusicEnabled: true,
     accentColor: "AE0B00",
     backgroundImage: "https://f4.bcbits.com/img/a2924891603_10.jpg",
+    tos: "",
   });
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
       const backgroundImage = await redisStore?.getValue(
         "hero-background-image"
       );
+      const tos = await redisStore?.getValue("terms-of-service");
       setData({
         title,
         subtitle,
@@ -57,6 +60,7 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
         radioMusicEnabled: radioMusicEnabled as boolean,
         accentColor,
         backgroundImage,
+        tos,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -232,6 +236,29 @@ const WebsiteContent: React.FC<WebsiteContentProps> = ({
             onClick={() =>
               handleSave("hero-background-image", data.backgroundImage)
             }
+          >
+            Save
+          </span>
+        </div>
+        <div className="admin-website-content__wrapper__setting">
+          <span className="admin-website-content__wrapper__setting__header">
+            TOS:
+          </span>
+          <input
+            type="text"
+            placeholder={data.tos}
+            className="admin-website-content__wrapper__setting__input"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setData({
+                ...data,
+                tos: e.target.value,
+              });
+            }}
+            value={data.tos}
+          />
+          <span
+            className="admin-website-content__wrapper__setting__save"
+            onClick={() => handleSave("terms-of-service", data.tos)}
           >
             Save
           </span>

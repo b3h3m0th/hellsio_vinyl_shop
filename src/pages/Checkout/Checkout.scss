@@ -151,6 +151,16 @@
         }
       }
 
+      .tos-reminder {
+        text-align: center;
+        color: var(--color-red);
+        margin-top: 10px;
+
+        &__link {
+          text-decoration: underline;
+        }
+      }
+
       .billing-errors {
         &__errors {
           margin: 0;

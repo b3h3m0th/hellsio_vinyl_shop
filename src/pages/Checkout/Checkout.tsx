@@ -400,6 +400,15 @@ const Checkout: React.FC<CheckoutProps> = ({
                   disabled={checkoutStore?.processing}
                 />
               </form>
+              <div className="tos-reminder">
+                By pressing Order Now you agree to our{" "}
+                <Link
+                  to={`/${languageStore.language}/tos`}
+                  className="tos-reminder__link"
+                >
+                  TOS
+                </Link>
+              </div>
               <div className="billing-errors">
                 <ul className="billing-errors__errors">
                   {billingErrors?.map((err: any, i: number) => {
