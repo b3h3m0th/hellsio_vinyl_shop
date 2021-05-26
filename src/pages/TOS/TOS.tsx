@@ -26,7 +26,7 @@ const TOS: React.FC<TOSProps> = ({ redisStore }: TOSProps) => {
         <Title link={`tos`} title="Terms of Service" />
         <div
           className="tos__wrapper__tos"
-          dangerouslySetInnerHTML={{ __html: TOS! }}
+          dangerouslySetInnerHTML={{ __html: TOS || "" }}
         ></div>
       </div>
     </div>
