@@ -34,6 +34,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
         setNotification("");
       }, 5000);
     }
+
     (async () => {
       const matchResponse = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
