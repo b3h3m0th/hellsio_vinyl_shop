@@ -250,6 +250,7 @@ const Nav: React.FC<NavProps> = ({
                   <Link
                     to={`/${languageStore?.language}/password-reset`}
                     className="forgot-password"
+                    onClick={() => burgerMenuStore?.close()}
                   >
                     Forgot Password?
                   </Link>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import Title from "../../components/Title/Title";
 import "./RedefinePassword.scss";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
@@ -22,13 +21,19 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   }>({ password: "", password2: "" });
 
   const handleSubmit = () => {
-    if (passwordData.password !== passwordData.password2)
-      return setNotification("Your passwords don't match");
-
-    if (passwordData.password.length < 8)
+    if (passwordData.password !== passwordData.password2) {
+      setNotification("Your passwords don't match");
       return setNotification(
         "Your new password must at least contain 8 characters"
       );
+    }
+
+    if (passwordData.password.length < 8) {
+      setNotification("Your new password must at least contain 8 characters");
+      return setTimeout(() => {
+        setNotification("");
+      }, 5000);
+    }
     (async () => {
       const matchResponse = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
