@@ -66,8 +66,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
         <input
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPasswordData({
-              password: e.target.value,
-              password2: passwordData.password2,
+              password: passwordData.password,
+              password2: e.target.value,
             });
           }}
           value={passwordData.password2}

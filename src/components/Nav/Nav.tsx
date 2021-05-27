@@ -247,7 +247,12 @@ const Nav: React.FC<NavProps> = ({
                   >
                     Don't have an account yet?
                   </p>
-                  <p className="forgot-password">Forgot Password?</p>
+                  <Link
+                    to={`/${languageStore?.language}/password-reset`}
+                    className="forgot-password"
+                  >
+                    Forgot Password?
+                  </Link>
                 </form>
               </div>
             ) : (
