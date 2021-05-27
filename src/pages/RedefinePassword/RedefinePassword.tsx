@@ -15,22 +15,37 @@ interface PasswordResetProps {
 const PasswordReset: React.FC<PasswordResetProps> = ({
   match,
 }: PasswordResetProps) => {
-  const [passwordSet, setPasswordSet] = useState<boolean>(false);
-  const [isAllowedToReset, setIsAllowedToReset] = useState<boolean>(true);
+  const [notification, setNotification] = useState<string>("");
   const [passwordData, setPasswordData] = useState<{
     password: string;
     password2: string;
   }>({ password: "", password2: "" });
 
   const handleSubmit = () => {
+    if (passwordData.password !== passwordData.password2)
+      return setNotification("Your passwords don't match");
     (async () => {
-      const matchResponse = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/`
+      const matchResponse = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
+        {
+          token: match.params.token,
+          newPassword: passwordData.password,
+        }
       );
+
+      if (matchResponse.status === 201)
+        setNotification("Your new password has been set :D");
+
+      if (matchResponse.status === 208)
+        setNotification("You are not allowed to set a new password");
+
+      return setTimeout(() => {
+        setNotification("");
+      }, 500);
     })();
   };
 
-  return isAllowedToReset ? (
+  return (
     <div className="password-redefine">
       <div className="password-redefine__wrapper">
         <Title link="password" title="Choose a new Password" />
@@ -66,15 +81,13 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
           onClick={() => handleSubmit()}
           link="redefine-password"
         />
-        {passwordSet && (
+        {notification && (
           <span className="password-redefine__wrapper__notification">
-            Your new password has been set :D
+            {notification}
           </span>
         )}
       </div>
     </div>
-  ) : (
-    <Redirect to="/" />
   );
 };
 

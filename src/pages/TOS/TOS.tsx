@@ -16,6 +16,7 @@ const TOS: React.FC<TOSProps> = ({ redisStore }: TOSProps) => {
     (async () => {
       setTOS(await redisStore?.getValue("terms-of-service"));
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(TOS);

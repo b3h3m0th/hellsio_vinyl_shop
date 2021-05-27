@@ -33,6 +33,7 @@ import EmailVerified from "./pages/EmailVerified/EmailVerified";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import TOS from "./pages/TOS/TOS";
 import PasswordReset from "./pages/PasswordReset/PasswordReset";
+import RedefinePassword from "./pages/RedefinePassword/RedefinePassword";
 
 const pages = {
   home: Home,
@@ -49,6 +50,7 @@ const pages = {
   emailVerified: EmailVerified,
   tos: TOS,
   passwordReset: PasswordReset,
+  redefinePassword: RedefinePassword,
 };
 
 interface AppProps {
@@ -135,6 +137,12 @@ const App: React.FC<AppProps> = ({
               exact
               path={`/${languageStore?.language}/password-reset`}
               component={pages.passwordReset}
+            ></Route>
+
+            <Route
+              exact
+              path={`/${languageStore?.language}/redefine-password/:token`}
+              component={pages.redefinePassword}
             ></Route>
 
             <Route
