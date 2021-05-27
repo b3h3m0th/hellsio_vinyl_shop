@@ -32,6 +32,7 @@ import CookieConsent from "react-cookie-consent";
 import EmailVerified from "./pages/EmailVerified/EmailVerified";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import TOS from "./pages/TOS/TOS";
+import PasswordReset from "./pages/PasswordReset/PasswordReset";
 
 const pages = {
   home: Home,
@@ -47,6 +48,7 @@ const pages = {
   orderPlaced: OrderPlaced,
   emailVerified: EmailVerified,
   tos: TOS,
+  passwordReset: PasswordReset,
 };
 
 interface AppProps {
@@ -127,6 +129,12 @@ const App: React.FC<AppProps> = ({
               exact
               path={`/${languageStore?.language}/email-verified`}
               component={pages.emailVerified}
+            ></Route>
+
+            <Route
+              exact
+              path={`/${languageStore?.language}/password-reset`}
+              component={pages.passwordReset}
             ></Route>
 
             <Route
