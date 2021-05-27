@@ -4,15 +4,20 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import Title from "../../components/Title/Title";
 import "./RedefinePassword.scss";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { LanguageStore } from "../../stores/languageStore";
+import { inject, observer } from "mobx-react";
 
-const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
+const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
 
 interface PasswordResetProps {
   match?: any;
+  languageStore?: LanguageStore;
 }
 
 const PasswordReset: React.FC<PasswordResetProps> = ({
   match,
+  languageStore,
 }: PasswordResetProps) => {
   const [notification, setNotification] = useState<string>("");
   const [passwordData, setPasswordData] = useState<{
@@ -59,6 +64,12 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   return (
     <div className="password-redefine">
       <div className="password-redefine__wrapper">
+        <Link
+          to={`/${languageStore?.language}/password-reset`}
+          className="checkout-final__wrapper__info__back"
+        >
+          <img src={arrowRight} alt="Hellsio arrow left" /> Back to Email
+        </Link>
         <Title link="password" title="Choose a new Password" />
         <label htmlFor="password">New Password</label>
         <input
@@ -100,4 +111,4 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   );
 };
 
-export default PasswordReset;
+export default inject("languageStore")(observer(PasswordReset));
