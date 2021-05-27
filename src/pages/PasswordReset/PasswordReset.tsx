@@ -26,6 +26,9 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
     );
 
     setEmailSent(true);
+    setTimeout(() => {
+      setEmailSent(false);
+    }, 5000);
   };
 
   return (
