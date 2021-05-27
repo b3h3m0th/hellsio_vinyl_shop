@@ -41,7 +41,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
 
       return setTimeout(() => {
         setNotification("");
-      }, 500);
+      }, 5000);
     })();
   };
 
@@ -79,7 +79,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
           label="Reset"
           icon={arrowRight}
           onClick={() => handleSubmit()}
-          link="redefine-password"
+          link={`redefine-password/${match.params.token}`}
         />
         {notification && (
           <span className="password-redefine__wrapper__notification">
