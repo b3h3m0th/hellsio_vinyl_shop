@@ -3,6 +3,12 @@ import { useState } from "react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import Title from "../../components/Title/Title";
 import "./PasswordReset.scss";
+import axios from "axios";
+import {
+  getUserAccessToken,
+  getUserRefreshToken,
+  setUserAccessToken,
+} from "../../authorization/token";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
@@ -11,8 +17,42 @@ interface PasswordResetProps {}
 const PasswordReset: React.FC<PasswordResetProps> =
   ({}: PasswordResetProps) => {
     const [emailSent, setEmailSent] = useState<boolean>(false);
+    const [emailValue, setEmailValue] = useState<string>("");
+
     const handleReset = () => {
-      (() => {})();
+      const accessToken = getUserAccessToken();
+      const refreshToken = getUserRefreshToken();
+
+      const fetch = async (email: string): Promise<any> => {
+        try {
+          const resetReponse = await axios.post(
+            `${process.env.REACT_APP_BASE_API_URL}/user/forgot-password`,
+            {
+              email: email,
+            },
+            { headers: { authorization: `Bearer ${accessToken}` } }
+          );
+
+          console.log(resetReponse);
+          setEmailSent(true);
+        } catch (err) {
+          const tokenResponse = await axios.post(
+            `${`${process.env.REACT_APP_BASE_API_URL}/user/token`}`,
+            {
+              token: refreshToken,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          setEmailSent(false);
+
+          setUserAccessToken(tokenResponse.data.accessToken);
+          return await fetch(email);
+        }
+      };
     };
 
     return (
@@ -21,6 +61,10 @@ const PasswordReset: React.FC<PasswordResetProps> =
           <Title link="password-reset" title="Password Reset" />
           <label htmlFor="email">Email/Username</label>
           <input
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmailValue(e.target.value)
+            }
+            value={emailValue}
             id="email"
             type="text"
             className="password-reset__wrapper__input"
