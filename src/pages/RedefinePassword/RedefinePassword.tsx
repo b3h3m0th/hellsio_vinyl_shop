@@ -23,9 +23,9 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   const handleSubmit = () => {
     if (passwordData.password !== passwordData.password2) {
       setNotification("Your passwords don't match");
-      return setNotification(
-        "Your new password must at least contain 8 characters"
-      );
+      return setTimeout(() => {
+        setNotification("");
+      }, 5000);
     }
 
     if (passwordData.password.length < 8) {
@@ -92,11 +92,9 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
           onClick={() => handleSubmit()}
           link={`redefine-password/${match.params.token}`}
         />
-        {notification && (
-          <span className="password-redefine__wrapper__notification">
-            {notification}
-          </span>
-        )}
+        <span className="password-redefine__wrapper__notification">
+          {notification && notification}
+        </span>
       </div>
     </div>
   );
