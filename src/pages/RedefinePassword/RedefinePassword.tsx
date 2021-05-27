@@ -24,6 +24,11 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   const handleSubmit = () => {
     if (passwordData.password !== passwordData.password2)
       return setNotification("Your passwords don't match");
+
+    if (passwordData.password.length < 8)
+      return setNotification(
+        "Your new password must at least contain 8 characters"
+      );
     (async () => {
       const matchResponse = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
