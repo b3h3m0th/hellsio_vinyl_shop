@@ -41,8 +41,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
       }, 5000);
     }
 
-    try {
-      (async () => {
+    (async () => {
+      try {
         const matchResponse = await axios.post(
           `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
           {
@@ -57,13 +57,13 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
         return setTimeout(() => {
           setNotification("");
         }, 5000);
-      })();
-    } catch (err) {
-      setNotification(err.response.data.error);
-      return setTimeout(() => {
-        setNotification("");
-      }, 5000);
-    }
+      } catch (err) {
+        setNotification(err.response.data.error);
+        return setTimeout(() => {
+          setNotification("");
+        }, 5000);
+      }
+    })();
   };
 
   return (
