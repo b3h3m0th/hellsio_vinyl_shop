@@ -40,25 +40,29 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
       }, 5000);
     }
 
-    (async () => {
-      const matchResponse = await axios.post(
-        `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
-        {
-          token: match.params.token,
-          newPassword: passwordData.password,
-        }
-      );
+    try {
+      (async () => {
+        const matchResponse = await axios.post(
+          `${process.env.REACT_APP_BASE_API_URL}/user/redefine-password`,
+          {
+            token: match.params.token,
+            newPassword: passwordData.password,
+          }
+        );
 
-      if (matchResponse.status === 201)
-        setNotification("Your new password has been set :D");
+        if (matchResponse.status === 201)
+          setNotification("Your new password has been set :D");
 
-      if (matchResponse.status === 208)
-        setNotification("You are not allowed to set a new password");
-
+        return setTimeout(() => {
+          setNotification("");
+        }, 5000);
+      })();
+    } catch (err) {
+      setNotification(err.response.data.error);
       return setTimeout(() => {
         setNotification("");
       }, 5000);
-    })();
+    }
   };
 
   return (
