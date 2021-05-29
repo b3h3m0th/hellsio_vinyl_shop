@@ -9,6 +9,7 @@ import { LanguageStore } from "../../stores/languageStore";
 import { inject, observer } from "mobx-react";
 
 const arrowRight = require("../../assets/icons/arrowRight/arrowRight.png");
+const arrowRightWhite = require("../../assets/icons/arrowRight/arrowRightWhite.png");
 
 interface PasswordResetProps {
   match?: any;
@@ -70,9 +71,15 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
       <div className="password-redefine__wrapper">
         <Link
           to={`/${languageStore?.language}/password-reset`}
-          className="checkout-final__wrapper__info__back"
+          className="password-redefine__wrapper__back"
         >
           <img src={arrowRight} alt="Hellsio arrow left" /> Back to Email
+        </Link>
+        <Link
+          to={`/${languageStore?.language}`}
+          className="password-redefine__wrapper__further"
+        >
+          Home <img src={arrowRight} alt="Hellsio arrow left" />
         </Link>
         <Title link="password" title="Choose a new Password" />
         <label htmlFor="password">New Password</label>
@@ -103,7 +110,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
         />
         <PrimaryButton
           label="Reset"
-          icon={arrowRight}
+          icon={arrowRightWhite}
           onClick={() => handleSubmit()}
           link={`redefine-password/${match.params.token}`}
         />
