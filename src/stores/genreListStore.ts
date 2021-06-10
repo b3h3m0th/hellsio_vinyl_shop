@@ -2,8 +2,7 @@ import { makeAutoObservable, observable, action } from "mobx";
 import axios from "axios";
 export class GenreListStore {
   @observable genres: Array<any & { checked: boolean }> = [];
-
-  @observable selectedGenres: string[] = [];
+  @observable isToggledAll: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -25,6 +24,10 @@ export class GenreListStore {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  @action setIsToggledAll: (value: boolean) => void = (value: boolean) => {
+    this.isToggledAll = value;
   };
 }
 

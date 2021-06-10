@@ -69,6 +69,20 @@ const GenreList: React.FC<GenresListProps> = ({
             />
           );
         })}
+        <GenreCheckBox
+          style={{ marginTop: "20px" }}
+          label={`Select ${genreListStore?.isToggledAll ? `None` : `All`}`}
+          checked={genreListStore?.isToggledAll || false}
+          onChange={(e) => {
+            genreListStore?.setGenres([
+              ...genreListStore.genres.map((g) => ({
+                ...g,
+                checked: !genreListStore.isToggledAll,
+              })),
+            ]);
+            genreListStore?.setIsToggledAll(!genreListStore.isToggledAll);
+          }}
+        />
       </div>
     </div>
   );
