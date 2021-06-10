@@ -25,8 +25,8 @@ const TOS: React.FC<TOSProps> = ({ redisStore }: TOSProps) => {
   return (
     <div className="tos">
       <div className="tos__wrapper">
-        <Link to="shopping-bag" className="checkout-final__wrapper__info__back">
-          <img src={arrowRight} alt="Hellsio arrow left" /> Back to Shopping bag
+        <Link to="shopping-bag" className="tos__wrapper__back">
+          <img src={arrowRight} alt="Hellsio arrow left" /> Back to Checkout
         </Link>
         <Title link={`tos`} title="Terms of Service" />
         <div

@@ -16,5 +16,18 @@
       max-height: 60vh;
       overflow-y: auto;
     }
+
+    &__back {
+      display: flex;
+      color: var(--color-red);
+      margin-bottom: 20px;
+      align-items: center;
+
+      img {
+        margin-right: 10px;
+        transform: rotate(180deg);
+        max-height: 12px;
+      }
+    }
   }
 }
